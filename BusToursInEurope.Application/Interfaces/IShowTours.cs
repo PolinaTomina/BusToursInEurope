@@ -1,11 +1,11 @@
 ﻿using BusToursInEurope.Application.Models;
 
-namespace BusToursInEurope.Application.Services
+namespace BusToursInEurope.Application.Interfaces
 {
     /// <summary>
     /// при входе на страницу показывает топ туры
     /// </summary>
-    public interface IShowToursService
+    public interface IShowTours
     {
         Task<List<Tour>> GetTopToursAsync();
 
