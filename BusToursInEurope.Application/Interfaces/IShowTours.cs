@@ -7,8 +7,8 @@ namespace BusToursInEurope.Application.Interfaces
     /// </summary>
     public interface IShowTours
     {
-        Task<List<Tour>> GetTopToursAsync();
+        List<ShortTourDto> GetTopToursAsync();
 
-        Task<List<Tour>> GetToursAsync(ToursFilter toursFilter);
+        Task<List<ShortTourDto>> GetToursAsync(ToursFilter toursFilter);
     }
 }
