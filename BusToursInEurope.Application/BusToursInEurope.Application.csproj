@@ -7,8 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\BusToursInEurope.Database\BusToursInEurope.Database.csproj" />
   </ItemGroup>
 
 </Project>
