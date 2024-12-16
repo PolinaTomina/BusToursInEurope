@@ -1,4 +1,7 @@
 
+using BusToursInEurope.Application.Interfaces;
+using BusToursInEurope.Application.Services;
+
 namespace BusToursInEurope
 {
     public class Program
@@ -14,6 +17,8 @@ namespace BusToursInEurope
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddScoped<IShowTours, ShowToursService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -22,8 +27,6 @@ namespace BusToursInEurope
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseAuthorization();
 

@@ -1,28 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusToursInEurope.Application.Interfaces;
+using BusToursInEurope.Application.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
 {
     [ApiController]
-    [Route("/tours1")]
+    [Route("/tours")]
     public class ShowToursController : ControllerBase
     {
-        private static readonly string[] Tours = new[]
-        {
-            "One", "Two", "Three", "Four", "Five"
-        };
-
+        private readonly IShowTours _showTours;
         private readonly ILogger<ShowToursController> _logger;
 
-        public ShowToursController(ILogger<ShowToursController> logger)
+        public ShowToursController(IShowTours showTours, ILogger<ShowToursController> logger)
         {
+            _showTours = showTours;
             _logger = logger;
         }
 
-
-        [HttpGet]
-        public IEnumerable<string> Get(int count)
+        [HttpGet("top")]
+        public ActionResult<List<ShortTourDto>> GetTopTours()
         {
-            return Tours.Take(count);
+            var topTours = _showTours.GetTopToursAsync();
+            return Ok(topTours);
         }
     }
 }
