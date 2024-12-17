@@ -1,6 +1,7 @@
 
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Services;
+using BusToursInEurope.Database;
 
 namespace BusToursInEurope
 {
@@ -10,9 +11,9 @@ namespace BusToursInEurope
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+                // Add services to the container.
 
-            builder.Services.AddControllers();
+                builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

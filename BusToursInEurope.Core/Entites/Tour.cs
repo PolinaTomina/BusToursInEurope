@@ -12,7 +12,7 @@ namespace BusToursInEurope.Core.Entites
         public string NumOfSeats { get; set; }
         public string Description { get; set; }
 
-        public Transport Transport { get; set; } // ссылка?
+        //public Transport Transport { get; set; } // ссылка?
 
         public List<User> users;//клиенты (пользователи)
         //ссылка на изображения
