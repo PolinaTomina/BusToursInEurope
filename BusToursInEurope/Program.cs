@@ -2,6 +2,7 @@
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Services;
 using BusToursInEurope.Database;
+using Microsoft.Extensions.Configuration;
 
 namespace BusToursInEurope
 {
@@ -19,6 +20,7 @@ namespace BusToursInEurope
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddScoped<IShowTours, ShowToursService>();
+            builder.Services.AddDbContext<ApplicationContext>();
 
             var app = builder.Build();
 
