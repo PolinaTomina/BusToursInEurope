@@ -9,7 +9,7 @@ namespace BusToursInEurope.Core.Entites
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Route { get; set; }
-        public string NumOfSeats { get; set; }
+        public int NumOfSeats { get; set; }
         public string Description { get; set; }
 
         //public Transport Transport { get; set; } // ссылка?
