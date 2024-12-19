@@ -23,5 +23,12 @@ namespace BusToursInEurope.Controllers
             var topTours = _showTours.GetTopToursAsync();
             return Ok(topTours);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> AddTour(CreateTourDto createTourDto)
+        {
+            await _showTours.AddTourAsync(createTourDto);
+            return StatusCode(201);
+        }
     }
 }

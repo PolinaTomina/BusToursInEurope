@@ -1,4 +1,3 @@
-
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Services;
 using BusToursInEurope.Core.Entites;
@@ -30,7 +29,7 @@ namespace BusToursInEurope
 
                 db.Tours.Add(tour1);
                 db.Tours.Add(tour2);
-                db.SaveChanges();
+                //db.SaveChanges();
             }
 
             var app = builder.Build();

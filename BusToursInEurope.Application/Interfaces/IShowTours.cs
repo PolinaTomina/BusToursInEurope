@@ -6,5 +6,7 @@ namespace BusToursInEurope.Application.Interfaces
     {
         Task<List<ShortTourDto>> GetTopToursAsync();
         Task<List<ShortTourDto>> GetToursAsync(ToursFilter toursFilter);
+        Task AddTourAsync(CreateTourDto createTourDto);
+
     }
 }
