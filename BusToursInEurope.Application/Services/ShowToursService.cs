@@ -30,9 +30,42 @@ namespace BusToursInEurope.Application.Services
             return tours;
         }
 
-        public Task<List<ShortTourDto>> GetToursAsync(ToursFilter toursFilter)
+        public async Task<List<ShortTourDto>> GetToursAsync(ToursFilter toursFilter)
         {
-            throw new NotImplementedException();
+            var query = _context.Tours.AsQueryable();
+
+            if (!string.IsNullOrEmpty(toursFilter.Country))
+            {
+                query = query.Where(t => t.Name.Contains(toursFilter.Country));
+            }
+            if (toursFilter.MinPrice.HasValue)
+            {
+                query = query.Where(t => t.Price >= toursFilter.MinPrice.Value);
+            }
+            if (toursFilter.MaxPrice.HasValue)
+            {
+                query = query.Where(t => t.Price <= toursFilter.MaxPrice.Value);
+            }
+            if (toursFilter.StartDate.HasValue) 
+            { 
+                query = query.Where(t => t.StartDate >= toursFilter.StartDate.Value); 
+            }
+            //if (toursFilter.EndDate.HasValue) 
+            //{ 
+            //    query = query.Where(t => t.EndDate <= toursFilter.EndDate.Value); 
+            //}
+
+            var filteredTours = await query
+                .Select(t => new ShortTourDto 
+                { 
+                    Id = t.Id, 
+                    Name = t.Name, 
+                    Price = t.Price, 
+                    StartDate = t.StartDate, 
+                }).ToListAsync(); 
+            
+            return filteredTours;
+
         }
 
         public async Task AddTourAsync(CreateTourDto createTourDto)
