@@ -30,5 +30,12 @@ namespace BusToursInEurope.Controllers
             await _showTours.AddTourAsync(createTourDto);
             return StatusCode(201);
         }
+
+        [HttpDelete("id")]
+        public async Task<ActionResult> DeleteTour(int id)
+        {
+            await _showTours.DeleteTourAsync(id);
+            return StatusCode(201);
+        }
     }
 }

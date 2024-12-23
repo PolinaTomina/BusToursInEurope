@@ -51,5 +51,15 @@ namespace BusToursInEurope.Application.Services
             await _context.Tours.AddAsync(tour);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteTourAsync(int tourId)
+        {
+            var tour = await _context.Tours.FindAsync(tourId);
+            if (tour != null)
+            {
+                _context.Tours.Remove(tour);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }
