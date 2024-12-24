@@ -3,6 +3,7 @@ using BusToursInEurope.Application.Models;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace BusToursInEurope.Application.Services
 {
@@ -91,6 +92,23 @@ namespace BusToursInEurope.Application.Services
             if (tour != null)
             {
                 _context.Tours.Remove(tour);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateTourAsync(int tourId, UpdateTourDto updateTourDto)
+        {
+            var tour = await _context.Tours.FindAsync(tourId);
+            if(tour != null)
+            {
+                tour.Name = updateTourDto.Name;
+                tour.Price = updateTourDto.Price;
+                tour.StartDate = updateTourDto.StartDate;
+                tour.EndDate = updateTourDto.EndDate;
+                tour.Route = updateTourDto.Route;
+                tour.NumOfSeats = updateTourDto.NumOfSeats;
+                tour.Description = updateTourDto.Description;
+
                 await _context.SaveChangesAsync();
             }
         }

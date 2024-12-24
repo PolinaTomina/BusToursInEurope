@@ -18,9 +18,9 @@ namespace BusToursInEurope.Controllers
         }
 
         [HttpGet("top")]
-        public ActionResult<List<ShortTourDto>> GetTopTours()
+        public async Task<ActionResult<List<ShortTourDto>>> GetTopTours()
         {
-            var topTours = _showTours.GetTopToursAsync();
+            var topTours = await _showTours.GetTopToursAsync();
             return Ok(topTours);
         }
 
@@ -42,6 +42,13 @@ namespace BusToursInEurope.Controllers
         public async Task<ActionResult> DeleteTour(int id)
         {
             await _showTours.DeleteTourAsync(id);
+            return NoContent();
+        }
+
+        [HttpPut("id")]
+        public async Task<ActionResult> UpdateTour(int id, [FromBody] UpdateTourDto updateTourDto)
+        {
+            await _showTours.UpdateTourAsync(id, updateTourDto);
             return NoContent();
         }
     }
