@@ -69,6 +69,24 @@ namespace BusToursInEurope.Application.Services
 
         }
 
+        public async Task<FullTourDto> GetFullTourAsync(int id)
+        {
+            var tour = await _context.Tours.FindAsync(id);
+            if (tour == null)
+                return null;
+
+            return new FullTourDto
+            {
+                Name = tour.Name,
+                Price = tour.Price,
+                StartDate = tour.StartDate,
+                EndDate = tour.EndDate,
+                Route = tour.Route,
+                NumOfSeats = tour.NumOfSeats,
+                Description = tour.Description
+            };
+        }
+
         public async Task AddTourAsync(CreateTourDto createTourDto)
         {
             var tour = new Tour

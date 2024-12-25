@@ -31,6 +31,17 @@ namespace BusToursInEurope.Controllers
             return Ok(tours);
         }
 
+        [HttpGet("id")]
+        public async Task<ActionResult<FullTourDto>> GetFullTour(int id)
+        {
+            var tour = await _showTours.GetFullTourAsync(id);
+            if (tour == null)
+            {
+                return NotFound();
+            }
+            return Ok(tour);
+        }
+
         [HttpPost]
         public async Task<ActionResult> AddTour(CreateTourDto createTourDto)
         {
