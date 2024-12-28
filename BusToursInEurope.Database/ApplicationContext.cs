@@ -15,11 +15,13 @@ namespace BusToursInEurope.Database
         public DbSet<User> Users => Set<User>();
         public DbSet<WayPoint> WayPoints => Set<WayPoint>();
 
-        //public ApplicationContext() => Database.EnsureCreated();
+        public ApplicationContext() => Database.EnsureCreated();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=BusTourInEurope.db");
+            var dirMyDocs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var dbPath = Path.Combine(dirMyDocs, "BusTourData", "BusTourInEurope.db");
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
     }
 }
