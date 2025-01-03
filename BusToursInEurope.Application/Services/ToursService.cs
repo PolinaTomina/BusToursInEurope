@@ -7,11 +7,11 @@ using System.Xml.Linq;
 
 namespace BusToursInEurope.Application.Services
 {
-    public class ShowToursService : IShowTours
+    public class ToursService : ITours
     {
         private readonly ApplicationContext _context;
 
-        public ShowToursService(ApplicationContext context)
+        public ToursService(ApplicationContext context)
         {
             _context = context;
         }

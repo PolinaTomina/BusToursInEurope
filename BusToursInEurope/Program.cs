@@ -19,7 +19,7 @@ namespace BusToursInEurope
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddScoped<IShowTours, ShowToursService>();
+            builder.Services.AddScoped<ITours, ToursService>();
             builder.Services.AddDbContext<ApplicationContext>();
 
             using (ApplicationContext db = new ApplicationContext())

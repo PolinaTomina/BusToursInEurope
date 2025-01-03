@@ -6,12 +6,12 @@ namespace BusToursInEurope.Controllers
 {
     [ApiController]
     [Route("/tours")]
-    public class ShowToursController : ControllerBase
+    public class ToursController : ControllerBase
     {
-        private readonly IShowTours _showTours;
-        private readonly ILogger<ShowToursController> _logger;
+        private readonly ITours _showTours;
+        private readonly ILogger<ToursController> _logger;
 
-        public ShowToursController(IShowTours showTours, ILogger<ShowToursController> logger)
+        public ToursController(ITours showTours, ILogger<ToursController> logger)
         {
             _showTours = showTours;
             _logger = logger;
