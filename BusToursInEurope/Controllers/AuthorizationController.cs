@@ -1,6 +1,11 @@
-﻿namespace BusToursInEurope.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace BusToursInEurope.Controllers
 {
-    public class AuthorizationController
+    [ApiController]
+    [Route("/auth")]
+    public class AuthorizationController : ControllerBase
     {
+
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace BusToursInEurope.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace BusToursInEurope.Controllers
 {
-    public class ReviewController
+    public class ReviewController : ControllerBase
     {
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace BusToursInEurope.Controllers
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace BusToursInEurope.Controllers
 {
-    public class ReservationController
+    public class ReservationController : ControllerBase
     {
     }
 }

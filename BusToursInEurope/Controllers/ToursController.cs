@@ -1,5 +1,6 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
