@@ -26,6 +26,7 @@ namespace BusToursInEurope
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddScoped<ITours, ToursService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddDbContext<ApplicationContext>();
 
             using (ApplicationContext db = new ApplicationContext())
@@ -72,22 +73,6 @@ namespace BusToursInEurope
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.Map("/login/{username}", (string username) =>
-            {
-                var claims = new List<Claim> { new Claim(ClaimTypes.Name, username) };
-                // создаем JWT-токен
-                var jwt = new JwtSecurityToken(
-                        issuer: AuthOptions.ISSUER,
-                        audience: AuthOptions.AUDIENCE,
-                        claims: claims,
-                        expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
-                        signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-
-                return new JwtSecurityTokenHandler().WriteToken(jwt);
-            });
-
-            app.Map("/data", [Authorize] () => new { message = "Hello World!" });
 
             app.MapControllers();
 
