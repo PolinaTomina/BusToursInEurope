@@ -1,8 +1,7 @@
-﻿namespace BusToursInEurope.Application.Models
+﻿namespace BusToursInEurope.Application.Models.TourModel
 {
-    public class FullTourDto
+    public class UpdateTourDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public DateTime StartDate { get; set; }

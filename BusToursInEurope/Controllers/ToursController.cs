@@ -1,5 +1,5 @@
 ﻿using BusToursInEurope.Application.Interfaces;
-using BusToursInEurope.Application.Models;
+using BusToursInEurope.Application.Models.TourModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

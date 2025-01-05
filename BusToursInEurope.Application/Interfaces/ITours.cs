@@ -1,4 +1,4 @@
-﻿using BusToursInEurope.Application.Models;
+﻿using BusToursInEurope.Application.Models.TourModel;
 
 namespace BusToursInEurope.Application.Interfaces
 {

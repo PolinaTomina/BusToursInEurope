@@ -1,4 +1,4 @@
-﻿namespace BusToursInEurope.Application.Models
+﻿namespace BusToursInEurope.Application.Models.TourModel
 {
     public class ShortTourDto
     {

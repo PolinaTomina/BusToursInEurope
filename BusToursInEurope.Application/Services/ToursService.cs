@@ -1,5 +1,5 @@
 ﻿using BusToursInEurope.Application.Interfaces;
-using BusToursInEurope.Application.Models;
+using BusToursInEurope.Application.Models.TourModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
 using Microsoft.EntityFrameworkCore;
