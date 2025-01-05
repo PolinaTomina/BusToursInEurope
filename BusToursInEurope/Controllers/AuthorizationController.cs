@@ -3,6 +3,7 @@ using BusToursInEurope.Core.Entites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BusToursInEurope.Application.Interfaces;
+using BusToursInEurope.Application.Services;
 
 namespace BusToursInEurope.Controllers
 {
@@ -29,7 +30,7 @@ namespace BusToursInEurope.Controllers
                 return null;
             }
 
-            return AuthOptions.CreateJwtToken(login);
+            return AuthService.CreateJwtToken(login);
         }
 
         [HttpPost("register")]
@@ -46,7 +47,7 @@ namespace BusToursInEurope.Controllers
 
             await _authService.RegisterNewUserAsync(newUser);
 
-            return AuthOptions.CreateJwtToken(login);
+            return AuthService.CreateJwtToken(login);
         }
     }
 }
