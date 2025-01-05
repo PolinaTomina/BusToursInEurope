@@ -2,13 +2,8 @@ using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Services;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.OAuth;
 
 namespace BusToursInEurope
 {
