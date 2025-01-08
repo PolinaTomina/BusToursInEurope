@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusToursInEurope.Application.Models.AccountModel;
 using BusToursInEurope.Core.Entites;
 
 namespace BusToursInEurope.Application.Interfaces
 {
     public interface IAuthService
     {
-        Task RegisterNewUserAsync(User user);
-        Task<User> GetUserAsync(string login, string password);
+        Task<string> RegistrationNewUserAsync(RegistrationDto registrationDto);
+        Task<string> AuthUserAsync(AuthorizationDto authorizationDto);
     }
 }

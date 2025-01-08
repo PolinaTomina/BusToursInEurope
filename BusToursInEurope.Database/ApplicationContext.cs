@@ -15,7 +15,11 @@ namespace BusToursInEurope.Database
         public DbSet<User> Users => Set<User>();
         public DbSet<WayPoint> WayPoints => Set<WayPoint>();
 
-        public ApplicationContext() => Database.EnsureCreated();
+        public ApplicationContext()
+        {
+            //Database.EnsureDeleted();
+            Database.EnsureCreated();
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

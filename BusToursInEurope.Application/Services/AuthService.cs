@@ -1,30 +1,67 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using BusToursInEurope.Application.Interfaces;
+using BusToursInEurope.Application.Models.AccountModel;
 using BusToursInEurope.Core.Entites;
+using BusToursInEurope.Database;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace BusToursInEurope.Application.Services;
 
 public class AuthService : IAuthService
 {
-    public Task RegisterNewUserAsync(User user)
+    private readonly ApplicationContext _context;
+
+    public AuthService(ApplicationContext context)
     {
-        //TODO: добавить бд
-        return Task.CompletedTask;
+        _context = context;
     }
 
-    //TODO: переимновать метод
-    public Task<User> GetUserAsync(string login, string password)
+    public async Task<string> RegistrationNewUserAsync(RegistrationDto registrationDto)
     {
-        return Task.FromResult<User>(null);
+        if (await _context.Users.AnyAsync(u => u.Email == registrationDto.Email))
+        {
+            throw new Exception("Пользователь с такой электронной почтой уже существует.");
+        }
+
+        var user = new User
+        {
+            Login = registrationDto.Login,
+            Email = registrationDto.Email,
+            Password = registrationDto.Password,
+            NumPhone = registrationDto.NumPhone,
+        };
+
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+
+        return CreateJwtToken(user.Email);
     }
 
-    public static string CreateJwtToken(string login)
+    public async Task<string> AuthUserAsync(AuthorizationDto authorizationDto)
+    {
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == authorizationDto.Email);
+        if (user == null)
+        {
+            throw new Exception("Пользователь не найден");
+        }
+
+        if (user.Password != authorizationDto.Password)
+        {
+            throw new Exception("Неверный пароль");
+        }
+
+        // Создание JWT токена
+        return CreateJwtToken(user.Email);
+    }
+
+    public static string CreateJwtToken(string email)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, login)
+            new Claim(ClaimTypes.Name, email)
         };
 
         // создаем JWT-токен
