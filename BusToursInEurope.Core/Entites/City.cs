@@ -8,6 +8,7 @@ namespace BusToursInEurope.Core.Entites
         public string Country { get; set; }
         public bool Visa { get; set; }
 
-        public WayPoint WayPoint { get; set; }// WayPoints ссылка
+        public ICollection<Hotel> Hotel { get; set; } = new List<Hotel>();
+        public ICollection<WayPoint> WayPoints { get; set; } = new List<WayPoint>();
     }
 }

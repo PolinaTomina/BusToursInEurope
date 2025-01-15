@@ -8,13 +8,16 @@ namespace BusToursInEurope.Core.Entites
         public decimal Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Route { get; set; }
         public int NumOfSeats { get; set; }
         public string Description { get; set; }
 
-        //public Transport Transport { get; set; } // ссылка?
+        public int BusId { get; set; }
+        public Bus Bus { get; set; }
 
-        public List<User> users;//клиенты (пользователи)
-        //ссылка на изображения
+        public int RouteBusId { get; set; }
+        public RouteBus RouteBus { get; set; }
+
+        public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }
 }

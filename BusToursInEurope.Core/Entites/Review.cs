@@ -4,12 +4,15 @@ namespace BusToursInEurope.Core.Entites
     public class Review
     {
         public int Id { get; set; }
-        public string Fio { get; set; }
-        public float Rating { get; set; }
+        public string FullName { get; set; }
+        public double Rating { get; set; }
         public string Comment { get; set; }
-        public DateTime DateReview { get; set; }
+        public DateTime ReviewDate { get; set; }
 
-        public User User { get; set; }// пользователь ссылка
-        public Tour Tour { get; set; } // ссылка?
+        public int UserId { get; set; }
+        public User User { get; set; }
+
+        public int TourId { get; set; }
+        public Tour Tour { get; set; } 
     }
 }

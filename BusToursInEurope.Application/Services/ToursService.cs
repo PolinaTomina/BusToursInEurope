@@ -81,7 +81,7 @@ namespace BusToursInEurope.Application.Services
                 Price = tour.Price,
                 StartDate = tour.StartDate,
                 EndDate = tour.EndDate,
-                Route = tour.Route,
+                //Route = tour.Route,
                 NumOfSeats = tour.NumOfSeats,
                 Description = tour.Description
             };
@@ -95,7 +95,7 @@ namespace BusToursInEurope.Application.Services
                 Price = createTourDto.Price,
                 StartDate = createTourDto.StartDate,
                 EndDate = createTourDto.EndDate,
-                Route = createTourDto.Route,
+                //Route = createTourDto.Route,
                 NumOfSeats = createTourDto.NumOfSeats,
                 Description = createTourDto.Description,
             };
@@ -123,7 +123,7 @@ namespace BusToursInEurope.Application.Services
                 tour.Price = updateTourDto.Price;
                 tour.StartDate = updateTourDto.StartDate;
                 tour.EndDate = updateTourDto.EndDate;
-                tour.Route = updateTourDto.Route;
+                //tour.Route = updateTourDto.Route;
                 tour.NumOfSeats = updateTourDto.NumOfSeats;
                 tour.Description = updateTourDto.Description;
 

@@ -7,6 +7,6 @@ namespace BusToursInEurope.Core.Entites
         public string Name { get; set; }
         public int NumOfSeats { get; set; }
 
-        public Tour Tour { get; set; }// тур ссылка
+        public ICollection<Tour> Tours { get; set; } = new List<Tour>();
     }
 }

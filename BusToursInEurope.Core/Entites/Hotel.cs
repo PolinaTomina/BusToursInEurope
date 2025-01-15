@@ -5,8 +5,9 @@ namespace BusToursInEurope.Core.Entites
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Rating { get; set; }
+        public double Rating { get; set; }
 
-        public City City { get; set; }// город ссылка
+        public int CityId { get; set; }
+        public City City { get; set; }
     }
 }

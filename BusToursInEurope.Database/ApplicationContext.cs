@@ -10,7 +10,7 @@ namespace BusToursInEurope.Database
         public DbSet<Reservation> Reservations => Set<Reservation>();
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<Role> Roles => Set<Role>();
-        public DbSet<Route> Routes => Set<Route>();
+        public DbSet<RouteBus> Routes => Set<RouteBus>();
         public DbSet<Tour> Tours => Set<Tour>();
         public DbSet<Bus> Buses => Set<Bus>();
         public DbSet<User> Users => Set<User>();
@@ -18,7 +18,7 @@ namespace BusToursInEurope.Database
 
         public ApplicationContext()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
