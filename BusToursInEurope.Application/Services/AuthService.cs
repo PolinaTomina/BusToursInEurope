@@ -32,6 +32,8 @@ public class AuthService : IAuthService
             Email = registrationDto.Email,
             Password = registrationDto.Password,
             NumPhone = registrationDto.NumPhone,
+            IsAdmin = false,
+            IsUser = true
         };
 
         await _context.Users.AddAsync(user);
@@ -69,7 +71,7 @@ public class AuthService : IAuthService
             issuer: AuthOptions.ISSUER,
             audience: AuthOptions.AUDIENCE,
             claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(2)),
+            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);

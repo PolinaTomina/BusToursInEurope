@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BusToursInEurope.Core.Entites
+﻿namespace BusToursInEurope.Core.Entites
 {
     public class Reservation
     {
@@ -8,7 +6,7 @@ namespace BusToursInEurope.Core.Entites
         public DateTime Date { get; set; }
         public DateTime PaymentDate { get; set; } // дата оплаты
         public DateTime PaymentDeadline { get; set; } // срок оплаты
-        public int NumOfSeats { get; set; }
+        public int NumOfSeats { get; set; } // количество человек
 
         public int UserId { get; set; }
         public User User { get; set; }

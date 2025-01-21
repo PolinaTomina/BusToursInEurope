@@ -10,8 +10,8 @@
         public string Password { get; set; }
         public string NumPhone {  get; set; }
 
-        public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public bool IsAdmin { get; set; } = false; // Администратор
+        public bool IsUser { get; set; } = true;  // Обычный пользователь (по умолчанию)
 
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
         public ICollection<Review> Reviews { get; set; } = new List<Review>();

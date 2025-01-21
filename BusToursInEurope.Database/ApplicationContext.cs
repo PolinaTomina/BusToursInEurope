@@ -9,7 +9,6 @@ namespace BusToursInEurope.Database
         public DbSet<Hotel> Hotels => Set<Hotel>();
         public DbSet<Reservation> Reservations => Set<Reservation>();
         public DbSet<Review> Reviews => Set<Review>();
-        public DbSet<Role> Roles => Set<Role>();
         public DbSet<RouteBus> Routes => Set<RouteBus>();
         public DbSet<Tour> Tours => Set<Tour>();
         public DbSet<Bus> Buses => Set<Bus>();
