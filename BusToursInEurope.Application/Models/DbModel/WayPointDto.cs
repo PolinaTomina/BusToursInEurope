@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BusToursInEurope.Core.Entites;
 
 namespace BusToursInEurope.Application.Models.DbModel
 {
     public class WayPointDto
     {
+        public int Id { get; set; }
+        public string NamePlace { get; set; }
+
+        public int CityDtoId { get; set; }
+        public CityDto CityDto { get; set; }
+
+        public int RouteBusDtoId { get; set; }
+        public RouteBusDto RouteBusDto { get; set; }
+
+        public int HotelDtoId { get; set; }
+        public HotelDto HotelDto { get; set; }
     }
 }

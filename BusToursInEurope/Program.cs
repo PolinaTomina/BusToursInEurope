@@ -43,7 +43,7 @@ namespace BusToursInEurope
                 db.Buses.Add(bus);
                 //db.SaveChanges();
 
-                var route = new RouteBus { Distance = 120.5f, BorderPlace = "Border Crossing" };
+                var route = new RouteBus { Distance = 120.5f};
                 db.Routes.Add(route);
                 //db.SaveChanges();
 
