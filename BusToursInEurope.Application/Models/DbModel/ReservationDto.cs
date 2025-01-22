@@ -6,6 +6,7 @@ namespace BusToursInEurope.Application.Models.DbModel
     {
         public int Id { get; set; }
         public DateTime ReservationDate { get; set; }
+        public DateTime PaymentDate { get; set; } // дата оплаты
         public DateTime PaymentDeadline { get; set; } // срок оплаты
         public int NumOfSeats { get; set; } // количество человек
 

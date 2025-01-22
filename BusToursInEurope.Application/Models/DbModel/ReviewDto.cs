@@ -4,9 +4,9 @@
     {
         public int Id { get; set; }
         public string FullName { get; set; }
-        public float Rating { get; set; }
+        public double Rating { get; set; }
         public string Comment { get; set; }
-        public DateTime DateReview { get; set; }
+        public DateTime ReviewDate { get; set; }
 
         public int UserDtoId { get; set; }
         public UserDto UserDto { get; set; }
