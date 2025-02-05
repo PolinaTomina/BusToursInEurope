@@ -3,6 +3,7 @@ using BusToursInEurope.Application.Models.DbModel;
 using BusToursInEurope.Application.Models.TourModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
@@ -157,6 +158,21 @@ namespace BusToursInEurope.Application.Services
 
         public async Task AddTourAsync(CreateTourDto createTourDto)
         {
+            // Проверка наличия автобуса
+            var bus = await _context.Buses.FindAsync(createTourDto.BusDto);
+            if (bus == null)
+            {
+                throw new ArgumentException($"Автобус с ID {createTourDto.BusDto} не найден");
+            }
+
+            // Проверка наличия маршрута
+            var route = await _context.Routes.FindAsync(createTourDto.RouteBusDto);
+            if (route == null)
+            {
+                throw new ArgumentException($"Маршрут с ID {createTourDto.RouteBusDto} не найден");
+            }
+
+            // Создание нового тура
             var tour = new Tour
             {
                 Name = createTourDto.Name,
@@ -165,10 +181,12 @@ namespace BusToursInEurope.Application.Services
                 EndDate = createTourDto.EndDate,
                 NumOfSeats = createTourDto.NumOfSeats,
                 Description = createTourDto.Description,
+                Bus = bus, // Связь с автобусом
+                RouteBus = route // Связь с маршрутом
             };
 
-            await _context.Tours.AddAsync(tour);
-            await _context.SaveChangesAsync();
+                await _context.Tours.AddAsync(tour);
+                await _context.SaveChangesAsync();
         }
 
         public async Task DeleteTourAsync(int tourId)
