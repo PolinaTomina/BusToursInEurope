@@ -2,7 +2,7 @@
 {
     public class ToursFilter
     {
-        public string Country { get; set; }
+        public string? Country { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public DateTime? StartDate { get; set; }
