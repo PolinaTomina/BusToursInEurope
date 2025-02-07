@@ -56,10 +56,10 @@ public class AuthService : IAuthService
         }
 
         // Создание JWT токена
-        return CreateJwtToken(user.Email);
+        return CreateJwtToken(user.Email, user.Id);
     }
 
-    public static string CreateJwtToken(string email)
+    public static string CreateJwtToken(string email, int id)
     {
         var claims = new List<Claim>
         {
