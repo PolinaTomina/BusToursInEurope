@@ -59,39 +59,39 @@ namespace BusToursInEurope
             {
                 var city = new City { Name = "Minsk", Country = "Belarus", Visa = false };
                 db.Cities.Add(city);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 var user = new User { Email = "user@example.com", FullName = "John Doe", UserName = "johndoe", Login = "john_login", Password = "password123", NumPhone = "+123456789", IsAdmin = true, IsUser = false};
                 db.Users.Add(user);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 var hotel = new Hotel { Name = "Hotel Minsk", Rating = 4.5, CityId = city.Id };
                 db.Hotels.Add(hotel);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 var bus = new Bus { Name = "City Bus", NumOfSeats = 50 };
                 db.Buses.Add(bus);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 var route = new RouteBus { Distance = 120.5f};
                 db.Routes.Add(route);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 var tour = new Tour { Name = "City Tour", Price = 299.99m, StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(7), NumOfSeats = 50, Description = "A wonderful city tour", BusId = bus.Id, RouteBusId = route.Id };
                 db.Tours.Add(tour);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 var reservation = new Reservation { Date = DateTime.Now, PaymentDate = DateTime.Now, PaymentDeadline = DateTime.Now.AddDays(1), NumOfSeats = 2, UserId = user.Id, TourId = tour.Id };
                 db.Reservations.Add(reservation);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 var review = new Review { FullName = "John Doe", Rating = 5.0, Comment = "Amazing tour!", ReviewDate = DateTime.Now, UserId = user.Id, TourId = tour.Id };
                 db.Reviews.Add(review);
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 var waypoint = new WayPoint { NamePlace = "Central Park", CityId = city.Id, RouteBusId = route.Id, HotelId = hotel.Id };
                 db.WayPoints.Add(waypoint);
-                //db.SaveChanges();
+                db.SaveChanges();
 
 
 
@@ -101,7 +101,7 @@ namespace BusToursInEurope
                 db.Tours.Add(tour1);
                 db.Tours.Add(tour2);
 
-                //db.SaveChanges();
+                db.SaveChanges();
             }
 
             builder.Services.AddAuthorization();

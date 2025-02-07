@@ -10,8 +10,7 @@ namespace BusToursInEurope.Application.Models.DbModel
         public int CityDtoId { get; set; }
         public CityDto CityDto { get; set; }
 
-        public int RouteBusDtoId { get; set; }
-        public RouteBusDto RouteBusDto { get; set; }
+        public int RouteBusId { get; set; }
 
         public int HotelDtoId { get; set; }
         public HotelDto HotelDto { get; set; }
