@@ -1,12 +1,12 @@
 ﻿using BusToursInEurope.Application.Interfaces;
-using BusToursInEurope.Application.Models.CrudModel;
-using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Application.Models.RoutesBusModels;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusToursInEurope.Application.Services
 {
-    public class RouteBusesService : IRouteBuses
+    public class RouteBusesService : IRouteBusesService
     {
         private readonly ApplicationContext _context;
 
@@ -15,32 +15,49 @@ namespace BusToursInEurope.Application.Services
             _context = context;
         }
 
-        public async Task AddRouteBusAsync(CrudRouteBusDto crudRouteBusDto)
+        public async Task AddRouteBusAsync(CreateRouteBusDto request)
         {
-            var wayPoint = await _context.WayPoints.FindAsync(crudRouteBusDto.WayPointDto);
-            if (wayPoint == null)
+            if (request.WaypointsId.Count < 2)
             {
-                throw new ArgumentException($"Маршрут автобуса с ID {crudRouteBusDto.WayPointDto} не найден");
+                throw new ApplicationException("Маршрут должен содержать 2 или более точки остановки");
             }
 
-            var routeBus = new RouteBus
+            var route = new RouteBus
             {
-                Distance = crudRouteBusDto.Distance,
-                WayPoints = wayPoint
+                Distance = request.Distance,
+                WayPoints = request.WaypointsId.Select(w => new WayPoint { Id = w }).ToList()
             };
 
-            await _context.Routes.AddAsync(routeBus);
+            await _context.AddAsync(route);
             await _context.SaveChangesAsync();
         }
 
-        public async Task ADeleteRouteBusAsync(int id)
+        public async Task DeleteRouteBusAsync(int id)
         {
+            var route = _context.Routes.SingleOrDefaultAsync(r => r.Id == id);
 
+            if (route == null)
+            {
+                throw new ApplicationException($"Маршрут с id {id} не найден");
+            }
+
+            _context.Remove(route);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateRouteBusAsync(int id, CrudRouteBusDto crudRouteBusDto)
+        public async Task UpdateRouteBusAsync(UpdateRouteBusDto request)
         {
+            var route = await _context.Routes.SingleOrDefaultAsync(r => r.Id == request.Id);
 
+            if (route == null)
+            {
+                throw new ApplicationException($"Маршрут с id {request.Id} не найден");
+            }
+
+            route.Distance = request.Distance;
+            route.WayPoints = request.WaypointsId.Select(w => new WayPoint { Id = w }).ToList();
+
+            await _context.SaveChangesAsync();
         }
     }
 }

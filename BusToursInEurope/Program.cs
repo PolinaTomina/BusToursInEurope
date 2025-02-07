@@ -50,6 +50,7 @@ namespace BusToursInEurope
             builder.Services.AddScoped<ITours, ToursService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IBuses, BusesService>();
+            builder.Services.AddScoped<IRouteBusesService, RouteBusesService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
 
             builder.Services.AddDbContext<ApplicationContext>();
