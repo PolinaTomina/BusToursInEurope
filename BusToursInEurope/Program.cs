@@ -23,6 +23,7 @@ namespace BusToursInEurope
 
             builder.Services.AddScoped<ITours, ToursService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IBuses, BusesService>();
             builder.Services.AddDbContext<ApplicationContext>();
 
             using (ApplicationContext db = new ApplicationContext())
