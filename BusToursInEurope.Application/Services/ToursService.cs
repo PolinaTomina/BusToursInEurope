@@ -76,18 +76,18 @@ namespace BusToursInEurope.Application.Services
         public async Task<FullTourDto> GetFullTourAsync(int id)
         {
             var tour = await _context.Tours
-        .Include(t => t.Bus)
-        .Include(t => t.RouteBus)
-            .ThenInclude(r => r.WayPoints)
-                .ThenInclude(wp => wp.City)
-        .Include(t => t.RouteBus)
-            .ThenInclude(r => r.WayPoints)
-                .ThenInclude(wp => wp.Hotel)
-        .Include(t => t.Reservations)
-            .ThenInclude(res => res.User)
-        .Include(t => t.Reviews)
-            .ThenInclude(rev => rev.User)
-        .FirstOrDefaultAsync(t => t.Id == id);
+                .Include(t => t.Bus)
+                .Include(t => t.RouteBus)
+                    .ThenInclude(r => r.WayPoints)
+                        .ThenInclude(wp => wp.City)
+                .Include(t => t.RouteBus)
+                    .ThenInclude(r => r.WayPoints)
+                        .ThenInclude(wp => wp.Hotel)
+                .Include(t => t.Reservations)
+                    .ThenInclude(res => res.User)
+                .Include(t => t.Reviews)
+                    .ThenInclude(rev => rev.User)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if (tour == null)
                 return null;
