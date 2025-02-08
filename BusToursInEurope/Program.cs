@@ -55,7 +55,7 @@ namespace BusToursInEurope
 
             builder.Services.AddDbContext<ApplicationContext>();
 
-            using (ApplicationContext db = new ApplicationContext())
+            /*using (ApplicationContext db = new ApplicationContext())
             {
                 var city = new City { Name = "Minsk", Country = "Belarus", Visa = false };
                 db.Cities.Add(city);
@@ -102,7 +102,7 @@ namespace BusToursInEurope
                 db.Tours.Add(tour2);
 
                 db.SaveChanges();
-            }
+            }*/
 
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

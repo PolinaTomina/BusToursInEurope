@@ -17,7 +17,7 @@ namespace BusToursInEurope.Application.Services
 
         public async Task AddRouteBusAsync(CreateRouteBusDto request)
         {
-            if (request.WaypointsId.Count < 2)
+            if (request.WayPoints.Count < 2)
             {
                 throw new ApplicationException("Маршрут должен содержать 2 или более точки остановки");
             }
@@ -25,7 +25,13 @@ namespace BusToursInEurope.Application.Services
             var route = new RouteBus
             {
                 Distance = request.Distance,
-                WayPoints = request.WaypointsId.Select(w => new WayPoint { Id = w }).ToList()
+                WayPoints = request.WayPoints
+                    .Select(w => new WayPoint
+                    {
+                        NamePlace = w.NamePlace,
+                        CityId = w.CityId,
+                        HotelId = w.HotelId
+                    }).ToList()
             };
 
             await _context.AddAsync(route);
@@ -55,7 +61,13 @@ namespace BusToursInEurope.Application.Services
             }
 
             route.Distance = request.Distance;
-            route.WayPoints = request.WaypointsId.Select(w => new WayPoint { Id = w }).ToList();
+            route.WayPoints = request.WayPoints
+                    .Select(w => new WayPoint
+                    {
+                        NamePlace = w.NamePlace,
+                        CityId = w.CityId,
+                        HotelId = w.HotelId
+                    }).ToList();
 
             await _context.SaveChangesAsync();
         }

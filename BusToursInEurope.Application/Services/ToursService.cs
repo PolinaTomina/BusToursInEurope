@@ -1,5 +1,7 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Application.Models.ReviewModels;
+using BusToursInEurope.Application.Models.RoutesBusModels;
 using BusToursInEurope.Application.Models.TourModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
@@ -148,7 +150,7 @@ namespace BusToursInEurope.Application.Services
                 ReviewsDto = tour.Reviews.Select(rv => new ReviewDto
                 {
                     Id = rv.Id,
-                    FullName = rv.User?.FullName,
+                    Username = rv.User?.FullName,
                     Rating = rv.Rating,
                     Comment = rv.Comment,
                     ReviewDate = rv.ReviewDate

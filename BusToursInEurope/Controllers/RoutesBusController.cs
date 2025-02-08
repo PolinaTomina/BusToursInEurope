@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
 {
+    [ApiController]
+    [Route("/routes")]
     public class RoutesBusController : ControllerBase
     {
         private readonly IRouteBusesService _routeService;

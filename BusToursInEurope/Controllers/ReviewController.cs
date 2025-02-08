@@ -6,6 +6,8 @@ using System.Security.Claims;
 
 namespace BusToursInEurope.Controllers
 {
+    [ApiController]
+    [Route("/reviews")]
     public class ReviewController : ControllerBase
     {
         private readonly IReviewService _reviewService;
