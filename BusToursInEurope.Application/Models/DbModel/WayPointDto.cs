@@ -1,4 +1,5 @@
 ﻿using BusToursInEurope.Application.Models.CityModel;
+using BusToursInEurope.Application.Models.HotelModel;
 using BusToursInEurope.Application.Models.RoutesBusModels;
 using BusToursInEurope.Core.Entites;
 

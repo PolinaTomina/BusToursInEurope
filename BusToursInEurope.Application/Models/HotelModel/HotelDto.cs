@@ -1,7 +1,7 @@
 ﻿using BusToursInEurope.Application.Models.CityModel;
 using BusToursInEurope.Core.Entites;
 
-namespace BusToursInEurope.Application.Models.DbModel
+namespace BusToursInEurope.Application.Models.HotelModel
 {
     public class HotelDto
     {

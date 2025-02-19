@@ -1,4 +1,5 @@
 ﻿using BusToursInEurope.Application.Interfaces;
+using BusToursInEurope.Application.Models.CityModel;
 using BusToursInEurope.Application.Models.DbModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace BusToursInEurope.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddBus(BusDto busDto)
+        public async Task<ActionResult> AddBus(CityDto cityDto)
         {
             return Ok();
         }
@@ -29,7 +30,7 @@ namespace BusToursInEurope.Controllers
         }
 
         [HttpPut("id")]
-        public async Task<ActionResult> UpdateBus(int id, [FromBody] BusDto busDto)
+        public async Task<ActionResult> UpdateBus(int id, [FromBody] CityDto cityDto)
         {
             return Ok();
         }
