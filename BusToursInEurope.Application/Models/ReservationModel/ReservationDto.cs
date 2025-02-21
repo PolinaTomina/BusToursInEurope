@@ -1,6 +1,7 @@
-﻿using BusToursInEurope.Core.Entites;
+﻿using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Core.Entites;
 
-namespace BusToursInEurope.Application.Models.DbModel
+namespace BusToursInEurope.Application.Models.ReservationModel
 {
     public class ReservationDto
     {

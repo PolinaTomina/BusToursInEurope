@@ -1,4 +1,5 @@
-﻿using BusToursInEurope.Application.Models.ReviewModels;
+﻿using BusToursInEurope.Application.Models.ReservationModel;
+using BusToursInEurope.Application.Models.ReviewModels;
 using BusToursInEurope.Core.Entites;
 
 namespace BusToursInEurope.Application.Models.DbModel

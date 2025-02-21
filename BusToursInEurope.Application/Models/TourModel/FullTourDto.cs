@@ -1,4 +1,5 @@
 ﻿using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Application.Models.ReservationModel;
 using BusToursInEurope.Application.Models.ReviewModels;
 using BusToursInEurope.Application.Models.RoutesBusModels;
 using BusToursInEurope.Core.Entites;
