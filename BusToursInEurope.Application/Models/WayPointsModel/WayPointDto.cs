@@ -3,7 +3,7 @@ using BusToursInEurope.Application.Models.HotelModel;
 using BusToursInEurope.Application.Models.RoutesBusModels;
 using BusToursInEurope.Core.Entites;
 
-namespace BusToursInEurope.Application.Models.DbModel
+namespace BusToursInEurope.Application.Models.WayPointsModel
 {
     public class WayPointDto
     {

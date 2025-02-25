@@ -1,4 +1,4 @@
-﻿using BusToursInEurope.Application.Models.DbModel;
+﻿using BusToursInEurope.Application.Models.WayPointsModel;
 
 namespace BusToursInEurope.Application.Models.RoutesBusModels
 {

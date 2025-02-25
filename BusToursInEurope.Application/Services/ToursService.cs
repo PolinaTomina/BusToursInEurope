@@ -1,8 +1,12 @@
 ﻿using BusToursInEurope.Application.Interfaces;
+using BusToursInEurope.Application.Models.CityModel;
 using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Application.Models.HotelModel;
+using BusToursInEurope.Application.Models.ReservationModel;
 using BusToursInEurope.Application.Models.ReviewModels;
 using BusToursInEurope.Application.Models.RoutesBusModels;
 using BusToursInEurope.Application.Models.TourModel;
+using BusToursInEurope.Application.Models.WayPointsModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
 using Microsoft.AspNetCore.Routing;
