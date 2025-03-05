@@ -52,6 +52,10 @@ namespace BusToursInEurope
             builder.Services.AddScoped<IBuses, BusesService>();
             builder.Services.AddScoped<IRouteBusesService, RouteBusesService>();
             builder.Services.AddScoped<IReviewService, ReviewService>();
+            builder.Services.AddScoped<ICities, CitiesService>();
+            builder.Services.AddScoped<IHotels, HotelsService>();
+            builder.Services.AddScoped<IReservations, ReservationsService>();
+            builder.Services.AddScoped<IWayPoints, WayPointsService>();
 
             builder.Services.AddDbContext<ApplicationContext>();
 

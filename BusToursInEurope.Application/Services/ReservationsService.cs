@@ -1,6 +1,8 @@
-﻿namespace BusToursInEurope.Application.Services
+﻿using BusToursInEurope.Application.Interfaces;
+
+namespace BusToursInEurope.Application.Services
 {
-    public class ReservationsService
+    public class ReservationsService : IReservations
     {
     }
 }
