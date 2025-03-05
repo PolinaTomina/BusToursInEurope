@@ -1,6 +1,7 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.CityModel;
 using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
@@ -36,6 +37,13 @@ namespace BusToursInEurope.Controllers
         {
             await _cities.UpdateCityAsync(id, cityDto);
             return StatusCode(201);
+        }
+
+        [HttpGet("filters")]
+        public async Task<IActionResult> GetCities([FromQuery] CityFilter cityFilter)
+        {
+            var cities = await _cities.GetCitiesAsync(cityFilter);
+            return Ok(cities);
         }
     }
 }

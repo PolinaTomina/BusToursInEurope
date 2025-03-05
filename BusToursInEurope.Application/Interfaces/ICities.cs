@@ -7,5 +7,6 @@ namespace BusToursInEurope.Application.Interfaces
         Task AddCityAsync(CityDto cityDto);
         Task DeleteCityAsync(int id);
         Task UpdateCityAsync(int id, CityDto cityDto);
+        Task<List<CityDto>> GetCitiesAsync(CityFilter cityFilter);
     }
 }

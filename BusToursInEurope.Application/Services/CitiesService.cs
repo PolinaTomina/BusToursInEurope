@@ -70,32 +70,53 @@ namespace BusToursInEurope.Application.Services
                 throw new KeyNotFoundException($"Город не найден");
             }
 
-            // Обновляем свойства
             city.Name = cityDto.Name;
             city.Country = cityDto.Country;
             city.Visa = cityDto.Visa;
 
-            // Обновляем отели (если был передан новый HotelId)
             if (cityDto.HotelIds.Any())
             {
                 var hotels = await _context.Hotels
                     .Where(h => cityDto.HotelIds.Contains(h.Id))
                     .ToListAsync();
 
-                city.Hotel = hotels; // Привязываем найденные отели к городу
+                city.Hotel = hotels; 
             }
 
-            // Обновляем точки маршрута (если были переданы новые WayPointIds)
             if (cityDto.WayPointIds.Any())
             {
                 var wayPoints = await _context.WayPoints
                     .Where(wp => cityDto.WayPointIds.Contains(wp.Id))
                     .ToListAsync();
 
-                city.WayPoints = wayPoints; // Привязываем найденные точки маршрута
+                city.WayPoints = wayPoints; 
             }
             await _context.SaveChangesAsync();
+        }
+        public async Task<List<CityDto>> GetCitiesAsync(CityFilter cityFilter)
+        {
+            var query = _context.Cities.AsQueryable();
 
+            if (!string.IsNullOrEmpty(cityFilter.Name))
+            {
+                query = query.Where(c => c.Name.Contains(cityFilter.Name));
+            }
+            if (!string.IsNullOrEmpty(cityFilter.Country))
+            {
+                query = query.Where(c => c.Country.Contains(cityFilter.Country));
+            }
+            if (cityFilter.VisaRequired.HasValue)
+            {
+                query = query.Where(c => c.Visa == cityFilter.VisaRequired);
+            }
+
+            return await query.Select(c => new CityDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Country = c.Country,
+                Visa = c.Visa
+            }).ToListAsync();
         }
     }
 }
