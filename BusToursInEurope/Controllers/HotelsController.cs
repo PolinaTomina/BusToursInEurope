@@ -1,5 +1,6 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.HotelModel;
+using BusToursInEurope.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
@@ -36,5 +37,13 @@ namespace BusToursInEurope.Controllers
             await _hotels.UpdateHotelAsync(id, hotelDto);
             return StatusCode(201);
         }
+
+        [HttpGet("filters")]
+        public async Task<IActionResult> GetHotels([FromQuery] HotelFilter hotelFilter)
+        {
+            var hotels = await _hotels.GetHotelsAsync(hotelFilter);
+            return Ok(hotels);
+        }
+
     }
 }

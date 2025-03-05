@@ -73,8 +73,38 @@ namespace BusToursInEurope.Application.Services
                 }
                 hotel.City = city;
             }
-
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<HotelDto>> GetHotelsAsync(HotelFilter hotelFilter)
+        {
+            var query = _context.Hotels.AsQueryable();
+
+            if (!string.IsNullOrEmpty(hotelFilter.Name))
+            {
+                query = query.Where(h => h.Name.Contains(hotelFilter.Name));
+            }
+            if (hotelFilter.MinRating.HasValue)
+            {
+                query = query.Where(h => h.Rating >= hotelFilter.MinRating.Value);
+            }
+            if (hotelFilter.MaxRating.HasValue)
+            {
+                query = query.Where(h => h.Rating <= hotelFilter.MaxRating.Value);
+            }
+            if (hotelFilter.CityId.HasValue)
+            {
+                query = query.Where(h => h.CityId == hotelFilter.CityId);
+            }
+
+            return await query.Select(h => new HotelDto
+            {
+                Id = h.Id,
+                Name = h.Name,
+                Rating = h.Rating,
+                CityDtoId = h.CityId
+            }).ToListAsync();
+        }
+
     }
 }

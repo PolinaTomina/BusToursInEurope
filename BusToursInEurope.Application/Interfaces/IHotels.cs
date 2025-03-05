@@ -7,5 +7,6 @@ namespace BusToursInEurope.Application.Interfaces
         Task AddHotelAsync(HotelDto hotelDto);
         Task DeleteHotelAsync(int id);
         Task UpdateHotelAsync(int id, HotelDto hotelDto);
+        Task<List<HotelDto>> GetHotelsAsync(HotelFilter hotelFilter);
     }
 }
