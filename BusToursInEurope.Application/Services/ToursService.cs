@@ -139,7 +139,7 @@ namespace BusToursInEurope.Application.Services
                 ReservationsDto = tour.Reservations.Select(r => new ReservationDto
                 {
                     Id = r.Id,
-                    ReservationDate = r.Date,
+                    Date = r.Date,
                     PaymentDeadline = r.PaymentDeadline,
                     PaymentDate = r.PaymentDate,
                     NumOfSeats = r.NumOfSeats,
