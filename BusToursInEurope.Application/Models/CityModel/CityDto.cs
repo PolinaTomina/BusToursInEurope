@@ -7,7 +7,7 @@
         public string Country { get; set; }
         public bool Visa { get; set; }
 
-        public List<int> HotelIds { get; set; } = new List<int>();
-        public List<int> WayPointIds { get; set; } = new List<int>();
+        public ICollection<int> HotelIds { get; set; } = new List<int>();
+        public ICollection<int> WayPointIds { get; set; } = new List<int>();
     }
 }
