@@ -19,19 +19,22 @@ namespace BusToursInEurope.Controllers
         [HttpPost]
         public async Task<ActionResult> AddHotel(HotelDto hotelDto)
         {
-            return Ok();
+            await _hotels.AddHotelAsync(hotelDto);
+            return StatusCode(201);
         }
 
         [HttpDelete("id")]
         public async Task<ActionResult> DeleteHotelBus(int id)
         {
-            return Ok();
+            await _hotels.DeleteHotelAsync(id);
+            return StatusCode(201);
         }
 
         [HttpPut("id")]
         public async Task<ActionResult> UpdateHotel(int id, [FromBody] HotelDto hotelDto)
         {
-            return Ok();
+            await _hotels.UpdateHotelAsync(id, hotelDto);
+            return StatusCode(201);
         }
     }
 }

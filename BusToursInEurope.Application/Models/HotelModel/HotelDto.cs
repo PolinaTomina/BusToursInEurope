@@ -1,5 +1,4 @@
 ﻿using BusToursInEurope.Application.Models.CityModel;
-using BusToursInEurope.Core.Entites;
 
 namespace BusToursInEurope.Application.Models.HotelModel
 {
@@ -10,6 +9,5 @@ namespace BusToursInEurope.Application.Models.HotelModel
         public double Rating { get; set; }
 
         public int CityDtoId { get; set; }
-        public CityDto CityDto { get; set; }
     }
 }

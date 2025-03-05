@@ -24,7 +24,6 @@ namespace BusToursInEurope.Application.Services
                 Visa = cityDto.Visa
             };
 
-            // Добавляем все отели по ID
             if (cityDto.HotelIds.Any())
             {
                 var hotels = await _context.Hotels
@@ -33,7 +32,6 @@ namespace BusToursInEurope.Application.Services
                 city.Hotel = hotels;
             }
 
-            // Добавляем все точки маршрута по ID
             if (cityDto.WayPointIds.Any())
             {
                 var wayPoints = await _context.WayPoints
