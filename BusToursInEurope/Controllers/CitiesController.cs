@@ -18,21 +18,24 @@ namespace BusToursInEurope.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddBus(CityDto cityDto)
+        public async Task<ActionResult> AddCity(CityDto cityDto)
         {
-            return Ok();
+            await _cities.AddCityAsync(cityDto);
+            return StatusCode(201);
         }
 
         [HttpDelete("id")]
-        public async Task<ActionResult> DeleteBus(int id)
+        public async Task<ActionResult> DeleteCity(int id)
         {
-            return Ok();
+            await _cities.DeleteCityAsync(id);
+            return StatusCode(201);
         }
 
         [HttpPut("id")]
-        public async Task<ActionResult> UpdateBus(int id, [FromBody] CityDto cityDto)
+        public async Task<ActionResult> UpdateCity(int id, [FromBody] CityDto cityDto)
         {
-            return Ok();
+            await _cities.UpdateCityAsync(id, cityDto);
+            return StatusCode(201);
         }
     }
 }
