@@ -24,7 +24,7 @@ namespace BusToursInEurope.Controllers
         }
 
         [HttpDelete("id")]
-        public async Task<ActionResult> DeleteHotelBus(int id)
+        public async Task<ActionResult> DeleteHotel(int id)
         {
             await _hotels.DeleteHotelAsync(id);
             return StatusCode(201);
