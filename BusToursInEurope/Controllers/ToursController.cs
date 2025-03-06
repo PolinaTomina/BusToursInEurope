@@ -25,7 +25,7 @@ namespace BusToursInEurope.Controllers
             return Ok(topTours);
         }
 
-        [HttpGet] 
+        [HttpGet("filters")] 
         public async Task<ActionResult<List<ShortTourDto>>> GetTours([FromQuery] ToursFilter toursFilter) 
         { 
             var tours = await _showTours.GetToursAsync(toursFilter); 
