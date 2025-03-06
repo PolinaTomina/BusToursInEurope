@@ -97,6 +97,7 @@ namespace BusToursInEurope.Application.Services
         {
             var query = _context.Cities.AsQueryable();
 
+            // Фильтрация
             if (!string.IsNullOrEmpty(cityFilter.Name))
             {
                 query = query.Where(c => c.Name.Contains(cityFilter.Name));
@@ -107,16 +108,30 @@ namespace BusToursInEurope.Application.Services
             }
             if (cityFilter.VisaRequired.HasValue)
             {
-                query = query.Where(c => c.Visa == cityFilter.VisaRequired);
+                query = query.Where(c => c.Visa == cityFilter.VisaRequired.Value);
             }
 
-            return await query.Select(c => new CityDto
+            // **Сортировка**
+            if (!string.IsNullOrEmpty(cityFilter.SortBy))
+            {
+                query = cityFilter.SortBy.ToLower() switch
+                {
+                    "name" => cityFilter.IsDescending ? query.OrderByDescending(c => c.Name) : query.OrderBy(c => c.Name),
+                    "country" => cityFilter.IsDescending ? query.OrderByDescending(c => c.Country) : query.OrderBy(c => c.Country),
+                    _ => query.OrderBy(c => c.Id) // Если поле сортировки не задано, сортируем по ID
+                };
+            }
+
+            // Преобразуем в DTO
+            var cities = await query.Select(c => new CityDto
             {
                 Id = c.Id,
                 Name = c.Name,
                 Country = c.Country,
                 Visa = c.Visa
             }).ToListAsync();
+
+            return cities;
         }
     }
 }
