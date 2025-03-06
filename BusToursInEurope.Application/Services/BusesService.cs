@@ -75,12 +75,24 @@ namespace BusToursInEurope.Application.Services
                 query = query.Where(b => b.NumOfSeats <= busFilter.MaxSeats.Value);
             }
 
-            return await query.Select(b => new BusDto
+            if (!string.IsNullOrEmpty(busFilter.SortBy))
+            {
+                query = busFilter.SortBy.ToLower() switch
+                {
+                    "name" => busFilter.IsDescending ? query.OrderByDescending(b => b.Name) : query.OrderBy(b => b.Name),
+                    "numofseats" => busFilter.IsDescending ? query.OrderByDescending(b => b.NumOfSeats) : query.OrderBy(b => b.NumOfSeats),
+                    _ => query.OrderBy(b => b.Id)
+                };
+            }
+
+            var buses = await query.Select(b => new BusDto
             {
                 Id = b.Id,
                 Name = b.Name,
                 NumOfSeats = b.NumOfSeats
             }).ToListAsync();
+
+            return buses;
         }
 
     }
