@@ -63,17 +63,14 @@ namespace BusToursInEurope.Application.Services
 
         public async Task UpdateWPAsync(int id, CreateWPDto wayPoint)
         {
-            // Ищем существующую точку маршрута в базе
             var wp = await _context.WayPoints.FindAsync(id);
             if (wayPoint == null)
             {
                 throw new KeyNotFoundException("Точка маршрута не найдена");
             }
 
-            // Обновляем свойства
             wayPoint.NamePlace = wp.NamePlace;
 
-            // Проверяем, был ли передан новый CityId
             if (wayPoint.CityDtoId > 0 && wayPoint.CityDtoId != wp.CityId)
             {
                 var city = await _context.Cities.FindAsync(wayPoint.CityDtoId);
@@ -84,7 +81,6 @@ namespace BusToursInEurope.Application.Services
                 wp.CityId = wayPoint.CityDtoId;
             }
 
-            // Проверяем, был ли передан новый RouteBusId
             if (wayPoint.RouteBusDtoId > 0 && wayPoint.RouteBusDtoId != wp.RouteBusId)
             {
                 var routeBus = await _context.Routes.FindAsync(wayPoint.RouteBusDtoId);
@@ -95,7 +91,6 @@ namespace BusToursInEurope.Application.Services
                 wp.RouteBusId = wayPoint.RouteBusDtoId;
             }
 
-            // Проверяем, был ли передан новый HotelId
             if (wayPoint.HotelDtoId > 0 && wayPoint.HotelDtoId != wp.HotelId)
             {
                 var hotel = await _context.Hotels.FindAsync(wayPoint.HotelDtoId);
@@ -106,7 +101,6 @@ namespace BusToursInEurope.Application.Services
                 wp.HotelId = wayPoint.HotelDtoId;
             }
 
-            // Сохраняем изменения в БД
             await _context.SaveChangesAsync();
         }
     }
