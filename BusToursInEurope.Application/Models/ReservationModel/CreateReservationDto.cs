@@ -8,5 +8,6 @@
         public int NumOfSeats { get; set; } // количество человек
 
         public int UserDtoId { get; set; }
+        public int TourId { get; set; }
     }
 }

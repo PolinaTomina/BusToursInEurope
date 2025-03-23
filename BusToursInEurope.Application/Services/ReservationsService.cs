@@ -20,7 +20,40 @@ namespace BusToursInEurope.Application.Services
         /// </summary>
         public async Task AddReservationAsync(CreateReservationDto reservationDto)
         {
-            
+            var user = await _context.Users.FindAsync(reservationDto.UserDtoId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("Пользователь не найден");
+            }
+
+            var tour = await _context.Tours.FindAsync(reservationDto.TourId);
+            if (tour == null)
+            {
+                throw new KeyNotFoundException("Тур не найден");
+            }
+
+            // Проверка доступности мест
+            if (tour.NumOfSeats < reservationDto.NumOfSeats)
+            {
+                throw new InvalidOperationException("Недостаточно свободных мест");
+            }
+
+            var reservation = new Reservation
+            {
+                Date = DateTime.UtcNow,
+                PaymentDate = reservationDto.PaymentDate,
+                PaymentDeadline = reservationDto.PaymentDeadline,
+                NumOfSeats = reservationDto.NumOfSeats,
+                UserId = reservationDto.UserDtoId,
+                TourId = reservationDto.TourId
+            };
+
+            _context.Reservations.Add(reservation);
+
+            // Обновляем количество доступных мест
+            tour.NumOfSeats -= reservationDto.NumOfSeats;
+
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
