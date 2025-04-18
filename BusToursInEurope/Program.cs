@@ -1,3 +1,4 @@
+using BusToursInEurope.Application;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Services;
 using BusToursInEurope.Core.Entites;
@@ -12,6 +13,8 @@ namespace BusToursInEurope
     {
         public static void Main(string[] args)
         {
+
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -56,6 +59,8 @@ namespace BusToursInEurope
             builder.Services.AddScoped<IHotels, HotelsService>();
             builder.Services.AddScoped<IReservations, ReservationsService>();
             builder.Services.AddScoped<IWayPoints, WayPointsService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IExportExcelService, ExportExcelService>();
 
             builder.Services.AddDbContext<ApplicationContext>();
 
