@@ -4,8 +4,10 @@ using BusToursInEurope.Application.Services;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 namespace BusToursInEurope
 {

@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.AccountModel;
 using BusToursInEurope.Application.Services;
+using BusToursInEurope.Application.Contstants;
 
 namespace BusToursInEurope.Controllers
 {
+    [Authorize]
     [ApiController]
     [AllowAnonymous]
     [Route("/auth")]
@@ -32,6 +34,20 @@ namespace BusToursInEurope.Controllers
         {
             var token = await _authService.AuthUserAsync(authorizationDto);
             return Ok(new { Token = token });
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpGet("admin")]
+        public IActionResult GetAdminData()
+        {
+            return Ok("Это доступно только админам!");
+        }
+
+        [Authorize] // Требует токен
+        [HttpGet("user")]
+        public IActionResult GetUserData()
+        {
+            return Ok("Это доступно только авторизованным пользователям!");
         }
     }
 }

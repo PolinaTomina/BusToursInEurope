@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using BusToursInEurope.Application.Contstants;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.AccountModel;
 using BusToursInEurope.Core.Entites;
@@ -32,14 +33,13 @@ public class AuthService : IAuthService
             Email = registrationDto.Email,
             Password = registrationDto.Password,
             NumPhone = registrationDto.NumPhone,
-            IsAdmin = false,
-            IsUser = true
+            Role = registrationDto.Email.Contains("admin") ? Role.Admin : Role.User
         };
 
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
 
-        return CreateJwtToken(user.Email);
+        return CreateJwtToken(user.Email, user);
     }
 
     public async Task<string> AuthUserAsync(AuthorizationDto authorizationDto)
@@ -56,14 +56,15 @@ public class AuthService : IAuthService
         }
 
         // Создание JWT токена
-        return CreateJwtToken(user.Email);
+        return CreateJwtToken(user.Email, user);
     }
 
-    public static string CreateJwtToken(string email)
+    public static string CreateJwtToken(string email, User user)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, email)
+            new Claim(ClaimTypes.Name, email),
+            new Claim(ClaimTypes.Role, user.Role)
         };
 
         // создаем JWT-токен
