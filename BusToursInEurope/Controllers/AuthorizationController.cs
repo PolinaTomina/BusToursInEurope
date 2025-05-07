@@ -40,14 +40,14 @@ namespace BusToursInEurope.Controllers
         [HttpGet("admin")]
         public IActionResult GetAdminData()
         {
-            return Ok("Это доступно только админам!");
+            return Ok("Это доступно только администратору");
         }
 
         [Authorize] // Требует токен
         [HttpGet("user")]
         public IActionResult GetUserData()
         {
-            return Ok("Это доступно только авторизованным пользователям!");
+            return Ok("Это доступно только пользователю");
         }
     }
 }

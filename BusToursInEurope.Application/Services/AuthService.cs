@@ -39,7 +39,7 @@ public class AuthService : IAuthService
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
 
-        return CreateJwtToken(user.Email, user);
+        return CreateJwtToken(user.Email, user.Role);
     }
 
     public async Task<string> AuthUserAsync(AuthorizationDto authorizationDto)
@@ -56,15 +56,15 @@ public class AuthService : IAuthService
         }
 
         // Создание JWT токена
-        return CreateJwtToken(user.Email, user);
+        return CreateJwtToken(user.Email, user.Role);
     }
 
-    public static string CreateJwtToken(string email, User user)
+    public static string CreateJwtToken(string email, string role)
     {
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, email),
-            new Claim(ClaimTypes.Role, user.Role)
+            new Claim(ClaimTypes.Role, role)
         };
 
         // создаем JWT-токен
