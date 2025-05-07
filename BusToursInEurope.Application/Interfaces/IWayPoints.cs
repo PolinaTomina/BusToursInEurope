@@ -4,8 +4,6 @@ namespace BusToursInEurope.Application.Interfaces
 {
     public interface IWayPoints
     {
-        Task AddWPAsync(CreateWPDto wayPoint);
-        Task DeleteWPAsync(int id);
-        Task UpdateWPAsync(int id, CreateWPDto wayPoint);
+        Task<List<ShowWayPointsDto>> GetWayPointsAsync();
     }
 }

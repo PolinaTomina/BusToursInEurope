@@ -9,32 +9,18 @@ namespace BusToursInEurope.Controllers
 
     public class WayPointController : ControllerBase
     {
-        private readonly IWayPoints _wp;
+        private readonly IWayPoints _wayPoints;
 
-        public WayPointController(IWayPoints wp)
+        public WayPointController(IWayPoints wayPoints)
         {
-            _wp = wp;
+            _wayPoints = wayPoints;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddWP(CreateWPDto wayPoint)
+        [HttpGet("get way points")]
+        public async Task<ActionResult<List<WayPointDto>>> GetWayPoints()
         {
-            await _wp.AddWPAsync(wayPoint);
-            return StatusCode(201);
-        }
-
-        [HttpDelete("id")]
-        public async Task<ActionResult> DeleteWP(int id)
-        {
-            await _wp.DeleteWPAsync(id);
-            return StatusCode(201);
-        }
-
-        [HttpPut("id")]
-        public async Task<ActionResult> UpdateWP(int id, [FromBody] CreateWPDto wayPoint)
-        {
-            await _wp.UpdateWPAsync(id, wayPoint);
-            return StatusCode(201);
+            var wp = await _wayPoints.GetWayPointsAsync();
+            return Ok(wp);
         }
     }
 }

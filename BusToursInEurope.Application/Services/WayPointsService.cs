@@ -1,9 +1,11 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.DbModel;
 using BusToursInEurope.Application.Models.HotelModel;
+using BusToursInEurope.Application.Models.TourModel;
 using BusToursInEurope.Application.Models.WayPointsModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusToursInEurope.Application.Services
 {
@@ -16,92 +18,19 @@ namespace BusToursInEurope.Application.Services
             _context = context;
         }
 
-        public async Task AddWPAsync(CreateWPDto wp)
+        public async Task<List<ShowWayPointsDto>> GetWayPointsAsync()
         {
-            var city = await _context.Cities.FindAsync(wp.CityDtoId);
-            if (city == null)
-            {
-                throw new KeyNotFoundException("Город не найден");
-            }
-
-            var routeBus = await _context.Routes.FindAsync(wp.RouteBusDtoId);
-            if(routeBus == null)
-            {
-                throw new KeyNotFoundException("Маршрут автобуса не найден");
-            }
-
-            var hotel = await _context.Hotels.FindAsync(wp.HotelDtoId);
-            if (hotel == null)
-            {
-                throw new KeyNotFoundException("Отель не найден");
-            }
-            var wayPoint = new WayPoint
-            {
-                NamePlace = wp.NamePlace,
-                CityId = wp.CityDtoId,
-                RouteBusId = wp.RouteBusDtoId,
-                HotelId = wp.HotelDtoId
-            };
-
-            await _context.WayPoints.AddAsync(wayPoint);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteWPAsync(int id)
-        {
-            var wayPoint = await _context.WayPoints.FindAsync(id);
-            if (wayPoint != null)
-            {
-                _context.WayPoints.Remove(wayPoint);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                throw new KeyNotFoundException($"Точка маршрута не найдена");
-            }
-        }
-
-        public async Task UpdateWPAsync(int id, CreateWPDto wayPoint)
-        {
-            var wp = await _context.WayPoints.FindAsync(id);
-            if (wayPoint == null)
-            {
-                throw new KeyNotFoundException("Точка маршрута не найдена");
-            }
-
-            wayPoint.NamePlace = wp.NamePlace;
-
-            if (wayPoint.CityDtoId > 0 && wayPoint.CityDtoId != wp.CityId)
-            {
-                var city = await _context.Cities.FindAsync(wayPoint.CityDtoId);
-                if (city == null)
+            var wayPoints = await _context.WayPoints.
+                Select(wp => new ShowWayPointsDto
                 {
-                    throw new KeyNotFoundException("Город не найден");
-                }
-                wp.CityId = wayPoint.CityDtoId;
-            }
+                    Id = wp.Id,
+                    NamePlace = wp.NamePlace,
+                    CityDtoId = wp.CityId,
+                    RouteBusDtoId = wp.RouteBusId,
+                    HotelDtoId = wp.HotelId,
+                }).ToListAsync();
 
-            if (wayPoint.RouteBusDtoId > 0 && wayPoint.RouteBusDtoId != wp.RouteBusId)
-            {
-                var routeBus = await _context.Routes.FindAsync(wayPoint.RouteBusDtoId);
-                if (routeBus == null)
-                {
-                    throw new KeyNotFoundException("Маршрут автобуса не найден");
-                }
-                wp.RouteBusId = wayPoint.RouteBusDtoId;
-            }
-
-            if (wayPoint.HotelDtoId > 0 && wayPoint.HotelDtoId != wp.HotelId)
-            {
-                var hotel = await _context.Hotels.FindAsync(wayPoint.HotelDtoId);
-                if (hotel == null)
-                {
-                    throw new KeyNotFoundException("Отель не найден");
-                }
-                wp.HotelId = wayPoint.HotelDtoId;
-            }
-
-            await _context.SaveChangesAsync();
+            return wayPoints;
         }
     }
 }
