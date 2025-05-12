@@ -1,5 +1,7 @@
-﻿using BusToursInEurope.Application.Interfaces;
+﻿using BusToursInEurope.Application.Contstants;
+using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.WayPointsModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
@@ -16,6 +18,7 @@ namespace BusToursInEurope.Controllers
             _wayPoints = wayPoints;
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("get way points")]
         public async Task<ActionResult<List<WayPointDto>>> GetWayPoints()
         {

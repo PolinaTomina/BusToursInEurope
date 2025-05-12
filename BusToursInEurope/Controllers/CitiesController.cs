@@ -1,7 +1,9 @@
-﻿using BusToursInEurope.Application.Interfaces;
+﻿using BusToursInEurope.Application.Contstants;
+using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.CityModel;
 using BusToursInEurope.Application.Models.DbModel;
 using BusToursInEurope.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
@@ -18,6 +20,7 @@ namespace BusToursInEurope.Controllers
             _cities = cities;
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public async Task<ActionResult> AddCity(CityDto cityDto)
         {
@@ -25,6 +28,7 @@ namespace BusToursInEurope.Controllers
             return StatusCode(201);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("id")]
         public async Task<ActionResult> DeleteCity(int id)
         {
@@ -32,6 +36,7 @@ namespace BusToursInEurope.Controllers
             return StatusCode(201);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPut("id")]
         public async Task<ActionResult> UpdateCity(int id, [FromBody] CityDto cityDto)
         {
@@ -39,6 +44,7 @@ namespace BusToursInEurope.Controllers
             return StatusCode(201);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("filters")]
         public async Task<IActionResult> GetCities([FromQuery] CityFilter cityFilter)
         {

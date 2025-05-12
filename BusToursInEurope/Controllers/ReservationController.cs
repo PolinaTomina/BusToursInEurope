@@ -1,5 +1,7 @@
-﻿using BusToursInEurope.Application.Interfaces;
+﻿using BusToursInEurope.Application.Contstants;
+using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.ReservationModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
@@ -30,6 +32,7 @@ namespace BusToursInEurope.Controllers
             return NoContent();
         }
 
+        // Нужен ли метод обновления брони?
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateReservation(int id, [FromBody] CreateReservationDto reservationDto)
         {
@@ -44,6 +47,7 @@ namespace BusToursInEurope.Controllers
             return Ok(reservations);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ReservationDto>> GetReservationById(int id)
         {

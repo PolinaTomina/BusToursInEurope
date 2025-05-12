@@ -1,6 +1,8 @@
-﻿using BusToursInEurope.Application.Interfaces;
+﻿using BusToursInEurope.Application.Contstants;
+using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.HotelModel;
 using BusToursInEurope.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BusToursInEurope.Controllers
@@ -17,6 +19,7 @@ namespace BusToursInEurope.Controllers
             _hotels = hotels;
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public async Task<ActionResult> AddHotel(HotelDto hotelDto)
         {
@@ -24,6 +27,7 @@ namespace BusToursInEurope.Controllers
             return StatusCode(201);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("id")]
         public async Task<ActionResult> DeleteHotel(int id)
         {
@@ -31,6 +35,7 @@ namespace BusToursInEurope.Controllers
             return StatusCode(201);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPut("id")]
         public async Task<ActionResult> UpdateHotel(int id, [FromBody] HotelDto hotelDto)
         {
@@ -38,6 +43,7 @@ namespace BusToursInEurope.Controllers
             return StatusCode(201);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("filters")]
         public async Task<IActionResult> GetHotels([FromQuery] HotelFilter hotelFilter)
         {

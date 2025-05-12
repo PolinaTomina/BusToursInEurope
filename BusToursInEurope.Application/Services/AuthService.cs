@@ -33,7 +33,7 @@ public class AuthService : IAuthService
             Email = registrationDto.Email,
             Password = registrationDto.Password,
             NumPhone = registrationDto.NumPhone,
-            Role = registrationDto.Email.Contains("admin") ? Role.Admin : Role.User
+            Role = Role.User
         };
 
         await _context.Users.AddAsync(user);

@@ -1,4 +1,5 @@
 ﻿using BusToursInEurope.Application.Models.DbModel;
+using Microsoft.AspNetCore.Http;
 
 namespace BusToursInEurope.Application.Models.TourModel
 {
@@ -14,6 +15,6 @@ namespace BusToursInEurope.Application.Models.TourModel
 
         public int BusDto { get; set; }
 
-        public int RouteBusDto{ get; set; }
+        public int RouteBusDto { get; set; }
     }
 }

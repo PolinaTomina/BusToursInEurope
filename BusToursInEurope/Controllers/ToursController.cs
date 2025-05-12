@@ -1,4 +1,5 @@
-﻿using BusToursInEurope.Application.Interfaces;
+﻿using BusToursInEurope.Application.Contstants;
+using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.TourModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,7 @@ namespace BusToursInEurope.Controllers
             return Ok(tour);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public async Task<ActionResult> AddTour(CreateTourDto createTourDto)
         {
@@ -50,6 +52,7 @@ namespace BusToursInEurope.Controllers
             return StatusCode(201);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("id")]
         public async Task<ActionResult> DeleteTour(int id)
         {
@@ -57,6 +60,7 @@ namespace BusToursInEurope.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpPut("id")]
         public async Task<ActionResult> UpdateTour(int id, [FromBody] UpdateTourDto updateTourDto)
         {

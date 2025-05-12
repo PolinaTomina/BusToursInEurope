@@ -9,7 +9,6 @@ using BusToursInEurope.Application.Contstants;
 
 namespace BusToursInEurope.Controllers
 {
-    [Authorize]
     [ApiController]
     [AllowAnonymous]
     [Route("/auth")]
@@ -41,13 +40,6 @@ namespace BusToursInEurope.Controllers
         public IActionResult GetAdminData()
         {
             return Ok("Это доступно только администратору");
-        }
-
-        [Authorize] // Требует токен
-        [HttpGet("user")]
-        public IActionResult GetUserData()
-        {
-            return Ok("Это доступно только пользователю");
         }
     }
 }
