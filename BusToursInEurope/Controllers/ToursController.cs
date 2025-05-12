@@ -11,12 +11,10 @@ namespace BusToursInEurope.Controllers
     public class ToursController : ControllerBase
     {
         private readonly ITours _showTours;
-        private readonly ILogger<ToursController> _logger;
 
-        public ToursController(ITours showTours, ILogger<ToursController> logger)
+        public ToursController(ITours showTours)
         {
             _showTours = showTours;
-            _logger = logger;
         }
 
         [HttpGet("top")]

@@ -20,7 +20,7 @@ namespace BusToursInEurope.Application.Services
         /// </summary>
         public async Task AddReservationAsync(CreateReservationDto reservationDto)
         {
-            var user = await _context.Users.FindAsync(reservationDto.UserDtoId);
+            var user = await _context.Users.FindAsync(reservationDto.UserId);
             if (user == null)
             {
                 throw new KeyNotFoundException("Пользователь не найден");
@@ -44,7 +44,7 @@ namespace BusToursInEurope.Application.Services
                 PaymentDate = reservationDto.PaymentDate,
                 PaymentDeadline = reservationDto.PaymentDeadline,
                 NumOfSeats = reservationDto.NumOfSeats,
-                UserId = reservationDto.UserDtoId,
+                UserId = reservationDto.UserId,
                 TourId = reservationDto.TourId
             };
 
@@ -92,7 +92,7 @@ namespace BusToursInEurope.Application.Services
                     PaymentDate = r.PaymentDate,
                     PaymentDeadline = r.PaymentDeadline,
                     NumOfSeats = r.NumOfSeats,
-                    UserDtoId = r.UserId
+                    UserId = r.UserId
                 })
                 .ToListAsync();
         }
@@ -115,7 +115,7 @@ namespace BusToursInEurope.Application.Services
                 PaymentDate = reservation.PaymentDate,
                 PaymentDeadline = reservation.PaymentDeadline,
                 NumOfSeats = reservation.NumOfSeats,
-                UserDtoId = reservation.UserId
+                UserId = reservation.UserId
             };
         }
     }

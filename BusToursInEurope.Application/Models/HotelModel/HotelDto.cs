@@ -6,6 +6,6 @@
         public string Name { get; set; }
         public double Rating { get; set; }
 
-        public int CityDtoId { get; set; }
+        public int CityId { get; set; }
     }
 }

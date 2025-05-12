@@ -21,9 +21,9 @@ namespace BusToursInEurope.Application.Services
                 {
                     Id = wp.Id,
                     NamePlace = wp.NamePlace,
-                    CityDtoId = wp.CityId,
-                    RouteBusDtoId = wp.RouteBusId,
-                    HotelDtoId = wp.HotelId,
+                    CityId = wp.CityId,
+                    RouteBusId = wp.RouteBusId,
+                    HotelId = wp.HotelId,
                 }).ToListAsync();
 
             return wayPoints;

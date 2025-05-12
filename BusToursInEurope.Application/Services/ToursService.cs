@@ -6,6 +6,7 @@ using BusToursInEurope.Application.Models.ReservationModel;
 using BusToursInEurope.Application.Models.ReviewModels;
 using BusToursInEurope.Application.Models.RoutesBusModels;
 using BusToursInEurope.Application.Models.TourModel;
+using BusToursInEurope.Application.Models.UserModel;
 using BusToursInEurope.Application.Models.WayPointsModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
@@ -118,7 +119,7 @@ namespace BusToursInEurope.Application.Services
                     {
                         Id = wp.Id,
                         NamePlace = wp.NamePlace,
-                        CityDto = wp.City != null ? new CityDto
+                        CityDto = wp.City != null ? new CreateCityDto
                         {
                             Id = wp.City.Id,
                             Name = wp.City.Name,
@@ -163,17 +164,17 @@ namespace BusToursInEurope.Application.Services
         public async Task AddTourAsync(CreateTourDto createTourDto)
         {
             // Проверка наличия автобуса
-            var bus = await _context.Buses.FindAsync(createTourDto.BusDto);
+            var bus = await _context.Buses.FindAsync(createTourDto.BusId);
             if (bus == null)
             {
-                throw new ArgumentException($"Автобус с ID {createTourDto.BusDto} не найден");
+                throw new ArgumentException($"Автобус с ID {createTourDto.BusId} не найден");
             }
 
             // Проверка наличия маршрута
-            var route = await _context.Routes.FindAsync(createTourDto.RouteBusDto);
+            var route = await _context.Routes.FindAsync(createTourDto.RouteBusId);
             if (route == null)
             {
-                throw new ArgumentException($"Маршрут с ID {createTourDto.RouteBusDto} не найден");
+                throw new ArgumentException($"Маршрут с ID {createTourDto.RouteBusId} не найден");
             }
 
             // Создание нового тура

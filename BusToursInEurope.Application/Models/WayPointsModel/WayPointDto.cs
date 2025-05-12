@@ -9,13 +9,13 @@ namespace BusToursInEurope.Application.Models.WayPointsModel
         public int Id { get; set; }
         public string NamePlace { get; set; }
 
-        public int CityDtoId { get; set; }
-        public CityDto CityDto { get; set; }
+        public int CityId { get; set; }
+        public CreateCityDto CityDto { get; set; }
 
-        public int RouteBusDtoId { get; set; }
+        public int RouteBusId { get; set; }
         public RouteBusDto RouteBusDto { get; set; }
 
-        public int HotelDtoId { get; set; }
+        public int HotelId { get; set; }
         public HotelDto HotelDto { get; set; }
     }
 }

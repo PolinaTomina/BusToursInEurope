@@ -17,7 +17,7 @@ namespace BusToursInEurope.Application.Services
 
         public async Task AddHotelAsync(HotelDto hotelDto)
         {
-            var city = await _context.Cities.FindAsync(hotelDto.CityDtoId);
+            var city = await _context.Cities.FindAsync(hotelDto.CityId);
             if (city == null)
             {
                 throw new KeyNotFoundException("Город не найден");
@@ -27,7 +27,7 @@ namespace BusToursInEurope.Application.Services
             {
                 Name = hotelDto.Name,
                 Rating = hotelDto.Rating,
-                CityId = hotelDto.CityDtoId
+                CityId = hotelDto.CityId
             };
 
             await _context.Hotels.AddAsync(hotel);
@@ -62,9 +62,9 @@ namespace BusToursInEurope.Application.Services
             hotel.Name = hotelDto.Name;
             hotel.Rating = hotelDto.Rating;
 
-            if (hotelDto.CityDtoId > 0 && hotel.City?.Id != hotelDto.CityDtoId)
+            if (hotelDto.CityId > 0 && hotel.City?.Id != hotelDto.CityId)
             {
-                var city = await _context.Cities.FindAsync(hotelDto.CityDtoId);
+                var city = await _context.Cities.FindAsync(hotelDto.CityId);
                 if (city == null)
                 {
                     throw new KeyNotFoundException("Город не найден");
@@ -100,7 +100,7 @@ namespace BusToursInEurope.Application.Services
                 Id = h.Id,
                 Name = h.Name,
                 Rating = h.Rating,
-                CityDtoId = h.CityId
+                CityId = h.CityId
             }).ToListAsync();
         }
 

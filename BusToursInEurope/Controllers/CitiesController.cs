@@ -20,7 +20,7 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
-        public async Task<ActionResult> AddCity(CityDto cityDto)
+        public async Task<ActionResult> AddCity(CreateCityDto cityDto)
         {
             await _cities.AddCityAsync(cityDto);
             return StatusCode(201);
@@ -36,7 +36,7 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPut("id")]
-        public async Task<ActionResult> UpdateCity(int id, [FromBody] CityDto cityDto)
+        public async Task<ActionResult> UpdateCity(int id, [FromBody] CreateCityDto cityDto)
         {
             await _cities.UpdateCityAsync(id, cityDto);
             return StatusCode(201);

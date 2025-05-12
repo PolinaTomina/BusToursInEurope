@@ -1,4 +1,4 @@
-﻿using BusToursInEurope.Application.Models.DbModel;
+﻿using BusToursInEurope.Application.Models.UserModel;
 
 namespace BusToursInEurope.Application.Models.ReservationModel
 {
@@ -10,7 +10,7 @@ namespace BusToursInEurope.Application.Models.ReservationModel
         public DateTime PaymentDeadline { get; set; } // срок оплаты
         public int NumOfSeats { get; set; } // количество человек
 
-        public int UserDtoId { get; set; }
+        public int UserId { get; set; }
         public UserDto UserDto { get; set; }
     }
 }

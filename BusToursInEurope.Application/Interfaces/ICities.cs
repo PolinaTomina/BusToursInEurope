@@ -4,9 +4,9 @@ namespace BusToursInEurope.Application.Interfaces
 {
     public interface ICities
     {
-        Task AddCityAsync(CityDto cityDto);
+        Task AddCityAsync(CreateCityDto cityDto);
         Task DeleteCityAsync(int id);
-        Task UpdateCityAsync(int id, CityDto cityDto);
-        Task<List<CityDto>> GetCitiesAsync(CityFilter cityFilter);
+        Task UpdateCityAsync(int id, CreateCityDto cityDto);
+        Task<List<CreateCityDto>> GetCitiesAsync(CityFilter cityFilter);
     }
 }

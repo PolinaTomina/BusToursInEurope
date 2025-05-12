@@ -1,7 +1,7 @@
 ﻿using BusToursInEurope.Application.Models.ReservationModel;
 using BusToursInEurope.Application.Models.ReviewModels;
 
-namespace BusToursInEurope.Application.Models.DbModel
+namespace BusToursInEurope.Application.Models.UserModel
 {
     public class UserDto
     {
@@ -12,9 +12,7 @@ namespace BusToursInEurope.Application.Models.DbModel
         public string Login { get; set; }
         public string Password { get; set; }
         public string NumPhone { get; set; }
-
-        public bool IsAdmin { get; set; } = false; // Администратор
-        public bool IsUser { get; set; } = true;  // Обычный пользователь (по умолчанию)
+        public string Role { get; set; }
 
         public ICollection<ReservationDto> ReservationsDto { get; set; } = new List<ReservationDto>();
         public ICollection<ReviewDto> ReviewsDto { get; set; } = new List<ReviewDto>();

@@ -6,10 +6,10 @@
 
         public string NamePlace { get; set; }
 
-        public int CityDtoId { get; set; }
+        public int CityId { get; set; }
 
-        public int RouteBusDtoId { get; set; }
+        public int RouteBusId { get; set; }
 
-        public int HotelDtoId { get; set; }
+        public int HotelId { get; set; }
     }
 }
