@@ -1,6 +1,4 @@
-﻿using BusToursInEurope.Application.Models.DbModel;
-
-namespace BusToursInEurope.Application.Models.CrudModel
+﻿namespace BusToursInEurope.Application.Models.CrudModel
 {
     public class CrudRouteBusDto
     {

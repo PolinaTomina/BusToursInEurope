@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusToursInEurope.Application.Models.AccountModel;
-using BusToursInEurope.Core.Entites;
+﻿using BusToursInEurope.Application.Models.AccountModel;
 
 namespace BusToursInEurope.Application.Interfaces
 {

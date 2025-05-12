@@ -9,9 +9,7 @@ using BusToursInEurope.Application.Models.TourModel;
 using BusToursInEurope.Application.Models.WayPointsModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 
 namespace BusToursInEurope.Application.Services
 {

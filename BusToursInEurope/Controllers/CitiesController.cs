@@ -1,8 +1,6 @@
 ﻿using BusToursInEurope.Application.Contstants;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.CityModel;
-using BusToursInEurope.Application.Models.DbModel;
-using BusToursInEurope.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

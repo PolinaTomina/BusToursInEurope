@@ -1,10 +1,7 @@
-﻿using System.Net;
-using BusToursInEurope.Core.Entites;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.AccountModel;
-using BusToursInEurope.Application.Services;
 using BusToursInEurope.Application.Contstants;
 
 namespace BusToursInEurope.Controllers

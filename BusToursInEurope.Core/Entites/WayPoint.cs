@@ -1,5 +1,4 @@
-﻿
-namespace BusToursInEurope.Core.Entites
+﻿namespace BusToursInEurope.Core.Entites
 {
     public class WayPoint
     {

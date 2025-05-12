@@ -1,5 +1,4 @@
 ﻿using BusToursInEurope.Application.Models.DbModel;
-using BusToursInEurope.Core.Entites;
 
 namespace BusToursInEurope.Application.Models.ReservationModel
 {

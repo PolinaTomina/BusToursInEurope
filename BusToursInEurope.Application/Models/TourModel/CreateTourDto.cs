@@ -1,7 +1,4 @@
-﻿using BusToursInEurope.Application.Models.DbModel;
-using Microsoft.AspNetCore.Http;
-
-namespace BusToursInEurope.Application.Models.TourModel
+﻿namespace BusToursInEurope.Application.Models.TourModel
 {
     public class CreateTourDto
     {

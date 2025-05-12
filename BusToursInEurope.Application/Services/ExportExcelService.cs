@@ -1,9 +1,4 @@
-﻿using System.Linq;
-using NPOI.XSSF.UserModel;
-using NPOI.SS.UserModel;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
-using BusToursInEurope.Database;
+﻿using NPOI.XSSF.UserModel;
 using BusToursInEurope.Application.Models.ExelModel;
 using BusToursInEurope.Application.Interfaces;
 

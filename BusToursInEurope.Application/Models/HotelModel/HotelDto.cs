@@ -1,6 +1,4 @@
-﻿using BusToursInEurope.Application.Models.CityModel;
-
-namespace BusToursInEurope.Application.Models.HotelModel
+﻿namespace BusToursInEurope.Application.Models.HotelModel
 {
     public class HotelDto
     {
