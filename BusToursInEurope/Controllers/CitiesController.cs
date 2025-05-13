@@ -36,7 +36,7 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPut("id")]
-        public async Task<ActionResult> UpdateCity(int id, [FromBody] CreateCityDto cityDto)
+        public async Task<ActionResult> UpdateCity(int id, [FromBody] UpdateCityDto cityDto)
         {
             await _cities.UpdateCityAsync(id, cityDto);
             return StatusCode(201);

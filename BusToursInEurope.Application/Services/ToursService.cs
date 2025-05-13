@@ -119,7 +119,7 @@ namespace BusToursInEurope.Application.Services
                     {
                         Id = wp.Id,
                         NamePlace = wp.NamePlace,
-                        CityDto = wp.City != null ? new CreateCityDto
+                        CityDto = wp.City != null ? new ShowCityDto
                         {
                             Id = wp.City.Id,
                             Name = wp.City.Name,

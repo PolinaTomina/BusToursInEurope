@@ -1,7 +1,8 @@
 ﻿namespace BusToursInEurope.Application.Models.CityModel
 {
-    public class CreateCityDto
+    public class ShowCityDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
         public bool Visa { get; set; }

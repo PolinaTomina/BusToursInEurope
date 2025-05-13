@@ -58,7 +58,7 @@ namespace BusToursInEurope.Application.Services
             }
         }
 
-        public async Task UpdateCityAsync(int id, CreateCityDto cityDto)
+        public async Task UpdateCityAsync(int id, UpdateCityDto cityDto)
         {
             var city = await _context.Cities
             .Include(c => c.Hotel)
@@ -93,7 +93,7 @@ namespace BusToursInEurope.Application.Services
             }
             await _context.SaveChangesAsync();
         }
-        public async Task<List<CreateCityDto>> GetCitiesAsync(CityFilter cityFilter)
+        public async Task<List<ShowCityDto>> GetCitiesAsync(CityFilter cityFilter)
         {
             var query = _context.Cities.AsQueryable();
 
@@ -123,7 +123,7 @@ namespace BusToursInEurope.Application.Services
             }
 
             // Преобразуем в DTO
-            var cities = await query.Select(c => new CreateCityDto
+            var cities = await query.Select(c => new ShowCityDto
             {
                 Name = c.Name,
                 Country = c.Country,
