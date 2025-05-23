@@ -9,6 +9,7 @@
         public DateTime EndDate { get; set; }
         public int NumOfSeats { get; set; }
         public string Description { get; set; }
+        public List<string> ImageLinks {  get; set; } = new List<string>();
 
         public int BusId { get; set; }
         public Bus Bus { get; set; }

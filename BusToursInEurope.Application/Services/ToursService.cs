@@ -10,7 +10,9 @@ using BusToursInEurope.Application.Models.UserModel;
 using BusToursInEurope.Application.Models.WayPointsModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace BusToursInEurope.Application.Services
 {
@@ -171,7 +173,7 @@ namespace BusToursInEurope.Application.Services
             }
 
             // Проверка наличия маршрута
-            var route = await _context.Routes.FindAsync(createTourDto.RouteBusId);
+            var route = await _context.RoutesBuses.FindAsync(createTourDto.RouteBusId);
             if (route == null)
             {
                 throw new ArgumentException($"Маршрут с ID {createTourDto.RouteBusId} не найден");
@@ -189,9 +191,25 @@ namespace BusToursInEurope.Application.Services
                 Bus = bus, // Связь с автобусом
                 RouteBus = route // Связь с маршрутом
             };
+            await _context.Tours.AddAsync(tour);
 
-                await _context.Tours.AddAsync(tour);
-                await _context.SaveChangesAsync();
+            string tourPath = Path.Combine("TourFiles", tour.Name.ToString());
+            Directory.CreateDirectory(tourPath);
+
+            foreach (var image in createTourDto.Images)
+            {
+                string imagePath = Path.Combine(tourPath, image.FileName);
+
+                using (var fileStream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+
+                // Добавляем путь к изображению в объект тура
+                tour.ImageLinks.Add(imagePath);
+
+            }
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteTourAsync(int tourId)

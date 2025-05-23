@@ -1,4 +1,6 @@
-﻿namespace BusToursInEurope.Application.Models.TourModel
+﻿using Microsoft.AspNetCore.Http;
+
+namespace BusToursInEurope.Application.Models.TourModel
 {
     public class CreateTourDto
     {
@@ -9,6 +11,7 @@
         public DateTime EndDate { get; set; }
         public int NumOfSeats { get; set; }
         public string Description { get; set; }
+        public List<IFormFile> Images { get; set; }
 
         public int BusId { get; set; }
         public int RouteBusId { get; set; }

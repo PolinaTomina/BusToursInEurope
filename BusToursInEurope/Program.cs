@@ -61,6 +61,17 @@ namespace BusToursInEurope
 
             builder.Services.AddDbContext<ApplicationContext>();
 
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowAll",
+            //        builder =>
+            //        {
+            //            builder.AllowAnyOrigin()
+            //                   .AllowAnyMethod()
+            //                   .AllowAnyHeader();
+            //        });
+            //});
+
             /*using (ApplicationContext db = new ApplicationContext())
             {
                 var city = new City { Name = "Minsk", Country = "Belarus", Visa = false };
@@ -109,6 +120,8 @@ namespace BusToursInEurope
 
                 db.SaveChanges();
             }*/
+
+
 
             builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

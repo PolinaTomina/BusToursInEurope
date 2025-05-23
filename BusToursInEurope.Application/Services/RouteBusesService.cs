@@ -40,7 +40,7 @@ namespace BusToursInEurope.Application.Services
 
         public async Task DeleteRouteBusAsync(int id)
         {
-            var route = await _context.Routes.SingleOrDefaultAsync(r => r.Id == id);
+            var route = await _context.RoutesBuses.SingleOrDefaultAsync(r => r.Id == id);
 
             if (route == null)
             {
@@ -53,7 +53,7 @@ namespace BusToursInEurope.Application.Services
 
         public async Task UpdateRouteBusAsync(UpdateRouteBusDto request)
         {
-            var route = await _context.Routes
+            var route = await _context.RoutesBuses
                 .Include(r => r.WayPoints)
                 .SingleOrDefaultAsync(r => r.Id == request.Id);
 

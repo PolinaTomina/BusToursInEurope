@@ -1,4 +1,5 @@
 ﻿using BusToursInEurope.Application.Models.TourModel;
+using Microsoft.AspNetCore.Http;
 
 namespace BusToursInEurope.Application.Interfaces
 {
