@@ -56,9 +56,9 @@ namespace BusToursInEurope.Application.Services
             {
                 query = query.Where(t => t.Price <= toursFilter.MaxPrice.Value);
             }
-            if (toursFilter.StartDate.HasValue) 
-            { 
-                query = query.Where(t => t.StartDate >= toursFilter.StartDate.Value); 
+            if (toursFilter.StartDate.HasValue)
+            {
+                query = query.Where(t => t.StartDate >= toursFilter.StartDate.Value);
             }
             if (toursFilter.EndDate.HasValue)
             {
@@ -66,14 +66,14 @@ namespace BusToursInEurope.Application.Services
             }
 
             var filteredTours = await query
-                .Select(t => new ShortTourDto 
-                { 
-                    Id = t.Id, 
-                    Name = t.Name, 
-                    Price = t.Price, 
-                    StartDate = t.StartDate, 
-                }).ToListAsync(); 
-            
+                .Select(t => new ShortTourDto
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Price = t.Price,
+                    StartDate = t.StartDate,
+                }).ToListAsync();
+
             return filteredTours;
 
         }
@@ -205,7 +205,6 @@ namespace BusToursInEurope.Application.Services
                     await image.CopyToAsync(fileStream);
                 }
 
-                // Добавляем путь к изображению в объект тура
                 tour.ImageLinks.Add(imagePath);
 
             }
@@ -215,24 +214,71 @@ namespace BusToursInEurope.Application.Services
         public async Task DeleteTourAsync(int tourId)
         {
             var tour = await _context.Tours.FindAsync(tourId);
-            if (tour != null)
+
+            if (tour == null)
             {
-                _context.Tours.Remove(tour);
-                await _context.SaveChangesAsync();
+                return;
             }
+
+            string tourPath = Path.Combine("TourFiles", tour.Name.ToString());
+
+            if (tour.ImageLinks != null)
+            {
+                foreach (var imagePath in tour.ImageLinks)
+                {
+                    if (File.Exists(imagePath))
+                    {
+                        File.Delete(imagePath);
+                    }
+                }
+            }
+
+            if (Directory.Exists(tourPath))
+            {
+                Directory.Delete(tourPath, true);
+            }
+
+            _context.Tours.Remove(tour);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateTourAsync(int tourId, UpdateTourDto updateTourDto)
         {
             var tour = await _context.Tours.FindAsync(tourId);
-            if(tour != null)
+            if (tour != null)
             {
-                tour.Name = updateTourDto.Name;
-                tour.Price = updateTourDto.Price;
-                tour.StartDate = updateTourDto.StartDate;
-                tour.EndDate = updateTourDto.EndDate;
-                tour.NumOfSeats = updateTourDto.NumOfSeats;
-                tour.Description = updateTourDto.Description;
+                if (!string.IsNullOrEmpty(updateTourDto.Name)) tour.Name = updateTourDto.Name;
+                if (updateTourDto.Price.HasValue) tour.Price = updateTourDto.Price.Value;
+                if (updateTourDto.StartDate.HasValue) tour.StartDate = updateTourDto.StartDate.Value;
+                if (updateTourDto.EndDate.HasValue) tour.EndDate = updateTourDto.EndDate.Value;
+                if (updateTourDto.NumOfSeats.HasValue) tour.NumOfSeats = updateTourDto.NumOfSeats.Value;
+                if (!string.IsNullOrEmpty(updateTourDto.Description)) tour.Description = updateTourDto.Description;
+
+                string tourPath = Path.Combine("TourFiles", tour.Name.ToString());
+
+                if (updateTourDto.Images != null && updateTourDto.Images.Any())
+                {
+                    if (Directory.Exists(tourPath))
+                    {
+                        Directory.Delete(tourPath, true);
+                    }
+
+                    Directory.CreateDirectory(tourPath);
+
+                    tour.ImageLinks.Clear();
+
+                    foreach (var image in updateTourDto.Images)
+                    {
+                        string imagePath = Path.Combine(tourPath, image.FileName);
+
+                        using (var fileStream = new FileStream(imagePath, FileMode.Create))
+                        {
+                            await image.CopyToAsync(fileStream);
+                        }
+
+                        tour.ImageLinks.Add(imagePath);
+                    }
+                }
 
                 await _context.SaveChangesAsync();
             }

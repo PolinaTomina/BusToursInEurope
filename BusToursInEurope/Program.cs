@@ -152,6 +152,8 @@ namespace BusToursInEurope
                 options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
             });
 
+            builder.Services.AddCors();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -163,6 +165,8 @@ namespace BusToursInEurope
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors(cfg => cfg.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.MapControllers();
 

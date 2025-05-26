@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BusToursInEurope.Core.Entites.Bus">
+    <Position X="3" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Entites\Bus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusToursInEurope.Core.Entites.City">
+    <Position X="4.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAAAAAAAAQAAAIAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entites\City.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusToursInEurope.Core.Entites.Hotel">
+    <Position X="8.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAABAAAAAAAIAAAAAAQAAAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Entites\Hotel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusToursInEurope.Core.Entites.Reservation">
+    <Position X="1.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAjAAAAAgEAAAAAAAAAACgAAAAAAAABAAAEAAAAAAA=</HashCode>
+      <FileName>Entites\Reservation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusToursInEurope.Core.Entites.Review">
+    <Position X="6.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAjAAAEAAAAAIgAAAAAAAgAAAAAAAEAAAAEAAAAAAA=</HashCode>
+      <FileName>Entites\Review.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusToursInEurope.Core.Entites.RouteBus">
+    <Position X="8.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAIAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Entites\RouteBus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusToursInEurope.Core.Entites.Tour">
+    <Position X="3" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQICAEAAAQAgAAAAEAAAACQgBAAAAAAAAAAAQEAAAEA=</HashCode>
+      <FileName>Entites\Tour.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusToursInEurope.Core.Entites.User">
+    <Position X="4.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAACAAAIAAEAAAAAAAAAAAAAAGAQAQAAAAAAA=</HashCode>
+      <FileName>Entites\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BusToursInEurope.Core.Entites.WayPoint">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEABAAAAAAAIAAAAAAAAAAAAAAAAAAQAQAAAAEA=</HashCode>
+      <FileName>Entites\WayPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
