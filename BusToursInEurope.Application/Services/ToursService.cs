@@ -1,6 +1,6 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.CityModel;
-using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Application.Models.BusModel;
 using BusToursInEurope.Application.Models.HotelModel;
 using BusToursInEurope.Application.Models.ReservationModel;
 using BusToursInEurope.Application.Models.ReviewModels;
@@ -108,7 +108,7 @@ namespace BusToursInEurope.Application.Services
                 Description = tour.Description,
                 FullImageLink = tour.ImageLinks,
 
-                BusDto = tour.Bus != null ? new BusDto
+                BusDto = tour.Bus != null ? new ShowBusDto
                 {
                     Id = tour.Bus.Id,
                     Name = tour.Bus.Name,

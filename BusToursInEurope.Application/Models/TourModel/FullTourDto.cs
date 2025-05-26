@@ -1,4 +1,4 @@
-﻿using BusToursInEurope.Application.Models.DbModel;
+﻿using BusToursInEurope.Application.Models.BusModel;
 using BusToursInEurope.Application.Models.ReservationModel;
 using BusToursInEurope.Application.Models.ReviewModels;
 using BusToursInEurope.Application.Models.RoutesBusModels;
@@ -17,7 +17,7 @@ namespace BusToursInEurope.Application.Models.TourModel
         public string Description { get; set; }
         public List<string> FullImageLink { get; set; } = new List<string>();
 
-        public BusDto BusDto { get; set; }
+        public ShowBusDto BusDto { get; set; }
 
         public RouteBusDto RouteBusDto { get; set; }
 

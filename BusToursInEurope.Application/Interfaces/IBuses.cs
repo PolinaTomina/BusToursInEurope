@@ -1,13 +1,13 @@
-﻿using BusToursInEurope.Application.Models.DbModel;
+﻿using BusToursInEurope.Application.Models.BusModel;
 
 namespace BusToursInEurope.Application.Interfaces
 {
     public interface IBuses
     {
         //Task<BusDto> GetAllBusAsync(int id);
-        Task AddBusAsync(BusDto busDto);
+        Task AddBusAsync(CreateBusDto busDto);
         Task DeleteBusAsync(int id);
-        Task UpdateBusAsync(int id, BusDto busDto);
-        Task<List<BusDto>> GetBusesAsync(BusFilter busFilter);
+        Task UpdateBusAsync(int id, UpdateBusDto busDto);
+        Task<List<CreateBusDto>> GetBusesAsync(BusFilter busFilter);
     }
 }

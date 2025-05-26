@@ -1,6 +1,6 @@
-﻿namespace BusToursInEurope.Application.Models.DbModel
+﻿namespace BusToursInEurope.Application.Models.BusModel
 {
-    public class BusDto
+    public class ShowBusDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,5 +1,6 @@
 ﻿using BusToursInEurope.Application.Interfaces;
-using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Application.Models.BusModel;
+using BusToursInEurope.Application.Models.TourModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ namespace BusToursInEurope.Application.Services
             _context = context;
         }
 
-        public async Task AddBusAsync(BusDto busDto)
+        public async Task AddBusAsync(CreateBusDto busDto)
         {
             var bus = new Bus
             {
@@ -41,13 +42,13 @@ namespace BusToursInEurope.Application.Services
             }
         }
 
-        public async Task UpdateBusAsync(int busId, BusDto busDto)
+        public async Task UpdateBusAsync(int busId, UpdateBusDto busDto)
         {
             var bus = await _context.Buses.FindAsync(busId);
             if (bus != null)
             {
-                bus.Name = busDto.Name;
-                bus.NumOfSeats = busDto.NumOfSeats;
+                if (!string.IsNullOrEmpty(busDto.Name)) bus.Name = busDto.Name;
+                if (busDto.NumOfSeats.HasValue) bus.NumOfSeats = busDto.NumOfSeats.Value;
 
                 await _context.SaveChangesAsync();
             }
@@ -57,7 +58,7 @@ namespace BusToursInEurope.Application.Services
             }
         }
 
-        public async Task<List<BusDto>> GetBusesAsync(BusFilter busFilter)
+        public async Task<List<CreateBusDto>> GetBusesAsync(BusFilter busFilter)
         {
             var query = _context.Buses.AsQueryable();
 
@@ -84,9 +85,8 @@ namespace BusToursInEurope.Application.Services
                 };
             }
 
-            var buses = await query.Select(b => new BusDto
+            var buses = await query.Select(b => new CreateBusDto
             {
-                Id = b.Id,
                 Name = b.Name,
                 NumOfSeats = b.NumOfSeats
             }).ToListAsync();

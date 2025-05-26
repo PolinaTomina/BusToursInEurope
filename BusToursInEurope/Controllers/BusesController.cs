@@ -1,6 +1,6 @@
 ﻿using BusToursInEurope.Application.Contstants;
 using BusToursInEurope.Application.Interfaces;
-using BusToursInEurope.Application.Models.DbModel;
+using BusToursInEurope.Application.Models.BusModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +20,7 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
-        public async Task<ActionResult> AddBus(BusDto busDto)
+        public async Task<ActionResult> AddBus(CreateBusDto busDto)
         {
             await _crudBuses.AddBusAsync(busDto);
             return StatusCode(201);
@@ -36,7 +36,7 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPut("id")]
-        public async Task<ActionResult> UpdateBus(int id, [FromBody] BusDto busDto)
+        public async Task<ActionResult> UpdateBus(int id, [FromBody] UpdateBusDto busDto)
         {
             await _crudBuses.UpdateBusAsync(id, busDto);
             return NoContent();

@@ -1,4 +1,4 @@
-﻿namespace BusToursInEurope.Application.Models.DbModel
+﻿namespace BusToursInEurope.Application.Models.BusModel
 {
     public class BusFilter
     {
