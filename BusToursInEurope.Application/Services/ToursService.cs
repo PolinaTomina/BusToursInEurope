@@ -35,6 +35,8 @@ namespace BusToursInEurope.Application.Services
                     Name = t.Name,
                     Price = t.Price,
                     StartDate = t.StartDate,
+                    EndDate = t.EndDate,
+                    FirstImageLink = t.ImageLinks.FirstOrDefault()
                 }).ToListAsync();
 
             return tours;
@@ -75,7 +77,6 @@ namespace BusToursInEurope.Application.Services
                 }).ToListAsync();
 
             return filteredTours;
-
         }
 
         public async Task<FullTourDto> GetFullTourAsync(int id)
@@ -105,6 +106,7 @@ namespace BusToursInEurope.Application.Services
                 EndDate = tour.EndDate,
                 NumOfSeats = tour.NumOfSeats,
                 Description = tour.Description,
+                FullImageLink = tour.ImageLinks,
 
                 BusDto = tour.Bus != null ? new BusDto
                 {

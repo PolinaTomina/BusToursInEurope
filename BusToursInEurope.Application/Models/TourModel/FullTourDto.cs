@@ -2,6 +2,7 @@
 using BusToursInEurope.Application.Models.ReservationModel;
 using BusToursInEurope.Application.Models.ReviewModels;
 using BusToursInEurope.Application.Models.RoutesBusModels;
+using Microsoft.AspNetCore.Http;
 
 namespace BusToursInEurope.Application.Models.TourModel
 {
@@ -14,6 +15,7 @@ namespace BusToursInEurope.Application.Models.TourModel
         public DateTime EndDate { get; set; }
         public int NumOfSeats { get; set; }
         public string Description { get; set; }
+        public List<string> FullImageLink { get; set; } = new List<string>();
 
         public BusDto BusDto { get; set; }
 
