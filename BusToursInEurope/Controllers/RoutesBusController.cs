@@ -23,12 +23,12 @@ namespace BusToursInEurope.Controllers
             => _routeService.AddRouteBusAsync(request);
 
         [Authorize(Roles = Role.Admin)]
-        [HttpPost(nameof(Update))]
+        [HttpPut(nameof(Update))]
         public Task Update([FromBody] UpdateRouteBusDto request)
             => _routeService.UpdateRouteBusAsync(request);
 
         [Authorize(Roles = Role.Admin)]
-        [HttpPost(nameof(Delete))]
+        [HttpDelete(nameof(Delete))]
         public Task Delete([FromBody] int id)
             => _routeService.DeleteRouteBusAsync(id);
     }
