@@ -1,4 +1,5 @@
-﻿using BusToursInEurope.Application.Interfaces;
+﻿using BusToursInEurope.Application.Contstants;
+using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.ReviewModels;
 using BusToursInEurope.Core.Entites;
 using Microsoft.AspNetCore.Authorization;
@@ -45,10 +46,20 @@ namespace BusToursInEurope.Controllers
 
         [Authorize]
         [HttpDelete("delete review")]
-        public async Task<ActionResult> DeleteReview (int id)
+        public async Task<IActionResult> DeleteReview(int reviewId)
         {
-            await _reviewService.DeleteReviewAsync(id);
-            return Ok();
+            var email = User.FindFirst(ClaimTypes.Name)?.Value;
+            var isAdmin = User.IsInRole(Role.Admin); // Используем твою константу
+
+            if (string.IsNullOrEmpty(email))
+                return Unauthorized();
+
+            var success = await _reviewService.DeleteReviewAsync(reviewId, email, isAdmin);
+
+            if (!success)
+                return Forbid("Вы не можете удалить этот отзыв.");
+
+            return NoContent();
         }
     }
 }

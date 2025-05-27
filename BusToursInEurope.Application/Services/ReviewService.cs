@@ -66,16 +66,23 @@ namespace BusToursInEurope.Application.Services
             }).ToList();
         }
 
-        public async Task DeleteReviewAsync (int id)
+        public async Task<bool> DeleteReviewAsync(int reviewId, string email, bool isAdmin)
         {
-            var review = await _context.Reviews.FindAsync(id);
+            var review = await _context.Reviews
+                .Include(r => r.User)
+                .FirstOrDefaultAsync(r => r.Id == reviewId);
+
             if (review == null)
-            {
-                throw new Exception("Отзыв не найден");
-            }
+                return false;
+
+            // Только автор отзыва или админ может удалить
+            if (review.User.Email != email && !isAdmin)
+                return false;
 
             _context.Reviews.Remove(review);
             await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using BusToursInEurope.Application.Models.ReviewModels;
+﻿using BusToursInEurope.Application.Contstants;
+using BusToursInEurope.Application.Models.ReviewModels;
 
 namespace BusToursInEurope.Application.Interfaces
 {
@@ -6,6 +7,6 @@ namespace BusToursInEurope.Application.Interfaces
     {
         Task<List<ReviewDto>> GetAllByTourIdAsync(int tourId);
         Task<ReviewDto> CreateReviewAsync(CreateReviewDto createReview, string email);
-        Task DeleteReviewAsync(int id);
+        Task<bool> DeleteReviewAsync(int reviewId, string email, bool isAdmin);
     }
 }
