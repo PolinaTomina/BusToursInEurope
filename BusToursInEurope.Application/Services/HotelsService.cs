@@ -15,7 +15,7 @@ namespace BusToursInEurope.Application.Services
             _context = context;
         }
 
-        public async Task AddHotelAsync(HotelDto hotelDto)
+        public async Task AddHotelAsync(CreateHotelDto hotelDto)
         {
             var city = await _context.Cities.FindAsync(hotelDto.CityId);
             if (city == null)
@@ -48,7 +48,7 @@ namespace BusToursInEurope.Application.Services
             }
         }
 
-        public async Task UpdateHotelAsync(int id, HotelDto hotelDto)
+        public async Task UpdateHotelAsync(int id, UpdateHotelDto hotelDto)
         {
             var hotel = await _context.Hotels
                 .Include(h => h.City) 
@@ -59,8 +59,8 @@ namespace BusToursInEurope.Application.Services
                 throw new KeyNotFoundException("Отель не найден");
             }
 
-            hotel.Name = hotelDto.Name;
-            hotel.Rating = hotelDto.Rating;
+            if (!string.IsNullOrEmpty(hotelDto.Name)) hotelDto.Name = hotelDto.Name;
+            if (hotelDto.Rating.HasValue) hotelDto.Rating = hotelDto.Rating.Value;
 
             if (hotelDto.CityId > 0 && hotel.City?.Id != hotelDto.CityId)
             {
@@ -74,7 +74,7 @@ namespace BusToursInEurope.Application.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<HotelDto>> GetHotelsAsync(HotelFilter hotelFilter)
+        public async Task<List<ShowHotelDto>> GetHotelsAsync(HotelFilter hotelFilter)
         {
             var query = _context.Hotels.AsQueryable();
 
@@ -95,7 +95,7 @@ namespace BusToursInEurope.Application.Services
                 query = query.Where(h => h.CityId == hotelFilter.CityId);
             }
 
-            return await query.Select(h => new HotelDto
+            return await query.Select(h => new ShowHotelDto
             {
                 Id = h.Id,
                 Name = h.Name,

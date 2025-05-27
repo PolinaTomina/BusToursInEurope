@@ -20,7 +20,7 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPost]
-        public async Task<ActionResult> AddHotel(HotelDto hotelDto)
+        public async Task<ActionResult> AddHotel(CreateHotelDto hotelDto)
         {
             await _hotels.AddHotelAsync(hotelDto);
             return StatusCode(201);
@@ -36,7 +36,7 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPut("id")]
-        public async Task<ActionResult> UpdateHotel(int id, [FromBody] HotelDto hotelDto)
+        public async Task<ActionResult> UpdateHotel(int id, [FromBody] UpdateHotelDto hotelDto)
         {
             await _hotels.UpdateHotelAsync(id, hotelDto);
             return StatusCode(201);

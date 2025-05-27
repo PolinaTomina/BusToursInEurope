@@ -16,6 +16,6 @@ namespace BusToursInEurope.Application.Models.WayPointsModel
         public RouteBusDto RouteBusDto { get; set; }
 
         public int HotelId { get; set; }
-        public HotelDto HotelDto { get; set; }
+        public ShowHotelDto HotelDto { get; set; }
     }
 }

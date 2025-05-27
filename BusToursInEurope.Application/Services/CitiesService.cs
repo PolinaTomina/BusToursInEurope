@@ -1,5 +1,6 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.CityModel;
+using BusToursInEurope.Application.Models.TourModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
 using Microsoft.EntityFrameworkCore;
@@ -70,9 +71,9 @@ namespace BusToursInEurope.Application.Services
                 throw new KeyNotFoundException($"Город не найден");
             }
 
-            city.Name = cityDto.Name;
-            city.Country = cityDto.Country;
-            city.Visa = cityDto.Visa;
+            if (!string.IsNullOrEmpty(cityDto.Name)) city.Name = cityDto.Name;
+            if (!string.IsNullOrEmpty(cityDto.Country)) city.Country = cityDto.Country;
+            if (cityDto.Visa.HasValue) city.Visa = cityDto.Visa.Value;
 
             if (cityDto.HotelIds.Any())
             {

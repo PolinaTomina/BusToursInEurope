@@ -130,7 +130,7 @@ namespace BusToursInEurope.Application.Services
                             Country = wp.City.Country,
                             Visa = wp.City.Visa
                         } : null,
-                        HotelDto = wp.Hotel != null ? new HotelDto
+                        HotelDto = wp.Hotel != null ? new ShowHotelDto
                         {
                             Id = wp.Hotel.Id,
                             Name = wp.Hotel.Name,
