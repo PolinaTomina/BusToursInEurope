@@ -1,5 +1,6 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.ReviewModels;
+using BusToursInEurope.Core.Entites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -31,11 +32,23 @@ namespace BusToursInEurope.Controllers
         /// </summary>
         /// <param name="request">Контракт для создания отзыва (оценка, коммент)</param>
         [Authorize]
-        [HttpPost(nameof(Create))]
-        public async Task Create([FromBody] CreateReviewDto request)
+        [HttpPost("create review")]
+        public async Task<IActionResult> CreateReview([FromBody] CreateReviewDto createReview)
         {
-            var userEmail = User.Claims.FirstOrDefault(c => c.ValueType == ClaimTypes.Name)?.Value;
-            await _reviewService.CreateReviewAsync(request, userEmail);
+            var email = User.FindFirst(ClaimTypes.Name)?.Value;
+            if (string.IsNullOrEmpty(email))
+                return Unauthorized("Не удалось определить пользователя");
+
+            var result = await _reviewService.CreateReviewAsync(createReview, email);
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpDelete("delete review")]
+        public async Task<ActionResult> DeleteReview (int id)
+        {
+            await _reviewService.DeleteReviewAsync(id);
+            return Ok();
         }
     }
 }

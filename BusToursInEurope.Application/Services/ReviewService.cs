@@ -16,50 +16,67 @@ namespace BusToursInEurope.Application.Services
             _context = context;
         }
 
-        public async Task CreateReviewAsync(CreateReviewDto request, string email)
+        public async Task<ReviewDto> CreateReviewAsync(CreateReviewDto createReview, string email)
         {
-            var review = await _context.Reviews
-                .FirstOrDefaultAsync(r => r.User.Email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+                throw new Exception("Пользователь не найден");
 
-            var user = await _context.Users
-                .AsNoTracking()
-                .SingleOrDefaultAsync(u => u.Email == email);
-
-            if (review != null || user == null)
+            var review = new Review
             {
-                throw new ApplicationException("Невозможно оставить отзыв");
-            }
-
-            review = new Review
-            {
+                Rating = createReview.Rating,
+                Comment = createReview.Comment,
+                ReviewDate = DateTime.UtcNow,
+                Login = user.Login,
                 UserId = user.Id,
-                Rating = request.Rating,
-                Comment = request.Comment,
-                ReviewDate = DateTime.Now,
-                FullName = user.FullName,
-                TourId = request.TourId,
+                TourId = createReview.TourId
             };
 
-            await _context.AddAsync(review);
+            _context.Reviews.Add(review);
             await _context.SaveChangesAsync();
+
+            return new ReviewDto
+            {
+                Id = review.Id,
+                Login = user.Login,
+                Rating = review.Rating,
+                Comment = review.Comment,
+                ReviewDate = review.ReviewDate,
+                UserId = user.Id,
+                TourId = review.TourId
+            };
         }
 
-        public Task<List<ReviewDto>> GetAllByTourIdAsync(int tourId) 
-            => _context.Reviews
-                .AsNoTracking()
+        public async Task<List<ReviewDto>> GetAllByTourIdAsync(int tourId)
+        {
+            var reviews = await _context.Reviews
+                .Include(r => r.User)
                 .Where(r => r.TourId == tourId)
-                .Select(r => new ReviewDto
-                {
-                    Id = r.Id,
-                    Comment = r.Comment,
-                    ReviewDate = r.ReviewDate,
-                    Rating = r.Rating,
-                    TourId = r.TourId,
-                    Username = r.User.UserName != null 
-                        ? r.User.UserName 
-                        : ReviewConstants.IncogUsername,
-                    UserId = r.User.Id
-                })
                 .ToListAsync();
+
+            return reviews.Select(r => new ReviewDto
+            {
+                Id = r.Id,
+                Login = r.Login,
+                Rating = r.Rating,
+                Comment = r.Comment,
+                ReviewDate = r.ReviewDate,
+                UserId = r.UserId,
+                TourId = r.TourId,
+            }).ToList();
+        }
+
+        public async Task DeleteReviewAsync (int id)
+        {
+            var review = await _context.Reviews.FindAsync(id);
+            if (review == null)
+            {
+                throw new Exception("Отзыв не найден");
+            }
+
+            _context.Reviews.Remove(review);
+            await _context.SaveChangesAsync();
+        }
     }
+
 }

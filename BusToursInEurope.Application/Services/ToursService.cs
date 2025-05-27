@@ -157,7 +157,7 @@ namespace BusToursInEurope.Application.Services
                 ReviewsDto = tour.Reviews.Select(rv => new ReviewDto
                 {
                     Id = rv.Id,
-                    Username = rv.User?.FullName,
+                    Login = rv.Login,
                     Rating = rv.Rating,
                     Comment = rv.Comment,
                     ReviewDate = rv.ReviewDate
