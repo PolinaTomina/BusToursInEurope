@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BusToursInEurope.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("reservations")]
 
     public class ReservationController : ControllerBase
@@ -29,14 +30,6 @@ namespace BusToursInEurope.Controllers
         public async Task<ActionResult> DeleteReservation(int id)
         {
             await _reservationsService.DeleteReservationAsync(id);
-            return NoContent();
-        }
-
-        // Нужен ли метод обновления брони?
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateReservation(int id, [FromBody] CreateReservationDto reservationDto)
-        {
-            await _reservationsService.UpdateReservationAsync(id, reservationDto);
             return NoContent();
         }
 

@@ -72,15 +72,7 @@ namespace BusToursInEurope.Application.Services
         }
 
         /// <summary>
-        /// Обновить бронирование
-        /// </summary>
-        public async Task UpdateReservationAsync(int id, CreateReservationDto reservationDto)
-        {
-           
-        }
-
-        /// <summary>
-        /// Получить все бронирования
+        /// Получить все бронирования (это для пользователя)
         /// </summary>
         public async Task<IEnumerable<ReservationDto>> GetAllReservationsAsync()
         {
@@ -98,7 +90,7 @@ namespace BusToursInEurope.Application.Services
         }
 
         /// <summary>
-        /// Получить бронирование по Id
+        /// Получить бронирование по Id (это для админа)
         /// </summary>
         public async Task<ReservationDto> GetReservationByIdAsync(int id)
         {
