@@ -5,6 +5,7 @@ import { Button } from '../../../ui/Button';
 import { createTour, updateTour, getTour } from '../../../queries/tours';
 import { CreateTourDto, UpdateTourDto } from '../../../types/Tours';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { BASE_URL } from '../../../utils/constants/urlConstants';
 
 interface CreateTourModalProps {
   isOpen: boolean;
@@ -40,7 +41,9 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
     route: null,
     numOfSeats: null,
     description: null,
-    images: []
+    images: [],
+    busId: 0,
+    routeBusId: 0
   });
 
   const [previewImages, setPreviewImages] = useState<Array<{url: string, isExisting: boolean}>>([]);
@@ -70,7 +73,9 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
             route: null,
             numOfSeats: tourData.numOfSeats,
             description: tourData.description || '',
-            images: []
+            images: [],
+            busId: tourData.busDto.Id,
+            routeBusId: tourData.routeBusDto.Id
           });
           
           if (tourData.fullImageLink?.length) {
@@ -107,9 +112,9 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
 
   // Функция для загрузки существующих изображений
   const loadExistingImages = (imageLinks: string[]) => {
-    const backendBasePath = 'D:/Projects/BusToursInEurope/BusToursInEurope';
     const images = imageLinks.map(link => {
-      const fullPath = `${backendBasePath}/${link}`;
+      const fullPath = `${BASE_URL}/${link}`;
+      console.log(fullPath)
       return {
         url: fullPath,
         isExisting: true
@@ -267,14 +272,6 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
           value={currentData.description || ''}
           onChange={(e) => handleCommonFieldChange('description', e.target.value)}
         />
-        
-        {id && (
-          <Input
-            label="Маршрут"
-            value={updateData.route || ''}
-            onChange={(e) => setUpdateData({ ...updateData, route: e.target.value })}
-          />
-        )}
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Изображения</label>
@@ -324,24 +321,20 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
           )}
         </div>
 
-        {!id && (
-          <>
-            <Input
-              label="ID автобуса"
-              type="number"
-              value={formData.busId}
-              onChange={(e) => setFormData({ ...formData, busId: parseInt(e.target.value) })}
-              required
-            />
-            <Input
-              label="ID маршрута"
-              type="number"
-              value={formData.routeBusId}
-              onChange={(e) => setFormData({ ...formData, routeBusId: parseInt(e.target.value) })}
-              required
-            />
-          </>
-        )}
+        <Input
+          label="ID автобуса"
+          type="number"
+          value={formData.busId}
+          onChange={(e) => setFormData({ ...formData, busId: parseInt(e.target.value) })}
+          required
+        />
+        <Input
+          label="ID маршрута"
+          type="number"
+          value={formData.routeBusId}
+          onChange={(e) => setFormData({ ...formData, routeBusId: parseInt(e.target.value) })}
+          required
+        />
 
         <div className="flex justify-end space-x-2">
           <Button type="button" variant="outline" onClick={onClose}>

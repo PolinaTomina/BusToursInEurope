@@ -1,0 +1,165 @@
+.tourContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.tourHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.tourTitle {
+  font-size: 2.5rem;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.tourPrice {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #e74c3c;
+  background-color: #f9f9f9;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.tourGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.tourImage {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.tourImage:hover {
+  transform: scale(1.03);
+}
+
+.tourDetails {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.detailCard {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tourDescription {
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.tourWaypoints ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.tourWaypoints li {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #f8f9fa;
+  border-left: 4px solid #3498db;
+}
+
+.reviewsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.reviewCard {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.reviewUsername {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.reviewRating {
+  color: #f39c12;
+}
+
+.starFilled {
+  color: #f39c12;
+}
+
+.starEmpty {
+  color: #ddd;
+}
+
+.reviewComment {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.reviewDate {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  text-align: right;
+}
+
+.bookButton {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 15px 25px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.bookButton:hover {
+  background-color: #267cb6;
+}
+
+@media (max-width: 768px) {
+  .tourHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .tourPrice {
+    margin-top: 15px;
+  }
+  
+  .tourDetails {
+    grid-template-columns: 1fr;
+  }
+}

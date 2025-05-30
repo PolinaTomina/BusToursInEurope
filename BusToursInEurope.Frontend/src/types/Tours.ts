@@ -25,6 +25,8 @@ export interface UpdateTourDto {
   numOfSeats: number | null; // CHANGED: сделал nullable
   description: string | null;
   images?: File[]; // NEW: добавил поддержку изображений
+  busId: number;
+  routeBusId: number
 }
 
 export interface ShortTourDto {
@@ -32,6 +34,8 @@ export interface ShortTourDto {
   name: string | null;
   price: number;
   startDate: string;
+  endDate: string;
+  firstImageLink: string;
 }
 
 export interface FullTourDto {

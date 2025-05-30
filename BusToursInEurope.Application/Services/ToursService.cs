@@ -257,6 +257,8 @@ namespace BusToursInEurope.Application.Services
                 if (updateTourDto.EndDate.HasValue) tour.EndDate = updateTourDto.EndDate.Value;
                 if (updateTourDto.NumOfSeats.HasValue) tour.NumOfSeats = updateTourDto.NumOfSeats.Value;
                 if (!string.IsNullOrEmpty(updateTourDto.Description)) tour.Description = updateTourDto.Description;
+                if (updateTourDto.BusId != default) tour.BusId = updateTourDto.BusId;
+                if (updateTourDto.RouteBusId != default) tour.RouteBusId = updateTourDto.RouteBusId;
 
                 string tourPath = Path.Combine("TourFiles", tour.Name.ToString());
 

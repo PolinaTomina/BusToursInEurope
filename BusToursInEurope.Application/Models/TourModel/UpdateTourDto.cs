@@ -11,6 +11,8 @@ namespace BusToursInEurope.Application.Models.TourModel
         public string? Route { get; set; }
         public int? NumOfSeats { get; set; }
         public string? Description { get; set; }
+        public int BusId { get; set; }
+        public int RouteBusId { get; set; }
         public List<IFormFile>? Images { get; set; }
     }
 }

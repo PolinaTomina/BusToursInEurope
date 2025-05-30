@@ -5,6 +5,7 @@ using BusToursInEurope.Application.Services;
 using BusToursInEurope.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -169,10 +170,16 @@ namespace BusToursInEurope
                 app.UseSwaggerUI();
             }
 
+            app.UseCors(cfg => cfg.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "TourFiles")),
+                RequestPath = "/TourFiles"
+            });
+
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseCors(cfg => cfg.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.MapControllers();
 
