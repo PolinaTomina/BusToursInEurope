@@ -40,7 +40,7 @@ export const AuthorizationPage: React.FC = () => {
 
             localStorage.setItem(JwtTokenKey, `Bearer ${token}`)
 
-            redirectByToken(token)
+            await redirectByToken(`Bearer ${token}`)
           }
         }
 
@@ -74,7 +74,7 @@ export const AuthorizationPage: React.FC = () => {
 
           localStorage.setItem(JwtTokenKey, `Bearer ${token}`)
           
-          redirectByToken(token)
+          redirectByToken(`Bearer ${token}`)
         }
       }
 
