@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace BusToursInEurope
 {
@@ -62,7 +63,6 @@ namespace BusToursInEurope
             builder.Services.AddScoped<IHotels, HotelsService>();
             builder.Services.AddScoped<IReservations, ReservationsService>();
             builder.Services.AddScoped<IWayPoints, WayPointsService>();
-            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IExportExcelService, ExportExcelService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IProfileService, ProfileService>();
@@ -178,6 +178,7 @@ namespace BusToursInEurope
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "TourFiles")),
                 RequestPath = "/TourFiles"
             });
+
 
             app.UseAuthentication();
             app.UseAuthorization();

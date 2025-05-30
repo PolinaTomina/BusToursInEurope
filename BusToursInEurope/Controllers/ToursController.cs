@@ -1,4 +1,5 @@
 ﻿
+using BusToursInEurope.Application;
 using BusToursInEurope.Application.Contstants;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.TourModel;
@@ -12,10 +13,12 @@ namespace BusToursInEurope.Controllers
     public class ToursController : ControllerBase
     {
         private readonly ITours _showTours;
+        private readonly IExportExcelService _exportExcelService;
 
-        public ToursController(ITours showTours)
+        public ToursController(ITours showTours, IExportExcelService exportExcelService)
         {
             _showTours = showTours;
+            _exportExcelService = exportExcelService;
         }
 
         [HttpGet("top")]
@@ -65,6 +68,18 @@ namespace BusToursInEurope.Controllers
         {
             await _showTours.UpdateTourAsync(id, updateTourDto);
             return NoContent();
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpGet("export_statistic_top_tours")]
+        public async Task<IActionResult> ExportTopTours()
+        {
+            var topTours = await _showTours.GetTopToursAsync();
+            var fileContents = await _exportExcelService.ExportToursToExcel(topTours);
+
+            return File(fileContents,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "TopTours.xlsx");
         }
     }
 }
