@@ -1,9 +1,10 @@
-﻿using BusToursInEurope.Application.Models.ExelModel;
+﻿using BusToursInEurope.Application.Models.ReservationModel;
+using BusToursInEurope.Application.Models.TourModel;
 
 namespace BusToursInEurope.Application.Interfaces
 {
     public interface IExportExcelService
     {
-        byte[] ExportUsersToExcel(List<ExportExcelUserDto> users);
+        Task<byte[]> ExportToursToExcel(List<ShortTourDto> tours);
     }
 }

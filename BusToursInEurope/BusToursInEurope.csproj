@@ -15,4 +15,8 @@
     <ProjectReference Include="..\BusToursInEurope.Application\BusToursInEurope.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TourFiles\" />
+  </ItemGroup>
+
 </Project>
