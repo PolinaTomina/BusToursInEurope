@@ -36,10 +36,24 @@ namespace BusToursInEurope.Controllers
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("ForUser")]
+        public async Task<IActionResult> GetUserReservations()
+        {
+            var userEmail = User.Claims.FirstOrDefault();
+
+            var reservations = await _reservationsService.GetUserReservationsAsync(userEmail.Value);
+
+            return Ok(reservations);
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpGet("All")]
         public async Task<IActionResult> GetAllReservations()
         {
+            var userEmail = User.Claims.FirstOrDefault();
+
             var reservations = await _reservationsService.GetAllReservationsAsync();
+
             return Ok(reservations);
         }
 

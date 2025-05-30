@@ -6,6 +6,7 @@ namespace BusToursInEurope.Application.Interfaces
     {
         Task AddReservationAsync(CreateReservationDto reservationDto, string userEmail);
         Task DeleteReservationAsync(int id);
+        Task<IEnumerable<ReservationDto>> GetUserReservationsAsync(string userEmail);
         Task<IEnumerable<ReservationDto>> GetAllReservationsAsync();
         Task<ReservationDto> GetReservationByIdAsync(int id);
         Task UpdatePaymentStatusAsync(UpdatePaymentStatusDto request);

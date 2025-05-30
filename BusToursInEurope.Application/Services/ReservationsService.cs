@@ -118,6 +118,23 @@ namespace BusToursInEurope.Application.Services
             };
         }
 
+        public async Task<IEnumerable<ReservationDto>> GetUserReservationsAsync(string userEmail)
+        {
+            return await _context.Reservations
+                .AsNoTracking()
+                .Where(r => r.User.Email == userEmail)
+                .Select(r => new ReservationDto
+                {
+                    Id = r.Id,
+                    Date = r.Date,
+                    PaymentDate = r.PaymentDate,
+                    PaymentDeadline = r.PaymentDeadline,
+                    NumOfSeats = r.NumOfSeats,
+                    UserId = r.UserId
+                })
+                .ToListAsync();
+        }
+
         public async Task UpdatePaymentStatusAsync(UpdatePaymentStatusDto request)
         {
             var reservation = await _context.Reservations.FindAsync(request.Id);
