@@ -13,10 +13,12 @@ namespace BusToursInEurope.Application.Services;
 public class AuthService : IAuthService
 {
     private readonly ApplicationContext _context;
+    private readonly IProfileService _profileService;
 
-    public AuthService(ApplicationContext context)
+    public AuthService(ApplicationContext context, IProfileService profileService)
     {
         _context = context;
+        _profileService = profileService;
     }
 
     public async Task<string> RegistrationNewUserAsync(RegistrationDto registrationDto)
@@ -31,12 +33,13 @@ public class AuthService : IAuthService
             Login = registrationDto.Login,
             Email = registrationDto.Email,
             Password = registrationDto.Password,
-            NumPhone = registrationDto.NumPhone,
             Role = Role.User
         };
 
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
+
+        await _profileService.CreateEmptyProfileAsync(user.Id);
 
         return CreateJwtToken(user.Email, user.Role);
     }

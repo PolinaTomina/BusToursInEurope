@@ -1,10 +1,15 @@
 import axios from 'axios';
 import { CreateReservationDto } from '../types/Reservations';
+import { JwtTokenKey } from '../utils/constants/localStorageConstants';
 
 const BASE_URL = 'http://your-api-url/reservations';
 
 export const createReservation = async (data: CreateReservationDto) => {
-  return axios.post(BASE_URL, data);
+  return axios.post(BASE_URL, data, {
+      headers: {
+        'Authorization': localStorage.getItem(JwtTokenKey)
+      }
+    });
 };
 
 export const updateReservation = async (id: number, data: CreateReservationDto) => {
