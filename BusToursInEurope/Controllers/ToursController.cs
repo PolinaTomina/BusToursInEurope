@@ -1,13 +1,9 @@
-﻿using BusToursInEurope.Application.Contstants;
+﻿
+using BusToursInEurope.Application.Contstants;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.TourModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using BusToursInEurope.Database;
-using BusToursInEurope.Core.Entites;
 
 namespace BusToursInEurope.Controllers
 {
@@ -16,12 +12,10 @@ namespace BusToursInEurope.Controllers
     public class ToursController : ControllerBase
     {
         private readonly ITours _showTours;
-        private readonly ApplicationContext _context;
 
-        public ToursController(ITours showTours, ApplicationContext context)
+        public ToursController(ITours showTours)
         {
             _showTours = showTours;
-            _context = context;
         }
 
         [HttpGet("top")]

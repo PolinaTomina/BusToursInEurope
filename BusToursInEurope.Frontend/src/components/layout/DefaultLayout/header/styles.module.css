@@ -1,0 +1,81 @@
+.header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+  }
+  
+  .navigation {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .navLink {
+    color: #333;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  
+  .navLink:hover {
+    color: #0066cc;
+  }
+  
+  .navLink::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: #0066cc;
+    transition: width 0.3s ease;
+  }
+  
+  .navLink:hover::after {
+    width: 100%;
+  }
+  
+  .headerElement {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    white-space: nowrap;
+  }
+  
+  /* Preserving logo class as requested */
+  /* Add responsive styles */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      height: auto;
+      padding: 1rem;
+      gap: 1rem;
+    }
+    
+    .navigation {
+      width: 100%;
+      justify-content: space-around;
+      gap: 1rem;
+    }
+    
+    .headerElement {
+      font-size: 0.9rem;
+    }
+  }

@@ -7,7 +7,6 @@ using BusToursInEurope.Application.Contstants;
 namespace BusToursInEurope.Controllers
 {
     [ApiController]
-    [AllowAnonymous]
     [Route("/auth")]
     public class AuthorizationController : ControllerBase
     {
@@ -18,6 +17,7 @@ namespace BusToursInEurope.Controllers
             _authService = authService;
         }
 
+        [AllowAnonymous]
         [HttpPost("reg")]
         public async Task<ActionResult> RegistrationNewUser([FromBody] RegistrationDto registrationDto)
         {
@@ -25,6 +25,7 @@ namespace BusToursInEurope.Controllers
             return Ok(new { Token = token });
         }
 
+        [AllowAnonymous]
         [HttpPost("auth")]
         public async Task<ActionResult> AuthUserAsync(AuthorizationDto authorizationDto)
         {
@@ -36,7 +37,7 @@ namespace BusToursInEurope.Controllers
         [HttpGet("admin")]
         public IActionResult GetAdminData()
         {
-            return Ok("Это доступно только администратору");
+            return Ok();
         }
     }
 }

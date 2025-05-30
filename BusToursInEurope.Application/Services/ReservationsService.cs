@@ -18,15 +18,19 @@ namespace BusToursInEurope.Application.Services
         /// <summary>
         /// Добавить бронирование
         /// </summary>
-        public async Task AddReservationAsync(CreateReservationDto reservationDto)
+        public async Task AddReservationAsync(CreateReservationDto reservationDto, string userEmail)
         {
-            var user = await _context.Users.FindAsync(reservationDto.UserId);
-            if (user == null)
+            var user = await _context.Users
+                .SingleAsync(x => x.Email == userEmail);
+
+            if (user is null)
             {
                 throw new KeyNotFoundException("Пользователь не найден");
             }
 
-            var tour = await _context.Tours.FindAsync(reservationDto.TourId);
+            var tour = await _context.Tours
+                .FindAsync(reservationDto.TourId);
+
             if (tour == null)
             {
                 throw new KeyNotFoundException("Тур не найден");
@@ -41,14 +45,13 @@ namespace BusToursInEurope.Application.Services
             var reservation = new Reservation
             {
                 Date = DateTime.UtcNow,
-                PaymentDate = reservationDto.PaymentDate,
-                PaymentDeadline = reservationDto.PaymentDeadline,
+                PaymentDeadline = tour.StartDate.AddDays(-3),
                 NumOfSeats = reservationDto.NumOfSeats,
-                UserId = reservationDto.UserId,
-                TourId = reservationDto.TourId
+                UserId = user.Id,
+                TourId = tour.Id
             };
 
-            _context.Reservations.Add(reservation);
+            await _context.Reservations.AddAsync(reservation);
 
             // Обновляем количество доступных мест
             tour.NumOfSeats -= reservationDto.NumOfSeats;
@@ -77,6 +80,7 @@ namespace BusToursInEurope.Application.Services
         public async Task<IEnumerable<ReservationDto>> GetAllReservationsAsync()
         {
             return await _context.Reservations
+                .AsNoTracking()
                 .Select(r => new ReservationDto
                 {
                     Id = r.Id,
@@ -94,7 +98,10 @@ namespace BusToursInEurope.Application.Services
         /// </summary>
         public async Task<ReservationDto> GetReservationByIdAsync(int id)
         {
-            var reservation = await _context.Reservations.FindAsync(id);
+            var reservation = await _context.Reservations
+                .AsNoTracking()
+                .SingleAsync(r => r.Id == id);
+
             if (reservation == null)
             {
                 throw new KeyNotFoundException("Бронирование не найдено");
@@ -109,6 +116,37 @@ namespace BusToursInEurope.Application.Services
                 NumOfSeats = reservation.NumOfSeats,
                 UserId = reservation.UserId
             };
+        }
+
+        public async Task<IEnumerable<ReservationDto>> GetUserReservationsAsync(string userEmail)
+        {
+            return await _context.Reservations
+                .AsNoTracking()
+                .Where(r => r.User.Email == userEmail)
+                .Select(r => new ReservationDto
+                {
+                    Id = r.Id,
+                    Date = r.Date,
+                    PaymentDate = r.PaymentDate,
+                    PaymentDeadline = r.PaymentDeadline,
+                    NumOfSeats = r.NumOfSeats,
+                    UserId = r.UserId
+                })
+                .ToListAsync();
+        }
+
+        public async Task UpdatePaymentStatusAsync(UpdatePaymentStatusDto request)
+        {
+            var reservation = await _context.Reservations.FindAsync(request.Id);
+
+            if (reservation is null)
+            {
+                throw new KeyNotFoundException("Бронь не найдена");
+            }
+
+            reservation.PaymentDate = request.IsPaid ? DateTime.Now : null;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

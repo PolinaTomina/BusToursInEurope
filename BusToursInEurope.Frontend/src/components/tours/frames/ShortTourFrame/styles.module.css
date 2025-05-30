@@ -1,0 +1,22 @@
+.block{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.imageTour{
+    background-color: brown;
+    width: 275px;
+    height: 200px;
+}
+
+.tourInfo{
+    display: flex;
+    flex-direction: column;
+}
+
+.nameAndPrice{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

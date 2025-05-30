@@ -20,29 +20,46 @@ namespace BusToursInEurope.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddReservation([FromBody] CreateReservationDto reservationDto)
+        public async Task<IActionResult> AddReservation([FromBody] CreateReservationDto reservationDto)
         {
-            await _reservationsService.AddReservationAsync(reservationDto);
-            return StatusCode(201);
+            var userEmail = User.Claims.FirstOrDefault();
+
+            await _reservationsService.AddReservationAsync(reservationDto, userEmail?.Value);
+
+            return StatusCode(StatusCodes.Status201Created);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteReservation(int id)
+        public async Task<IActionResult> DeleteReservation(int id)
         {
             await _reservationsService.DeleteReservationAsync(id);
             return NoContent();
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReservationDto>>> GetAllReservations()
+        [HttpGet("ForUser")]
+        public async Task<IActionResult> GetUserReservations()
         {
+            var userEmail = User.Claims.FirstOrDefault();
+
+            var reservations = await _reservationsService.GetUserReservationsAsync(userEmail.Value);
+
+            return Ok(reservations);
+        }
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpGet("All")]
+        public async Task<IActionResult> GetAllReservations()
+        {
+            var userEmail = User.Claims.FirstOrDefault();
+
             var reservations = await _reservationsService.GetAllReservationsAsync();
+
             return Ok(reservations);
         }
 
         [Authorize(Roles = Role.Admin)]
         [HttpGet("{id}")]
-        public async Task<ActionResult<ReservationDto>> GetReservationById(int id)
+        public async Task<IActionResult> GetReservationById(int id)
         {
             var reservation = await _reservationsService.GetReservationByIdAsync(id);
             return Ok(reservation);
