@@ -45,7 +45,7 @@ export const UserProfilePage: React.FC = () => {
   }, []);
 
   const handleReviewClick = (tourId: number) => {
-    navigate(`/tour/${tourId}`);
+    navigate(`/tours/${tourId}`);
   };
 
   const formatDate = (dateString: string) => {
