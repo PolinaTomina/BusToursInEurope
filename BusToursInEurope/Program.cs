@@ -1,8 +1,10 @@
 using BusToursInEurope.Application;
+using BusToursInEurope.Application.Configurations;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Services;
 using BusToursInEurope.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -47,6 +49,9 @@ namespace BusToursInEurope
                 });
             });
 
+            builder.Services.AddOptions<EmailConfig>()
+                .Bind(builder.Configuration.GetSection(nameof(EmailConfig)));
+
             builder.Services.AddScoped<ITours, ToursService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IBuses, BusesService>();
@@ -58,6 +63,7 @@ namespace BusToursInEurope
             builder.Services.AddScoped<IWayPoints, WayPointsService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IExportExcelService, ExportExcelService>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             builder.Services.AddDbContext<ApplicationContext>();
 
@@ -155,11 +161,6 @@ namespace BusToursInEurope
             builder.Services.AddCors();
 
             var app = builder.Build();
-
-            var smtpSenderEmail = app.Configuration["Smtp:Email"];
-            var smtpSenderPassword = app.Configuration["Smtp:Password"];
-
-            builder.Services.AddScoped<IEmailService, EmailService>(_ => new EmailService(smtpSenderEmail, smtpSenderPassword));
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

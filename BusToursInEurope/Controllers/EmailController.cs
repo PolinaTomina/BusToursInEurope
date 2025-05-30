@@ -18,7 +18,7 @@ namespace BusToursInEurope.Controllers
         public async Task SendMessage()
         {
             // Получатель письма.
-            var recipientEmail = "polina6085@mail.ru";
+            var recipientEmail = "ashevskya@gmail.ru";
             await _emailService.SendEmailAsync(recipientEmail, "Тема письма", "Тест письма: тест!");
         }
     }

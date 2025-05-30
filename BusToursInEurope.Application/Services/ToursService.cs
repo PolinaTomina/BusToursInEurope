@@ -36,7 +36,7 @@ namespace BusToursInEurope.Application.Services
                     Price = t.Price,
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
-                    FirstImageLink = t.ImageLinks.FirstOrDefault()
+                    FirstImageLink = t.ImageLinks.First()
                 }).ToListAsync();
 
             return tours;
@@ -74,6 +74,8 @@ namespace BusToursInEurope.Application.Services
                     Name = t.Name,
                     Price = t.Price,
                     StartDate = t.StartDate,
+                    EndDate = t.EndDate,
+                    FirstImageLink = t.ImageLinks.First()
                 }).ToListAsync();
 
             return filteredTours;
