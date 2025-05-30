@@ -14,6 +14,7 @@ namespace BusToursInEurope.Database
         public DbSet<Bus> Buses => Set<Bus>();
         public DbSet<User> Users => Set<User>();
         public DbSet<WayPoint> WayPoints => Set<WayPoint>();
+        public DbSet<Profile> Profiles => Set<Profile>();
 
         public ApplicationContext()
         {

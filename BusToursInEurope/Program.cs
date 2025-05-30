@@ -65,6 +65,7 @@ namespace BusToursInEurope
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IExportExcelService, ExportExcelService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<IProfileService, ProfileService>();
 
             builder.Services.AddDbContext<ApplicationContext>();
 

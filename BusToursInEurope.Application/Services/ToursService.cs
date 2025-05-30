@@ -152,7 +152,6 @@ namespace BusToursInEurope.Application.Services
                     {
                         Id = r.User.Id,
                         Email = r.User.Email,
-                        FullName = r.User.FullName
                     }
                 }).ToList(),
 

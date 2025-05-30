@@ -20,9 +20,7 @@ namespace BusToursInEurope.Application.Services
                 .Select(u => new ExportExcelUserDto
                 {
                     Id = u.Id,
-                    FullName = u.FullName,
                     Email = u.Email,
-                    NumPhone = u.NumPhone
                 })
                 .ToListAsync();
         }

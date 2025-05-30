@@ -21,7 +21,6 @@ export const DefaultHeader: React.FC = () => {
                     }
                 }
                 catch {
-                    navigate('/main')
                     setProfileString("Личный кабинет")
                     setProfileLink("/profile")
                 }
