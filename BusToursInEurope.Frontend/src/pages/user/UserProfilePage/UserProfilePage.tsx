@@ -5,9 +5,11 @@ import { getProfileQuery, updateProfileQuery } from "../../../queries/profile";
 import { ProfileDto, UpdateProfileDto } from "../../../types/Profile";
 import { CircularProgress, Alert, Snackbar, Modal, Box, TextField, Button } from "@mui/material";
 import { JwtTokenKey } from "../../../utils/constants/localStorageConstants";
+import { isAdmin } from "../../../queries/auth";
 
 export const UserProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<ProfileDto | null>(null);
+  const [userIsAdmin, setIsAdmin] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -33,6 +35,12 @@ export const UserProfilePage: React.FC = () => {
           numPhone: profileData.numPhone || "",
           passportNumber: profileData.passportNumber || ""
         });
+
+        const admin = await isAdmin(localStorage.getItem(JwtTokenKey) || "")
+
+        if (admin.status !== 401) {
+          setIsAdmin(true)
+        }
       } catch (err) {
         setError("Не удалось загрузить профиль. Пожалуйста, попробуйте позже.");
         console.error("Error fetching profile:", err);
@@ -151,17 +159,6 @@ export const UserProfilePage: React.FC = () => {
       </div>
       
       <div className={classes.profileSection}>
-        <h2>Личная информация</h2>
-        <div className={classes.profileInfo}>
-          <p><strong>Имя:</strong> {profile.name || "Не указано"}</p>
-          <p><strong>Фамилия:</strong> {profile.surName || "Не указано"}</p>
-          <p><strong>Отчество:</strong> {profile.middleName || "Не указано"}</p>
-          <p><strong>Телефон:</strong> {profile.numPhone || "Не указано"}</p>
-          <p><strong>Идентификационный паспорта:</strong> {profile.passportNumber || "Не указано"}</p>
-        </div>
-      </div>
-
-      <div className={classes.profileSection}>
         <h2>Учетные данные</h2>
         <div className={classes.profileInfo}>
           <p><strong>Email:</strong> {profile.user.email || "Не указан"}</p>
@@ -170,7 +167,21 @@ export const UserProfilePage: React.FC = () => {
         </div>
       </div>
 
-      {profile.user.reservationsDto && profile.user.reservationsDto.length > 0 ? (
+      {!userIsAdmin &&
+      <div className={classes.profileSection}>
+        <h2>Личная информация</h2>
+        <div className={classes.profileInfo}>
+          <p><strong>Имя:</strong> {profile.name || "Не указано"}</p>
+          <p><strong>Фамилия:</strong> {profile.surName || "Не указано"}</p>
+          <p><strong>Отчество:</strong> {profile.middleName || "Не указано"}</p>
+          <p><strong>Телефон:</strong> {profile.numPhone || "Не указано"}</p>
+          <p><strong>Идентификационный паспорта:</strong> {profile.passportNumber || "Не указано"}</p>
+        </div>
+      </div>}
+
+      {!userIsAdmin && 
+        <>
+              {profile.user.reservationsDto && profile.user.reservationsDto.length > 0 ? (
         <div className={classes.profileSection}>
           <h2>Бронирования ({profile.user.reservationsDto.length})</h2>
           <div className={classes.reservationsList}>
@@ -190,8 +201,12 @@ export const UserProfilePage: React.FC = () => {
           <p>У вас пока нет бронирований.</p>
         </div>
       )}
+        </>
+      }
 
-      {profile.user.reviewsDto && profile.user.reviewsDto.length > 0 ? (
+      {!userIsAdmin && 
+      <>
+            {profile.user.reviewsDto && profile.user.reviewsDto.length > 0 ? (
         <div className={classes.profileSection}>
           <h2>Отзывы ({profile.user.reviewsDto.length})</h2>
           <div className={classes.reviewsList}>
@@ -215,6 +230,7 @@ export const UserProfilePage: React.FC = () => {
           <p>Вы еще не оставляли отзывов.</p>
         </div>
       )}
+      </>}
 
       {/* Модальное окно редактирования */}
       <Modal

@@ -41,7 +41,6 @@ export const updateTour = async (id: number, data: UpdateTourDto) => {
   if (data.price !== null) formData.append('Price', data.price?.toString() || '');
   if (data.startDate !== null) formData.append('StartDate', data.startDate || '');
   if (data.endDate !== null) formData.append('EndDate', data.endDate || '');
-  if (data.route !== null) formData.append('Route', data.route || '');
   if (data.numOfSeats !== null) formData.append('NumOfSeats', data.numOfSeats?.toString() || '');
   if (data.description !== null) formData.append('Description', data.description || '');
   
@@ -52,12 +51,19 @@ export const updateTour = async (id: number, data: UpdateTourDto) => {
     });
   }
 
+  if (data.existingImages) {
+    data.existingImages.forEach((link) => {
+      formData.append('ExistingImages', link)
+    })
+  }
+
   // Получаем токен из localStorage
   const token = localStorage.getItem(JwtTokenKey);
   if (!token) {
     throw new Error('No JWT token found');
   }
-
+  console.log("update request")
+  console.log(token)
   return axios.put(`${TOURS_URL}/id?id=${id}`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',

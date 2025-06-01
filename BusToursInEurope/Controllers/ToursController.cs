@@ -64,7 +64,7 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpPut("id")]
-        public async Task<ActionResult> UpdateTour(int id, [FromQuery] UpdateTourDto updateTourDto)
+        public async Task<ActionResult> UpdateTour(int id, [FromForm]UpdateTourDto updateTourDto)
         {
             await _showTours.UpdateTourAsync(id, updateTourDto);
             return NoContent();

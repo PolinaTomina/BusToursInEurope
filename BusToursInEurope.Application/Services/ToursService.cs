@@ -261,27 +261,59 @@ namespace BusToursInEurope.Application.Services
 
                 string tourPath = Path.Combine("TourFiles", tour.Name.ToString());
 
-                if (updateTourDto.Images != null && updateTourDto.Images.Any())
+                if (updateTourDto.Images != null || updateTourDto.ExistingImages != null)
                 {
-                    if (Directory.Exists(tourPath))
+                    // Создаем директорию, если её нет
+                    if (!Directory.Exists(tourPath))
                     {
-                        Directory.Delete(tourPath, true);
+                        Directory.CreateDirectory(tourPath);
                     }
 
-                    Directory.CreateDirectory(tourPath);
+                    // Получаем список текущих файлов в директории
+                    var currentFiles = Directory.GetFiles(tourPath).ToList();
 
+                    // Определяем файлы для удаления (те, которых нет в ExistingImages)
+                    var filesToDelete = currentFiles
+                        .Where(file => updateTourDto.ExistingImages == null ||
+                                      !updateTourDto.ExistingImages.Any(existing =>
+                                          Path.GetFileName(existing) == Path.GetFileName(file)))
+                        .ToList();
+
+                    // Удаляем файлы, которые не входят в ExistingImages
+                    foreach (var fileToDelete in filesToDelete)
+                    {
+                        File.Delete(fileToDelete);
+                    }
+
+                    // Очищаем текущие ссылки на изображения
                     tour.ImageLinks.Clear();
 
-                    foreach (var image in updateTourDto.Images)
+                    // Добавляем существующие изображения
+                    if (updateTourDto.ExistingImages != null)
                     {
-                        string imagePath = Path.Combine(tourPath, image.FileName);
-
-                        using (var fileStream = new FileStream(imagePath, FileMode.Create))
+                        foreach (var existingImage in updateTourDto.ExistingImages)
                         {
-                            await image.CopyToAsync(fileStream);
+                            if (File.Exists(string.Concat(tourPath, "\\", Path.GetFileName(existingImage))))
+                            {
+                                tour.ImageLinks.Add(string.Concat(tourPath, "\\", Path.GetFileName(existingImage)));
+                            }
                         }
+                    }
 
-                        tour.ImageLinks.Add(imagePath);
+                    // Добавляем новые изображения
+                    if (updateTourDto.Images != null && updateTourDto.Images.Any())
+                    {
+                        foreach (var image in updateTourDto.Images)
+                        {
+                            string imagePath = Path.Combine(tourPath, image.FileName);
+
+                            using (var fileStream = new FileStream(imagePath, FileMode.Create))
+                            {
+                                await image.CopyToAsync(fileStream);
+                            }
+
+                            tour.ImageLinks.Add(imagePath);
+                        }
                     }
                 }
 

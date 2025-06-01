@@ -11,7 +11,7 @@ interface CreateTourModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
-  id?: number; // Изменено с model?: FullTourDto на id?: number
+  id?: number;
 }
 
 export const CreateTourModal: React.FC<CreateTourModalProps> = ({
@@ -38,10 +38,10 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
     price: null,
     startDate: null,
     endDate: null,
-    route: null,
     numOfSeats: null,
     description: null,
     images: [],
+    existingImages: [],
     busId: 0,
     routeBusId: 0
   });
@@ -55,7 +55,6 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
     return dateString ? dateString.split('T')[0] : '';
   };
 
-  // Загрузка данных тура при открытии модального окна
   useEffect(() => {
     const loadTourData = async () => {
       if (isOpen && id) {
@@ -70,10 +69,10 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
             price: tourData.price,
             startDate: formatDate(tourData.startDate),
             endDate: formatDate(tourData.endDate),
-            route: null,
             numOfSeats: tourData.numOfSeats,
             description: tourData.description || '',
             images: [],
+            existingImages: tourData.fullImageLink || [],
             busId: tourData.busDto.Id,
             routeBusId: tourData.routeBusDto.Id
           });
@@ -89,7 +88,6 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
           setIsLoading(false);
         }
       } else if (isOpen) {
-        // Режим создания нового тура
         setTitle('Создать тур');
         setFormData({
           id: 0,
@@ -110,22 +108,12 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
     loadTourData();
   }, [isOpen, id]);
 
-  // Функция для загрузки существующих изображений
   const loadExistingImages = (imageLinks: string[]) => {
-    const images = imageLinks.map(link => {
-      const fullPath = `${BASE_URL}/${link}`;
-      console.log(fullPath)
-      return {
-        url: fullPath,
-        isExisting: true
-      };
-    });
-    
-    setPreviewImages(images);
-    setUpdateData(prev => ({
-      ...prev,
-      images: []
+    const images = imageLinks.map(link => ({
+      url: `${BASE_URL}/${link}`,
+      isExisting: true
     }));
+    setPreviewImages(images);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,28 +142,34 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
 
   const removeImage = (index: number) => {
     const imageToRemove = previewImages[index];
-    if (!imageToRemove.isExisting) {
-      URL.revokeObjectURL(imageToRemove.url);
-    }
-
     const newPreviews = [...previewImages];
     newPreviews.splice(index, 1);
     setPreviewImages(newPreviews);
 
-    if (id) {
-      setUpdateData(prev => {
-        const newImages = [...(prev.images || [])];
-        if (!imageToRemove.isExisting) {
+    if (!imageToRemove.isExisting) {
+      URL.revokeObjectURL(imageToRemove.url);
+      
+      if (id) {
+        setUpdateData(prev => {
+          const newImages = [...(prev.images || [])];
           newImages.splice(index, 1);
-        }
-        return { ...prev, images: newImages };
-      });
+          return { ...prev, images: newImages };
+        });
+      } else {
+        setFormData(prev => {
+          const newImages = [...prev.images];
+          newImages.splice(index, 1);
+          return { ...prev, images: newImages };
+        });
+      }
     } else {
-      setFormData(prev => {
-        const newImages = [...prev.images];
-        newImages.splice(index, 1);
-        return { ...prev, images: newImages };
-      });
+      if (id) {
+        setUpdateData(prev => {
+          const existingImagePath = imageToRemove.url.replace(`${BASE_URL}/`, '');
+          const newExistingImages = prev.existingImages?.filter(img => img !== existingImagePath) || [];
+          return { ...prev, existingImages: newExistingImages };
+        });
+      }
     }
   };
 
@@ -315,7 +309,7 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
                 ))}
               </div>
               <p className="text-xs text-gray-500 mt-1">
-                Существующие изображения будут заменены новыми
+                {id ? 'Удаленные изображения будут удалены с сервера' : 'Загруженные изображения будут сохранены'}
               </p>
             </div>
           )}
