@@ -1,6 +1,9 @@
 ﻿using BusToursInEurope.Application.Contstants;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.ReservationModel;
+using BusToursInEurope.Application.Models.TourModel;
+using BusToursInEurope.Application.Models.UserModel;
+using BusToursInEurope.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +16,12 @@ namespace BusToursInEurope.Controllers
     public class ReservationController : ControllerBase
     {
         private readonly IReservations _reservationsService;
+        private readonly IExportExcelService _exportExcelService;
 
-        public ReservationController(IReservations reservationsService)
+        public ReservationController(IReservations reservationsService, IExportExcelService exportExcelService)
         {
             _reservationsService = reservationsService;
+            _exportExcelService = exportExcelService;
         }
 
         [HttpPost]
@@ -63,6 +68,17 @@ namespace BusToursInEurope.Controllers
         {
             var reservation = await _reservationsService.GetReservationByIdAsync(id);
             return Ok(reservation);
+        }
+
+        [HttpGet("reservations_export")]
+        public async Task<IActionResult> ExportReservations()
+        {
+            var reservationsExport = await _reservationsService.GetReservationsForExportAsync();
+            var fileContents = await _exportExcelService.ExportReservationsToExcel(reservationsExport);
+
+            return File(fileContents,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "Reservations.xlsx");
         }
     }
 }

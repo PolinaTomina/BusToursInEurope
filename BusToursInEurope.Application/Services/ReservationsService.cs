@@ -1,5 +1,7 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.ReservationModel;
+using BusToursInEurope.Application.Models.TourModel;
+using BusToursInEurope.Application.Models.UserModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
 using Microsoft.EntityFrameworkCore;
@@ -147,6 +149,26 @@ namespace BusToursInEurope.Application.Services
             reservation.PaymentDate = request.IsPaid ? DateTime.Now : null;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<ReservationExportDto>> GetReservationsForExportAsync()
+        {
+            var reservations = await _context.Reservations
+                .Include(r => r.User)
+                .Include(r => r.Tour)
+                .Select(r => new ReservationExportDto
+                {
+                    ReservationId = r.Id,
+                    Date = r.Date,
+                    PaymentDate = r.PaymentDate,
+                    PaymentDeadline = r.PaymentDeadline,
+                    NumOfSeats = r.NumOfSeats,
+                    UserEmail = new UserDto { Email = r.User.Email },
+                    ExportExcelReservationTour = new ExportExcelReservationTourDto { TourId = r.Tour.Id, TourName = r.Tour.Name }
+                })
+                .ToListAsync();
+
+            return reservations;
         }
     }
 }
