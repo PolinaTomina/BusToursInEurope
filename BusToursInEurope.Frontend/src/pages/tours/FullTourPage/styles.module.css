@@ -129,12 +129,36 @@
   text-align: right;
 }
 
+/* Родительский контейнер (центрирует группу инпут+кнопка) */
+.actionZone {
+  display: flex;
+  justify-content: center; /* Центрирует группу */
+  margin: 20px auto;
+}
+
+/* Группа инпут + кнопка (располагаются рядом с отступом 5px) */
+.inputButtonGroup {
+  display: flex;
+  gap: 15px; /* Расстояние между инпутом и кнопкой */
+  align-items: center; /* Выравнивает по высоте */
+}
+
+/* Стили инпута */
+.seatsInput {
+  width: 100%;
+  max-width: 75px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Стили кнопки */
 .bookButton {
-  display: block;
+  padding: 10px 25px;
   width: 100%;
   max-width: 300px;
-  margin: 20px auto;
-  padding: 15px 25px;
   background-color: #3498db;
   color: white;
   border: none;

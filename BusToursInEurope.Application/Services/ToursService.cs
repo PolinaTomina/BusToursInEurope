@@ -102,6 +102,7 @@ namespace BusToursInEurope.Application.Services
 
             return new FullTourDto
             {
+                Id = tour.Id,
                 Name = tour.Name,
                 Price = tour.Price,
                 StartDate = tour.StartDate,

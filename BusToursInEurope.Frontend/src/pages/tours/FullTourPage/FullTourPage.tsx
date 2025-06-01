@@ -4,12 +4,16 @@ import { getTour } from "../../../queries/tours";
 import { useParams } from "react-router-dom";
 import classes from "./styles.module.css";
 import { BASE_URL } from "../../../utils/constants/urlConstants";
+import { createReservation } from "../../../queries/reservations";
+import { Input } from "../../../ui";
 
 interface FullTourProps {}
 
 export const FullTourPage: React.FC<FullTourProps> = ({}) => {
   const [tour, setTour] = useState<FullTourDto>();
   const { id } = useParams<{ id: string }>();
+  const [numOfSeats, setNumOfSeats] = useState(0)
+  const [isBooked, setIsBooked] = useState(false)
 
   useEffect(() => {
     if (id) {
@@ -29,7 +33,23 @@ export const FullTourPage: React.FC<FullTourProps> = ({}) => {
   };
 
   const handleBookTour = () => {
-    // Пустой метод для бронирования тура
+    const fetchBookAsync = async () => {
+      console.log(tour?.id)
+      if (!tour?.id) {
+        return;
+      }
+
+      var response = await createReservation({
+        numOfSeats: numOfSeats,
+        tourId: tour?.id
+      })
+      console.log(response)
+      if (response.status >= 200 && response.status < 300){
+        setIsBooked(true)
+      }
+    }
+
+    fetchBookAsync()
     console.log("Бронирование тура с ID:", tour?.id);
   };
 
@@ -53,12 +73,23 @@ export const FullTourPage: React.FC<FullTourProps> = ({}) => {
             ))}
           </div>
 
-            <button 
+          <div className={classes.actionZone}>
+            <div className={classes.inputButtonGroup}>
+              <Input 
+                type="number" 
+                value={numOfSeats} 
+                onChange={(value) => setNumOfSeats(Number(value.target.value))}
+                className={classes.seatsInput}
+              />
+              <button 
                 onClick={handleBookTour}
                 className={classes.bookButton}
-            >
+                disabled={isBooked}
+              >
                 Забронировать тур
-            </button>
+              </button>
+            </div>
+          </div>
 
           <div className={classes.tourDetails}>
             <div className={classes.detailCard}>
