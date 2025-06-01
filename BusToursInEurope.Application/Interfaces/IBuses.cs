@@ -8,6 +8,6 @@ namespace BusToursInEurope.Application.Interfaces
         Task AddBusAsync(CreateBusDto busDto);
         Task DeleteBusAsync(int id);
         Task UpdateBusAsync(int id, UpdateBusDto busDto);
-        Task<List<CreateBusDto>> GetBusesAsync(BusFilter busFilter);
+        Task<List<ShowBusDto>> GetBusesAsync(BusFilter busFilter);
     }
 }

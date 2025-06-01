@@ -59,18 +59,18 @@ namespace BusToursInEurope.Application.Services
                 throw new KeyNotFoundException("Отель не найден");
             }
 
-            if (!string.IsNullOrEmpty(hotelDto.Name)) hotelDto.Name = hotelDto.Name;
-            if (hotelDto.Rating.HasValue) hotelDto.Rating = hotelDto.Rating.Value;
+            if (!string.IsNullOrEmpty(hotelDto.Name)) hotel.Name = hotelDto.Name;
+            if (hotelDto.Rating.HasValue) hotel.Rating = hotelDto.Rating.Value;
 
-            if (hotelDto.CityId > 0 && hotel.City?.Id != hotelDto.CityId)
+            var cityId = await _context.Cities
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync(x => x == hotelDto.CityId);
+            
+            if (cityId != default)
             {
-                var city = await _context.Cities.FindAsync(hotelDto.CityId);
-                if (city == null)
-                {
-                    throw new KeyNotFoundException("Город не найден");
-                }
-                hotel.City = city;
+                hotel.CityId = cityId;
             }
+
             await _context.SaveChangesAsync();
         }
 
