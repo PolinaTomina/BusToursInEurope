@@ -17,5 +17,7 @@
         public int UserId { get; set; }
 
         public User User { get; set; }
+
+        //добавить список туров многие ко многим
     }
 }
