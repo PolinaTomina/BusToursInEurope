@@ -1,22 +1,101 @@
-.block{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+.tourLink {
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
 }
 
-.imageTour{
-    background-color: brown;
+.tourLink:hover {
+    transform: translateY(-5px);
+}
+
+.tourCard {
     width: 275px;
-    height: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background: white;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-.tourInfo{
+.tourCard:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.imageContainer {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.tourImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.tourCard:hover .tourImage {
+    transform: scale(1.05);
+}
+
+.priceTag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tourContent {
+    padding: 16px;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-.nameAndPrice{
+.tourTitle {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 3em;
+    line-height: 1.5;
+}
+
+.dateRange {
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: #7f8c8d;
     display: flex;
-    flex-direction: row;
-    gap: 5px;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.dateIcon {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .tourCard {
+        width: 100%;
+    }
+    
+    .imageContainer {
+        height: 180px;
+    }
 }

@@ -6,7 +6,7 @@ export interface CreateReviewDto {
 
 export interface ReviewDto {
   id: number;
-  username: string | null;
+  login: string | null;
   comment: string | null;
   rating: number;
   reviewDate: string;

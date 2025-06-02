@@ -33,7 +33,7 @@ namespace BusToursInEurope.Controllers
         /// </summary>
         /// <param name="request">Контракт для создания отзыва (оценка, коммент)</param>
         [Authorize]
-        [HttpPost("create review")]
+        [HttpPost]
         public async Task<IActionResult> CreateReview([FromBody] CreateReviewDto createReview)
         {
             var email = User.FindFirst(ClaimTypes.Name)?.Value;
@@ -45,7 +45,7 @@ namespace BusToursInEurope.Controllers
         }
 
         [Authorize]
-        [HttpDelete("delete review")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteReview(int reviewId)
         {
             var email = User.FindFirst(ClaimTypes.Name)?.Value;
