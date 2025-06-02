@@ -19,10 +19,12 @@ namespace BusToursInEurope.Application.Services
     public class ToursService : ITours
     {
         private readonly ApplicationContext _context;
+        private readonly IEmailService _emailService;
 
-        public ToursService(ApplicationContext context)
+        public ToursService(ApplicationContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         public async Task<List<ShortTourDto>> GetTopToursAsync()
@@ -213,6 +215,13 @@ namespace BusToursInEurope.Application.Services
 
             }
             await _context.SaveChangesAsync();
+
+            // Получаем список email пользователей
+            var userEmails = await _context.Users.Select(u => u.Email).ToListAsync();
+
+            // Отправляем уведомления
+            string subject = $"🚍 Новый тур: {tour.Name}";
+            await _emailService.SendBulkEmailAsync(userEmails, subject, tour);
         }
 
         public async Task DeleteTourAsync(int tourId)
@@ -243,8 +252,7 @@ namespace BusToursInEurope.Application.Services
             }
 
             _context.Tours.Remove(tour);
-            await _context.SaveChangesAsync();
-        }
+            await _context.SaveChangesAsync();        }
 
         public async Task UpdateTourAsync(int tourId, UpdateTourDto updateTourDto)
         {
