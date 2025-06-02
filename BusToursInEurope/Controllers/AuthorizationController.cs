@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.AccountModel;
 using BusToursInEurope.Application.Contstants;
+using BusToursInEurope.Application.Services;
 
 namespace BusToursInEurope.Controllers
 {
@@ -38,6 +39,13 @@ namespace BusToursInEurope.Controllers
         public IActionResult GetAdminData()
         {
             return Ok();
+        }
+
+        [HttpGet("is_authenticated")]
+        public IActionResult CheckAuthentication()
+        {
+            bool isAuthenticated = _authService.IsUserAuthenticated(HttpContext);
+            return Ok(new { isAuthenticated });
         }
 
         [Authorize]

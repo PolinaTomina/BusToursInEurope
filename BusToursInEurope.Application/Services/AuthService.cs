@@ -5,6 +5,7 @@ using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.AccountModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -61,6 +62,11 @@ public class AuthService : IAuthService
 
         // Создание JWT токена
         return CreateJwtToken(user.Email, user.Role);
+    }
+
+    public bool IsUserAuthenticated(HttpContext httpContext)
+    {
+        return httpContext.User.Identity.IsAuthenticated;
     }
 
     public async Task ChangePasswordAsync(string email, string currentPassword, string newPassword)
