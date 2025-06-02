@@ -70,6 +70,7 @@ namespace BusToursInEurope.Controllers
             return Ok(reservation);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("reservations_export")]
         public async Task<IActionResult> ExportReservations()
         {
