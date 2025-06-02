@@ -61,6 +61,23 @@ public class AuthService : IAuthService
         return CreateJwtToken(user.Email, user.Role);
     }
 
+    public async Task ChangePasswordAsync(string email, string currentPassword, string newPassword)
+    {
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+        if (user == null)
+        {
+            throw new Exception("Пользователь не найден.");
+        }
+
+        if (user.Password != currentPassword)
+        {
+            throw new Exception("Неверный текущий пароль.");
+        }
+
+        user.Password = newPassword;
+        await _context.SaveChangesAsync();
+    }
+
     public static string CreateJwtToken(string email, string role)
     {
         var claims = new List<Claim>

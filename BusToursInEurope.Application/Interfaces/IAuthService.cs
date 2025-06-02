@@ -6,5 +6,6 @@ namespace BusToursInEurope.Application.Interfaces
     {
         Task<string> RegistrationNewUserAsync(RegistrationDto registrationDto);
         Task<string> AuthUserAsync(AuthorizationDto authorizationDto);
+        Task ChangePasswordAsync(string email, string currentPassword, string newPassword);
     }
 }

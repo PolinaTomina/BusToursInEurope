@@ -39,5 +39,20 @@ namespace BusToursInEurope.Controllers
         {
             return Ok();
         }
+
+        [Authorize]
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePassword)
+        {
+            try
+            {
+                await _authService.ChangePasswordAsync(changePassword.Email, changePassword.CurrentPassword, changePassword.NewPassword);
+                return Ok(new { message = "Пароль успешно изменен." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
     }
 }
