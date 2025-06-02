@@ -21,10 +21,10 @@ export interface UpdateTourDto {
   price: number | null; // CHANGED: сделал nullable как в бэкенде
   startDate: string | null; // CHANGED: сделал nullable
   endDate: string | null; // CHANGED: сделал nullable
-  route: string | null;
   numOfSeats: number | null; // CHANGED: сделал nullable
   description: string | null;
   images?: File[]; // NEW: добавил поддержку изображений
+  existingImages?: string[];
   busId: number;
   routeBusId: number
 }

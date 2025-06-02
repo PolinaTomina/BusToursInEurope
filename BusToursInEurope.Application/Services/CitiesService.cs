@@ -126,6 +126,7 @@ namespace BusToursInEurope.Application.Services
             // Преобразуем в DTO
             var cities = await query.Select(c => new ShowCityDto
             {
+                Id = c.Id,
                 Name = c.Name,
                 Country = c.Country,
                 Visa = c.Visa

@@ -43,6 +43,7 @@ export const CreateBusModal: React.FC<CreateBusModalProps> = ({
     e.preventDefault();
     try {
       if (model) {
+        console.log(model)
         const updatedBusData: BusDto = {
           id: model.id,
           ...formData

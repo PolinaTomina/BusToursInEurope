@@ -23,7 +23,7 @@ export const AdminHotelsPage: React.FC = ({ }) => {
             title: "Местоположение", 
             render: (hotel: HotelDto) => (
                 <div>
-                    {getCityName(hotel.id)}
+                    {getCityName(hotel.cityId)}
                 </div>
             )
         },

@@ -10,6 +10,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   error?: string;
   options: SelectOption[];
   currentSelectedId?: number | string | null;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void; // Добавлено
 }
 
 export const Select: React.FC<SelectProps> = ({
@@ -18,6 +19,7 @@ export const Select: React.FC<SelectProps> = ({
   options,
   currentSelectedId,
   className = '',
+  onChange,
   ...props
 }) => {
   return (
@@ -36,6 +38,7 @@ export const Select: React.FC<SelectProps> = ({
         `}
         {...props}
         value={currentSelectedId ?? ''}
+        onChange={onChange}
       >
         <option value="" disabled>Выберите вариант</option>
         {options.map((option) => (

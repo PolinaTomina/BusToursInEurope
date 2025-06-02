@@ -63,6 +63,7 @@ export const AdminBusPage: React.FC = ({ }) => {
 
     const onEditClick = (bus: BusDto) => {
         setCurrentBus(_ => {
+            console.log(bus.id)
             return bus;
         });
         setModalOpen(true)

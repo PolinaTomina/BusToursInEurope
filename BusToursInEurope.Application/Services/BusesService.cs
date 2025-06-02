@@ -58,7 +58,7 @@ namespace BusToursInEurope.Application.Services
             }
         }
 
-        public async Task<List<CreateBusDto>> GetBusesAsync(BusFilter busFilter)
+        public async Task<List<ShowBusDto>> GetBusesAsync(BusFilter busFilter)
         {
             var query = _context.Buses.AsQueryable();
 
@@ -85,8 +85,9 @@ namespace BusToursInEurope.Application.Services
                 };
             }
 
-            var buses = await query.Select(b => new CreateBusDto
+            var buses = await query.Select(b => new ShowBusDto
             {
+                Id = b.Id,
                 Name = b.Name,
                 NumOfSeats = b.NumOfSeats
             }).ToListAsync();

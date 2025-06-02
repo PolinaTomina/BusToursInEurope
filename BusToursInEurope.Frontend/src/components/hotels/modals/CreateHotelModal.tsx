@@ -12,7 +12,7 @@ interface CreateHotelModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess?: () => void;
-  model?: HotelDto
+  model?: HotelDto;
 }
 
 export const CreateHotelModal: React.FC<CreateHotelModalProps> = ({
@@ -24,22 +24,19 @@ export const CreateHotelModal: React.FC<CreateHotelModalProps> = ({
   const [formData, setFormData] = useState<Omit<HotelDto, 'id'>>({
     name: '',
     rating: 0,
-    cityDtoId: 0
+    cityId: 0 // изменено на число
   });
 
-  const [cityOptions, setCityOptions] = useState<SelectOption[]>([])
-
-  const [title, setTitle] = useState('Создать отель')
+  const [cityOptions, setCityOptions] = useState<SelectOption[]>([]);
+  const [title, setTitle] = useState('Создать отель');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       if (model) {
-        const updatedHotelData: HotelDto = {
-          id: model.id,
-          ...formData
-        };
-        await updateHotel(model.id, updatedHotelData);
+        await updateHotel(model.id, { ...formData, id: model.id });
       } else {
         await createHotel({ ...formData, id: 0 });
       }
@@ -47,48 +44,62 @@ export const CreateHotelModal: React.FC<CreateHotelModalProps> = ({
       onClose();
     } catch (error) {
       console.error('Failed to create hotel:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormData({ ...formData, cityId: Number(e.target.value) }); // преобразуем в число
+  };
+
   useEffect(() => {
-    const fecthCities = async () => {
-        try {
-          const response = await getCities({});
-          const options: SelectOption[] = response.data.map((city: CityDto) => ({
-              id: city.id,
-              value: `${city.name}, ${city.country}`
-          }));
-
-          setCityOptions(options)
-        } catch (error) {
-          console.error('Error fetching buses:', error);
+    const fetchCities = async () => {
+      try {
+        const response = await getCities({});
+        const options: SelectOption[] = response.data.map((city: CityDto) => ({
+          id: city.id,
+          value: `${city.name}, ${city.country}`
+        }));
+        setCityOptions(options);
+        
+        if (!model && options.length > 0 && formData.cityId === 0) {
+          setFormData(prev => ({ ...prev, cityId: options[0].id as number }));
+        }
+      } catch (error) {
+        console.error('Error fetching cities:', error);
       }
-    }
+    };
 
-    fecthCities()
-  }, [])
+    if (isOpen) {
+      fetchCities();
+    }
+  }, [isOpen, model]);
 
   useEffect(() => {
     if (model) {
-      const { id, ...modelWithoutId } = model;
-      setTitle('Редактировать отель')
-      setFormData(modelWithoutId);
+      setTitle('Редактировать отель');
+      setFormData({
+        name: model.name,
+        rating: model.rating,
+        cityId: model.cityId
+      });
     } else {
-      setTitle('Создать отель')
+      setTitle('Создать отель');
       setFormData({
         name: '',
         rating: 0,
-        cityDtoId: 0
+        cityId: cityOptions[0]?.id as number || 0
       });
     }
-  }, [isOpen, model])
+  }, [isOpen, model, cityOptions]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title}>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Название"
-          value={formData.name || ''}
+          value={formData.name || ""}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           required
         />
@@ -96,19 +107,25 @@ export const CreateHotelModal: React.FC<CreateHotelModalProps> = ({
           label="Рейтинг"
           type="number"
           value={formData.rating}
-          onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) })}
+          onChange={(e) => setFormData({ ...formData, rating: parseFloat(e.target.value) || 0 })}
           required
           min={0}
           max={5}
           step={0.1}
         />
-        <Select label='Город' options={cityOptions} currentSelectedId={model?.cityDtoId}/>
+        <Select
+          label="Город"
+          options={cityOptions}
+          currentSelectedId={formData.cityId}
+          onChange={handleCityChange}
+          required
+        />
         <div className="flex justify-end space-x-2">
-          <Button type="button" variant="outline" onClick={onClose}>
+          <Button type="button" variant="outline" onClick={onClose} disabled={isLoading}>
             Отмена
           </Button>
-          <Button type="submit">
-            Сохранить
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? 'Сохранение...' : 'Сохранить'}
           </Button>
         </div>
       </form>
