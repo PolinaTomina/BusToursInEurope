@@ -1,95 +1,281 @@
+/* Основные стили */
 .profileContainer {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: #2d3748;
 }
 
+/* Шапка профиля */
 .profileHeader {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 30px;
-  border-bottom: 1px solid #eee;
   padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .profileTitle {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
-  color: #2c3e50;
+  color: #1a365d;
+  font-weight: 600;
+}
+
+.profileSubtitle {
+  margin: 5px 0 0;
+  color: #718096;
+  font-size: 0.95rem;
+}
+
+/* Кнопки действий */
+.actionButtons {
+  display: flex;
+  gap: 12px;
 }
 
 .editButton {
-  background-color: #3498db;
+  background-color: #3182ce;
   color: white;
   text-transform: none;
-  font-size: 1rem;
-  padding: 8px 20px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s;
 }
 
 .editButton:hover {
-  background-color: #267cb6;
+  background-color: #2b6cb0;
+  transform: translateY(-1px);
 }
 
+.exitButton {
+  color: #718096;
+  border-color: #cbd5e0;
+  text-transform: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.exitButton:hover {
+  border-color: #a0aec0;
+  background-color: #f7fafc;
+}
+
+.editIcon {
+  margin-right: 6px;
+}
+
+/* Основное содержимое */
+.profileContent {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .profileContent {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+/* Секции профиля */
 .profileSection {
-  margin-bottom: 30px;
-  background-color: #f8f9fa;
+  background-color: white;
+  border-radius: 12px;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #edf2f7;
 }
 
-.profileSection h2 {
-  color: #2c3e50;
-  margin-top: 0;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+.sectionTitle {
+  font-size: 1.3rem;
+  margin: 0 0 16px;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.sectionIcon {
+  font-size: 1.2rem;
+}
+
+/* Информация профиля */
 .profileInfo {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 15px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
-.profileInfo p {
-  margin: 8px 0;
-  padding: 10px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.reservationsList, .reviewsList {
-  display: grid;
-  gap: 15px;
-}
-
-.reservationItem, .reviewItem {
-  background-color: white;
-  padding: 15px;
+.infoItem {
+  display: flex;
+  padding: 12px;
+  background-color: #f8fafc;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: #4a5568;
+  min-width: 120px;
+}
+
+.infoValue {
+  color: #1a365d;
+}
+
+/* Список бронирований */
+.reservationsList {
+  display: grid;
+  gap: 12px;
+}
+
+.reservationItem {
+  padding: 16px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s;
+}
+
+.reservationItem:hover {
+  background-color: #ebf8ff;
+  border-color: #bee3f8;
+}
+
+.reservationHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.reservationDate {
+  color: #2b6cb0;
+}
+
+.reservationSeats {
+  background-color: #ebf8ff;
+  color: #3182ce;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.reservationDetails {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+/* Список отзывов */
+.reviewsList {
+  display: grid;
+  gap: 16px;
 }
 
 .reviewItem {
+  padding: 16px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s;
 }
 
 .reviewItem:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-color: #bee3f8;
 }
 
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.reviewRating {
+  font-size: 1.1rem;
+  color: #ecc94b;
+}
+
+.starFilled {
+  color: #ecc94b;
+}
+
+.starEmpty {
+  color: #e2e8f0;
+}
+
+.reviewDate {
+  font-size: 0.85rem;
+  color: #718096;
+}
+
+.commentContainer {
+  margin: 8px 0;
+}
+
+.commentContent {
+  max-height: 100px;
+  overflow-y: auto;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+  word-break: break-word;
+}
+
+/* Стили для скроллбара */
+.commentContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.commentContent::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.commentContent::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.commentContent::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+.reviewAuthor {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: #718096;
+  text-align: right;
+}
+
+/* Пустые секции */
 .emptySection {
   text-align: center;
   padding: 20px;
-  color: #7f8c8d;
+  color: #718096;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e0;
 }
 
+/* Загрузка */
 .loadingContainer {
   display: flex;
   flex-direction: column;
@@ -99,14 +285,13 @@
   gap: 20px;
 }
 
+/* Ошибка */
 .errorContainer {
   padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
   text-align: center;
 }
 
-/* Стили для модального окна */
+/* Модальное окно */
 .modalContainer {
   position: absolute;
   top: 50%;
@@ -116,47 +301,56 @@
   max-width: 90%;
   background-color: white;
   padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   outline: none;
+}
+
+.modalTitle {
+  margin: 0 0 20px;
+  color: #2d3748;
+  font-size: 1.5rem;
 }
 
 .editForm {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 16px;
 }
 
 .modalButtons {
   display: flex;
   justify-content: flex-end;
-  gap: 15px;
+  gap: 12px;
   margin-top: 20px;
 }
 
-.actionButtons{
-  display: flex;
-  gap: 15px;
+.cancelButton {
+  color: #718096;
+  border-color: #cbd5e0;
 }
 
-/* Адаптивные стили */
+.saveButton {
+  background-color: #3182ce;
+}
+
+.saveButton:hover {
+  background-color: #2b6cb0;
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
-  .profileInfo {
-    grid-template-columns: 1fr;
-  }
-  
-  .profileTitle {
-    font-size: 2rem;
-  }
-  
   .profileHeader {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+    gap: 16px;
   }
   
-  .modalContainer {
-    width: 90%;
-    padding: 20px;
+  .actionButtons {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .reservationDetails {
+    grid-template-columns: 1fr;
   }
 }

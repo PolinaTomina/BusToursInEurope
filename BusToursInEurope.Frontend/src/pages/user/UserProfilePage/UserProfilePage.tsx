@@ -36,10 +36,9 @@ export const UserProfilePage: React.FC = () => {
           passportNumber: profileData.passportNumber || ""
         });
 
-        const admin = await isAdmin(localStorage.getItem(JwtTokenKey) || "")
-
+        const admin = await isAdmin(localStorage.getItem(JwtTokenKey) || "");
         if (admin.status !== 401) {
-          setIsAdmin(true)
+          setIsAdmin(true);
         }
       } catch (err) {
         setError("Не удалось загрузить профиль. Пожалуйста, попробуйте позже.");
@@ -74,8 +73,8 @@ export const UserProfilePage: React.FC = () => {
   };
 
   const handleExitProfile = () => {
-    localStorage.removeItem(JwtTokenKey)
-    navigate('/')
+    localStorage.removeItem(JwtTokenKey);
+    navigate('/');
   };
 
   const handleCloseEditModal = () => {
@@ -110,7 +109,7 @@ export const UserProfilePage: React.FC = () => {
   if (loading) {
     return (
       <div className={classes.loadingContainer}>
-        <CircularProgress />
+        <CircularProgress size={60} />
         <p>Загрузка профиля...</p>
       </div>
     );
@@ -119,7 +118,7 @@ export const UserProfilePage: React.FC = () => {
   if (!profile || !profile.user) {
     return (
       <div className={classes.errorContainer}>
-        <Alert severity="error">
+        <Alert severity="error" sx={{ width: '100%' }}>
           Профиль не найден или произошла ошибка при загрузке.
         </Alert>
       </div>
@@ -139,98 +138,189 @@ export const UserProfilePage: React.FC = () => {
       </Snackbar>
 
       <div className={classes.profileHeader}>
-        <h1 className={classes.profileTitle}>Профиль пользователя</h1>
+        <div>
+          <h1 className={classes.profileTitle}>Профиль пользователя</h1>
+          <p className={classes.profileSubtitle}>Личная информация и активность</p>
+        </div>
         <div className={classes.actionButtons}>
+          {!userIsAdmin && (
+            <Button 
+              variant="contained" 
+              onClick={handleEditProfile}
+              className={classes.editButton}
+              startIcon={<span className={classes.editIcon}>✏️</span>}
+            >
+              Редактировать
+            </Button>
+          )}
           <Button 
-            variant="contained" 
-            onClick={handleEditProfile}
-            className={classes.editButton}
-          >
-            Редактировать профиль
-          </Button>
-          <Button 
-            variant="contained" 
+            variant="outlined" 
             onClick={handleExitProfile}
-            className={classes.editButton}
+            className={classes.exitButton}
           >
-            Выйти из аккаунта
+            Выйти
           </Button>
         </div>
       </div>
       
-      <div className={classes.profileSection}>
-        <h2>Учетные данные</h2>
-        <div className={classes.profileInfo}>
-          <p><strong>Email:</strong> {profile.user.email || "Не указан"}</p>
-          <p><strong>Логин:</strong> {profile.user.login || "Не указан"}</p>
-          <p><strong>Роль:</strong> {profile.user.role || "Не указана"}</p>
+      <div className={classes.profileContent}>
+        <div className={classes.mainSection}>
+          <div className={classes.profileSection}>
+            <h2 className={classes.sectionTitle}>
+              <span className={classes.sectionIcon}>👤</span>
+              Учетные данные
+            </h2>
+            <div className={classes.profileInfo}>
+              <div className={classes.infoItem}>
+                <span className={classes.infoLabel}>Email:</span>
+                <span className={classes.infoValue}>{profile.user.email || "Не указан"}</span>
+              </div>
+              <div className={classes.infoItem}>
+                <span className={classes.infoLabel}>Логин:</span>
+                <span className={classes.infoValue}>{profile.user.login || "Не указан"}</span>
+              </div>
+            </div>
+          </div>
+
+          {!userIsAdmin && (
+            <div className={classes.profileSection}>
+              <h2 className={classes.sectionTitle}>
+                <span className={classes.sectionIcon}>📝</span>
+                Личная информация
+              </h2>
+              <div className={classes.profileInfo}>
+                <div className={classes.infoItem}>
+                  <span className={classes.infoLabel}>Имя:</span>
+                  <span className={classes.infoValue}>{profile.name || "Не указано"}</span>
+                </div>
+                <div className={classes.infoItem}>
+                  <span className={classes.infoLabel}>Фамилия:</span>
+                  <span className={classes.infoValue}>{profile.surName || "Не указано"}</span>
+                </div>
+                <div className={classes.infoItem}>
+                  <span className={classes.infoLabel}>Отчество:</span>
+                  <span className={classes.infoValue}>{profile.middleName || "Не указано"}</span>
+                </div>
+                <div className={classes.infoItem}>
+                  <span className={classes.infoLabel}>Телефон:</span>
+                  <span className={classes.infoValue}>{profile.numPhone || "Не указано"}</span>
+                </div>
+                <div className={classes.infoItem}>
+                  <span className={classes.infoLabel}>Паспорт:</span>
+                  <span className={classes.infoValue}>{profile.passportNumber || "Не указано"}</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className={classes.activitySection}>
+          {!userIsAdmin && (
+            <>
+              {profile.user.reservationsDto && profile.user.reservationsDto.length > 0 ? (
+                <div className={classes.profileSection}>
+                  <h2 className={classes.sectionTitle}>
+                    <span className={classes.sectionIcon}>📅</span>
+                    Бронирования ({profile.user.reservationsDto.length})
+                  </h2>
+                  <div className={classes.reservationsList}>
+                    {profile.user.reservationsDto.map(reservation => (
+                      <div key={reservation.id} className={classes.reservationItem}>
+                        <div className={classes.reservationHeader}>
+                          <span className={classes.reservationDate}>
+                            {formatDate(reservation.date)}
+                          </span>
+                          <span className={classes.reservationSeats}>
+                            {reservation.numOfSeats} мест
+                          </span>
+                        </div>
+                        <div className={classes.reservationDetails}>
+                          <div>
+                            <span>Оплата: </span>
+                            <span>{formatDate(reservation.paymentDate) || "Не оплачено"}</span>
+                          </div>
+                          <div>
+                            <span>Срок оплаты: </span>
+                            <span>{formatDate(reservation.paymentDeadline)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className={classes.profileSection}>
+                  <h2 className={classes.sectionTitle}>
+                    <span className={classes.sectionIcon}>📅</span>
+                    Бронирования
+                  </h2>
+                  <div className={classes.emptySection}>
+                    <p>У вас пока нет бронирований.</p>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
+          {!userIsAdmin && (
+            <>
+              {profile.user.reviewsDto && profile.user.reviewsDto.length > 0 ? (
+                <div className={classes.profileSection}>
+                  <h2 className={classes.sectionTitle}>
+                    <span className={classes.sectionIcon}>⭐</span>
+                    Отзывы ({profile.user.reviewsDto.length})
+                  </h2>
+                  <div className={classes.reviewsList}>
+                    {profile.user.reviewsDto.map(review => (
+                      <div 
+                        key={review.id} 
+                        className={classes.reviewItem}
+                        onClick={() => handleReviewClick(review.tourId)}
+                      >
+                        <div className={classes.reviewHeader}>
+                          <span className={classes.reviewRating}>
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <span 
+                                key={i} 
+                                className={i < review.rating ? classes.starFilled : classes.starEmpty}
+                              >
+                                ★
+                              </span>
+                            ))}
+                          </span>
+                          <span className={classes.reviewDate}>
+                            {formatDate(review.reviewDate)}
+                          </span>
+                        </div>
+                        <div className={classes.commentContainer}>
+                          <div className={classes.commentContent}>
+                            {review.comment || "Без комментария"}
+                          </div>
+                        </div>
+                        {review.login && (
+                          <div className={classes.reviewAuthor}>
+                            Автор: {review.login}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className={classes.profileSection}>
+                  <h2 className={classes.sectionTitle}>
+                    <span className={classes.sectionIcon}>⭐</span>
+                    Отзывы
+                  </h2>
+                  <div className={classes.emptySection}>
+                    <p>Вы еще не оставляли отзывов.</p>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
-
-      {!userIsAdmin &&
-      <div className={classes.profileSection}>
-        <h2>Личная информация</h2>
-        <div className={classes.profileInfo}>
-          <p><strong>Имя:</strong> {profile.name || "Не указано"}</p>
-          <p><strong>Фамилия:</strong> {profile.surName || "Не указано"}</p>
-          <p><strong>Отчество:</strong> {profile.middleName || "Не указано"}</p>
-          <p><strong>Телефон:</strong> {profile.numPhone || "Не указано"}</p>
-          <p><strong>Идентификационный паспорта:</strong> {profile.passportNumber || "Не указано"}</p>
-        </div>
-      </div>}
-
-      {!userIsAdmin && 
-        <>
-              {profile.user.reservationsDto && profile.user.reservationsDto.length > 0 ? (
-        <div className={classes.profileSection}>
-          <h2>Бронирования ({profile.user.reservationsDto.length})</h2>
-          <div className={classes.reservationsList}>
-            {profile.user.reservationsDto.map(reservation => (
-              <div key={reservation.id} className={classes.reservationItem}>
-                <p><strong>Дата бронирования:</strong> {formatDate(reservation.date)}</p>
-                <p><strong>Дата оплаты:</strong> {formatDate(reservation.paymentDate)}</p>
-                <p><strong>Крайний срок оплаты:</strong> {formatDate(reservation.paymentDeadline)}</p>
-                <p><strong>Количество мест:</strong> {reservation.numOfSeats}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className={classes.profileSection}>
-          <h2>Бронирования</h2>
-          <p>У вас пока нет бронирований.</p>
-        </div>
-      )}
-        </>
-      }
-
-      {!userIsAdmin && 
-      <>
-            {profile.user.reviewsDto && profile.user.reviewsDto.length > 0 ? (
-        <div className={classes.profileSection}>
-          <h2>Отзывы ({profile.user.reviewsDto.length})</h2>
-          <div className={classes.reviewsList}>
-            {profile.user.reviewsDto.map(review => (
-              <div 
-                key={review.id} 
-                className={classes.reviewItem}
-                onClick={() => handleReviewClick(review.tourId)}
-              >
-                <p><strong>Имя:</strong> {review.username || "Аноним"}</p>
-                <p><strong>Оценка:</strong> {review.rating}/5</p>
-                <p><strong>Комментарий:</strong> {review.comment || "Без комментария"}</p>
-                <p><strong>Дата отзыва:</strong> {formatDate(review.reviewDate)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className={classes.profileSection}>
-          <h2>Отзывы</h2>
-          <p>Вы еще не оставляли отзывов.</p>
-        </div>
-      )}
-      </>}
 
       {/* Модальное окно редактирования */}
       <Modal
@@ -240,7 +330,7 @@ export const UserProfilePage: React.FC = () => {
         aria-describedby="edit-profile-form"
       >
         <Box className={classes.modalContainer}>
-          <h2>Редактировать профиль</h2>
+          <h2 className={classes.modalTitle}>Редактировать профиль</h2>
           <div className={classes.editForm}>
             <TextField
               label="Имя"
@@ -249,6 +339,7 @@ export const UserProfilePage: React.FC = () => {
               onChange={handleFormChange}
               fullWidth
               margin="normal"
+              variant="outlined"
             />
             <TextField
               label="Фамилия"
@@ -257,6 +348,7 @@ export const UserProfilePage: React.FC = () => {
               onChange={handleFormChange}
               fullWidth
               margin="normal"
+              variant="outlined"
             />
             <TextField
               label="Отчество"
@@ -265,6 +357,7 @@ export const UserProfilePage: React.FC = () => {
               onChange={handleFormChange}
               fullWidth
               margin="normal"
+              variant="outlined"
             />
             <TextField
               label="Телефон"
@@ -273,19 +366,22 @@ export const UserProfilePage: React.FC = () => {
               onChange={handleFormChange}
               fullWidth
               margin="normal"
+              variant="outlined"
             />
             <TextField
-              label="Идентификационный паспорта"
+              label="Паспорт"
               name="passportNumber"
               value={editForm.passportNumber}
               onChange={handleFormChange}
               fullWidth
               margin="normal"
+              variant="outlined"
             />
             <div className={classes.modalButtons}>
               <Button 
                 variant="outlined" 
                 onClick={handleCloseEditModal}
+                className={classes.cancelButton}
               >
                 Отмена
               </Button>
@@ -293,6 +389,7 @@ export const UserProfilePage: React.FC = () => {
                 variant="contained" 
                 onClick={handleSaveProfile}
                 disabled={loading}
+                className={classes.saveButton}
               >
                 {loading ? <CircularProgress size={24} /> : "Сохранить"}
               </Button>

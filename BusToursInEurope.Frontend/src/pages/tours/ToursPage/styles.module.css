@@ -1,0 +1,149 @@
+.toursPage {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.filtersSection {
+  margin-bottom: 30px;
+}
+
+.filtersToggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background-color: transparent;
+  color: #3498db;
+  border: 2px solid #3498db;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.filtersToggle.active {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.filtersToggle:hover {
+  background-color: rgba(52, 152, 219, 0.2);
+}
+
+.filtersPanel {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  overflow: hidden;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterGroup label {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.filterInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.filterInput:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.rangeInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.filterActions {
+  display: flex;
+  gap: 10px;
+  align-self: flex-end;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+}
+
+.applyButton {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.applyButton:hover {
+  background-color: #2980b9;
+}
+
+.resetButton {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.resetButton:hover {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.toursList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.loading,
+.noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+@media (max-width: 768px) {
+  .filtersPanel {
+    grid-template-columns: 1fr;
+  }
+  
+  .rangeInputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .filterActions {
+    justify-content: stretch;
+  }
+  
+  .applyButton,
+  .resetButton {
+    flex: 1;
+  }
+}

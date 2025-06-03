@@ -1,8 +1,69 @@
-.topTours{
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    width: 100%;
+.topToursSection {
+    padding: 40px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.sectionTitle {
+    text-align: center;
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.sectionTitle::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #3498db;
+    margin: 15px auto 0;
+}
+
+.toursGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
     justify-content: center;
-    margin-top: 25px;
+}
+
+.loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+
+.noTours {
+    text-align: center;
+    padding: 50px;
+    font-size: 1.2rem;
+    color: #e74c3c;
+    background: #f9f9f9;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .sectionTitle {
+        font-size: 1.5rem;
+    }
+    
+    .toursGrid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .topToursSection {
+        padding: 30px 15px;
+    }
+    
+    .toursGrid {
+        grid-template-columns: 1fr;
+    }
 }

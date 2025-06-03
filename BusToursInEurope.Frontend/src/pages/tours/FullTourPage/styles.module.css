@@ -1,3 +1,4 @@
+/* Основные стили контейнера тура */
 .tourContainer {
   max-width: 1200px;
   margin: 0 auto;
@@ -6,6 +7,7 @@
   color: #333;
 }
 
+/* Шапка тура */
 .tourHeader {
   display: flex;
   justify-content: space-between;
@@ -24,12 +26,13 @@
 .tourPrice {
   font-size: 2rem;
   font-weight: bold;
-  color: #e74c3c;
+  color: #2b6cb0;
   background-color: #f9f9f9;
   padding: 10px 20px;
   border-radius: 5px;
 }
 
+/* Галерея изображений */
 .tourGallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -50,6 +53,7 @@
   transform: scale(1.03);
 }
 
+/* Детали тура */
 .tourDetails {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -62,11 +66,40 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
 }
 
+.detailCard:hover {
+  transform: translateY(-3px);
+}
+
+.detailCard h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+/* Описание тура */
 .tourDescription {
   margin-bottom: 30px;
   line-height: 1.6;
+}
+
+.tourDescription h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Маршрут тура */
+.tourWaypoints {
+  margin-bottom: 30px;
+}
+
+.tourWaypoints h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
 }
 
 .tourWaypoints ul {
@@ -75,10 +108,172 @@
 }
 
 .tourWaypoints li {
-  padding: 10px;
-  margin-bottom: 5px;
+  padding: 10px 15px;
+  margin-bottom: 8px;
   background-color: #f8f9fa;
   border-left: 4px solid #3498db;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.tourWaypoints li:hover {
+  background-color: #e9ecef;
+}
+
+/* Блок бронирования */
+.bookingSection {
+  margin: 40px 0;
+  padding: 25px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.bookingContainer {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.bookingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.bookingHeader h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #2d3748;
+}
+
+.priceBadge {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  background-color: #ebf8ff;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.perPerson {
+  font-size: 1rem;
+  color: #718096;
+  font-weight: 400;
+}
+
+.bookingControls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.seatsControl {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seatsLabel {
+  font-size: 0.95rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.seatsInput {
+  padding: 12px 15px;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.seatsInput:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.seatsInput:disabled {
+  background-color: #edf2f7;
+  cursor: not-allowed;
+}
+
+.bookButton {
+  padding: 14px 20px;
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.bookButton:hover {
+  background-color: #3182ce;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(66, 153, 225, 0.2);
+}
+
+.bookButton:active {
+  transform: translateY(0);
+}
+
+.bookButton:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.bookButton:disabled:hover {
+  background-color: #a0aec0;
+  transform: none;
+  box-shadow: none;
+}
+
+.checkIcon, .bookIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.authPrompt {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.authLink {
+  color: #4299e1;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.authLink:hover {
+  text-decoration: underline;
+}
+
+/* Стили для блока отзывов */
+.tourReviews {
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+}
+
+.tourReviews h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
 }
 
 .reviewsGrid {
@@ -92,6 +287,16 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 180px;
+  height: 100%;
+  word-break: break-word;
+  transition: transform 0.2s ease;
+}
+
+.reviewCard:hover {
+  transform: translateY(-3px);
 }
 
 .reviewHeader {
@@ -104,10 +309,15 @@
 .reviewUsername {
   font-weight: bold;
   color: #2c3e50;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70%;
 }
 
 .reviewRating {
   color: #f39c12;
+  white-space: nowrap;
 }
 
 .starFilled {
@@ -121,58 +331,215 @@
 .reviewComment {
   margin: 10px 0;
   line-height: 1.5;
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: 200px;
+  padding-right: 5px;
+}
+
+/* Стили для полосы прокрутки */
+.reviewComment::-webkit-scrollbar {
+  width: 4px;
+}
+
+.reviewComment::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.reviewComment::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 2px;
+}
+
+.reviewComment::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .reviewDate {
   font-size: 0.8rem;
   color: #7f8c8d;
   text-align: right;
+  margin-top: 10px;
 }
 
-/* Родительский контейнер (центрирует группу инпут+кнопка) */
-.actionZone {
-  display: flex;
-  justify-content: center; /* Центрирует группу */
-  margin: 20px auto;
+/* Форма отзыва */
+.reviewFormContainer {
+  margin-bottom: 30px;
 }
 
-/* Группа инпут + кнопка (располагаются рядом с отступом 5px) */
-.inputButtonGroup {
-  display: flex;
-  gap: 15px; /* Расстояние между инпутом и кнопкой */
-  align-items: center; /* Выравнивает по высоте */
-}
-
-/* Стили инпута */
-.seatsInput {
-  width: 100%;
-  max-width: 75px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.toggleReviewFormButton {
+  background: none;
+  border: none;
+  color: #3498db;
+  cursor: pointer;
+  padding: 10px 15px;
   font-size: 1rem;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  border-radius: 4px;
 }
 
-/* Стили кнопки */
-.bookButton {
-  padding: 10px 25px;
+.toggleReviewFormButton:hover {
+  background-color: #f0f7fd;
+}
+
+.toggleReviewFormButton:active {
+  transform: translateY(1px);
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.reviewForm {
+  background-color: white;
+  padding: 0;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.formVisible {
+  max-height: 500px;
+  padding: 25px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.formHeader {
+  margin-bottom: 20px;
+}
+
+.formHeader h3 {
+  margin: 0 0 15px 0;
+  color: #2c3e50;
+  font-size: 1.3rem;
+}
+
+.ratingContainer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.ratingContainer label {
+  font-weight: 500;
+  color: #333;
+}
+
+.starsContainer {
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  font-size: 1.8rem;
+  color: #ddd;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.star:hover {
+  transform: scale(1.1);
+}
+
+.starSelected {
+  color: #f1c40f;
+  text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
+}
+
+.reviewTextInput {
   width: 100%;
-  max-width: 300px;
+  min-height: 120px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.reviewTextInput:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.submitReviewButton {
+  padding: 12px 25px;
   background-color: #3498db;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  font-weight: bold;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
 }
 
-.bookButton:hover {
-  background-color: #267cb6;
+.submitReviewButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.submitReviewButton:active {
+  transform: translateY(0);
+}
+
+.submitReviewButton:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.sendIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.noReviews {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+/* Разделитель секций */
+.sectionDivider {
+  height: 1px;
+  background-color: #e2e8f0;
+  margin: 40px 0;
+  position: relative;
+}
+
+.sectionDivider::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 10px;
+  background-color: #f8fafc;
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
   .tourHeader {
     flex-direction: column;
@@ -181,9 +548,26 @@
   
   .tourPrice {
     margin-top: 15px;
+    font-size: 1.8rem;
   }
   
   .tourDetails {
     grid-template-columns: 1fr;
+  }
+  
+  .bookingHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .priceBadge {
+    align-self: flex-start;
+  }
+  
+  .ratingContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }

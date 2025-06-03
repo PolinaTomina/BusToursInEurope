@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, User, AlertCircle, Phone } from 'lucide-react';
+import { Mail, Lock, User, AlertCircle, Phone, Eye, EyeOff } from 'lucide-react';
 import styles from './styles.module.css';
 import { AuthorizationDto, RegistrationDto } from '../../../types/Authorization';
 import { isAdmin, login, register } from '../../../queries/auth';
@@ -11,14 +11,16 @@ type AuthMode = 'login' | 'register';
 export const AuthorizationPage: React.FC = () => {
   const [mode, setMode] = useState<AuthMode>('login');
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
   
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [registerPhone, setRegisterPhone] = useState('');
 
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -29,20 +31,20 @@ export const AuthorizationPage: React.FC = () => {
       return;
     }
 
-      try {
-        const fetchLogin = async (dto: AuthorizationDto) => {
-          console.log(dto)
-          const response = await login(dto);
+    try {
+      const fetchLogin = async (dto: AuthorizationDto) => {
+        console.log(dto)
+        const response = await login(dto);
 
-          if (response.data) {
-            console.log(response.data)
-            const token = response.data.token
+        if (response.data) {
+          console.log(response.data)
+          const token = response.data.token
 
-            localStorage.setItem(JwtTokenKey, `Bearer ${token}`)
+          localStorage.setItem(JwtTokenKey, `Bearer ${token}`)
 
-            await redirectByToken(`Bearer ${token}`)
-          }
+          await redirectByToken(`Bearer ${token}`)
         }
+      }
 
       const request : AuthorizationDto = { 
         email: loginEmail,
@@ -111,6 +113,14 @@ export const AuthorizationPage: React.FC = () => {
     }
   }
 
+  const toggleLoginPasswordVisibility = () => {
+    setShowLoginPassword(!showLoginPassword);
+  };
+
+  const toggleRegisterPasswordVisibility = () => {
+    setShowRegisterPassword(!showRegisterPassword);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.authCard}>
@@ -159,12 +169,19 @@ export const AuthorizationPage: React.FC = () => {
                   <Lock size={18} className={styles.inputIcon} />
                   <input
                     id="login-password"
-                    type="password"
+                    type={showLoginPassword ? "text" : "password"}
                     className={styles.input}
                     placeholder="••••••••"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                   />
+                  <button 
+                    type="button" 
+                    className={styles.passwordToggle}
+                    onClick={toggleLoginPasswordVisibility}
+                  >
+                    {showLoginPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               </div>
               
@@ -181,7 +198,7 @@ export const AuthorizationPage: React.FC = () => {
             </form>
           ) : (
             <form onSubmit={handleRegisterSubmit} className={styles.form}>
-              <h2 className={styles.formTitle}>Create Account</h2>
+              <h2 className={styles.formTitle}>Создать аккаунт</h2>
               
               <div className={styles.inputGroup}>
                 <label htmlFor="register-username" className={styles.label}>
@@ -225,7 +242,7 @@ export const AuthorizationPage: React.FC = () => {
                   <Phone size={18} className={styles.inputIcon} />
                   <input
                     id="register-phone"
-                    type="phone"
+                    type="tel"
                     className={styles.input}
                     placeholder="+375-xx-xxx-xx-xx"
                     value={registerPhone}
@@ -242,12 +259,19 @@ export const AuthorizationPage: React.FC = () => {
                   <Lock size={18} className={styles.inputIcon} />
                   <input
                     id="register-password"
-                    type="password"
+                    type={showRegisterPassword ? "text" : "password"}
                     className={styles.input}
                     placeholder="••••••••"
                     value={registerPassword}
                     onChange={(e) => setRegisterPassword(e.target.value)}
                   />
+                  <button 
+                    type="button" 
+                    className={styles.passwordToggle}
+                    onClick={toggleRegisterPasswordVisibility}
+                  >
+                    {showRegisterPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               </div>
               
