@@ -5,6 +5,7 @@ using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.AccountModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -14,11 +15,13 @@ public class AuthService : IAuthService
 {
     private readonly ApplicationContext _context;
     private readonly IProfileService _profileService;
+    private readonly IEmailService _emailService;
 
-    public AuthService(ApplicationContext context, IProfileService profileService)
+    public AuthService(ApplicationContext context, IProfileService profileService, IEmailService emailService)
     {
         _context = context;
         _profileService = profileService;
+        _emailService = emailService;
     }
 
     public async Task<string> RegistrationNewUserAsync(RegistrationDto registrationDto)
@@ -61,6 +64,11 @@ public class AuthService : IAuthService
         return CreateJwtToken(user.Email, user.Role);
     }
 
+    public bool IsUserAuthenticated(HttpContext httpContext)
+    {
+        return httpContext.User.Identity.IsAuthenticated;
+    }
+
     public async Task ChangePasswordAsync(string email, string currentPassword, string newPassword)
     {
         var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
@@ -76,6 +84,29 @@ public class AuthService : IAuthService
 
         user.Password = newPassword;
         await _context.SaveChangesAsync();
+
+        string subject = "🔐 Пароль успешно изменен";
+        string message = $@"
+            <html>
+            <head>
+                <style>
+                    body {{ font-family: Arial, sans-serif; }}
+                    .container {{ max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; text-align: center; padding: 20px; }}
+                    h2 {{ color: #2E86C1; }}
+                    p {{ font-size: 16px; }}
+                    .footer {{ font-size: 12px; color: #555; margin-top: 20px; }}
+                </style>
+            </head>
+            <body>
+                <div class='container'>
+                    <h2>🔐 Ваш пароль успешно изменен</h2>
+                    <p>Здравствуйте! Ваш пароль был изменен. Если это были не вы, пожалуйста, немедленно свяжитесь с поддержкой.</p>
+                    <p class='footer'>Это автоматическое уведомление. Спасибо за использование нашего сервиса! 🚀</p>
+                </div>
+            </body>
+            </html>";
+
+        await _emailService.SendEmailAsync(email, subject, message);
     }
 
     public static string CreateJwtToken(string email, string role)

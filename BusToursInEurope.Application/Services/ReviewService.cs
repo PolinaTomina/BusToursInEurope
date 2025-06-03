@@ -22,6 +22,10 @@ namespace BusToursInEurope.Application.Services
             if (user == null)
                 throw new Exception("Пользователь не найден");
 
+            var existingReview = await _context.Reviews.FirstOrDefaultAsync(r => r.UserId == user.Id && r.TourId == createReview.TourId);
+            if (existingReview != null)
+                throw new Exception("Вы уже оставили отзыв на этот тур.");
+
             var review = new Review
             {
                 Rating = createReview.Rating,

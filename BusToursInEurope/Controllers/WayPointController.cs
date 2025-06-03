@@ -19,7 +19,7 @@ namespace BusToursInEurope.Controllers
         }
 
         [Authorize(Roles = Role.Admin)]
-        [HttpGet("get way points")]
+        [HttpGet("get_way_points")]
         public async Task<ActionResult<List<WayPointDto>>> GetWayPoints()
         {
             var wp = await _wayPoints.GetWayPointsAsync();

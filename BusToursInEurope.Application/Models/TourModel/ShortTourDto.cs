@@ -10,5 +10,8 @@ namespace BusToursInEurope.Application.Models.TourModel
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string FirstImageLink { get; set; }
+
+        public int ReservationCount { get; set; }
+        public double Rating { get; set; }
     }
 }

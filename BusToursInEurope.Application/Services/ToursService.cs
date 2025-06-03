@@ -38,8 +38,15 @@ namespace BusToursInEurope.Application.Services
                     Price = t.Price,
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
-                    FirstImageLink = t.ImageLinks.First()
-                }).ToListAsync();
+                    FirstImageLink = t.ImageLinks.First(),
+                    ReservationCount = t.Reservations.Count, // Считаем бронирования
+                    Rating = t.Reviews.Any()
+                ? Math.Round(t.Reviews.Average(r => r.Rating), 2) // Средний рейтинг до 2 знаков
+                : 0
+                })
+                .OrderByDescending(t => t.ReservationCount)
+                .Take(10)
+                .ToListAsync();
 
             return tours;
         }

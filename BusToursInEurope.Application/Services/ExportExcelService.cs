@@ -15,7 +15,7 @@ namespace BusToursInEurope.Application
             ISheet sheet = workbook.CreateSheet("Top Tours");
 
             IRow headerRow = sheet.CreateRow(0);
-            string[] headers = { "Id", "Name", "Price", "Start Date", "End Date" };
+            string[] headers = { "Идентификационный номер", "Название", "Цена", "Дата начала", "Дата окончания", "Количество бронирований", "Рейтинг" };
 
             for (int i = 0; i < headers.Length; i++)
             {
@@ -31,6 +31,8 @@ namespace BusToursInEurope.Application
                 row.CreateCell(2).SetCellValue((double)tour.Price);
                 row.CreateCell(3).SetCellValue(tour.StartDate.ToString("yyyy-MM-dd"));
                 row.CreateCell(4).SetCellValue(tour.EndDate.ToString("yyyy-MM-dd"));
+                row.CreateCell(5).SetCellValue(tour.ReservationCount);
+                row.CreateCell(6).SetCellValue((double)tour.Rating);
             }
 
             using (var ms = new MemoryStream())
@@ -46,8 +48,8 @@ namespace BusToursInEurope.Application
             ISheet sheet = workbook.CreateSheet("Reservations");
 
             IRow headerRow = sheet.CreateRow(0);
-            string[] headers = { "Reservation ID", "Date", "Payment Date", "Payment Deadline",
-                             "Num of Seats", "User Email", "Tour ID", "Tour Name" };
+            string[] headers = { "Идентификационный номер бронирования", "Дата бронирования", "Дата оплаты", "Срок оплаты",
+                             "Количество забронированных мест", "Почта пользователя", "Идентификационный номер тура", "Название тура" };
 
             for (int i = 0; i < headers.Length; i++)
             {

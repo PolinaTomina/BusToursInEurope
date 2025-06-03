@@ -45,7 +45,7 @@ namespace BusToursInEurope.Controllers
         }
 
         [Authorize]
-        [HttpDelete]
+        [HttpDelete("delete review")]
         public async Task<IActionResult> DeleteReview(int reviewId)
         {
             var email = User.FindFirst(ClaimTypes.Name)?.Value;
