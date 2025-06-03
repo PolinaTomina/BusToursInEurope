@@ -112,25 +112,45 @@ namespace BusToursInEurope.Application.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AddTourToProfile(int profileId, int tourId)
+        public async Task AddTourToProfile(string userEmail, int tourId)
         {
-            var profile = await _context.Profiles.Include(p => p.Tours)
-                .FirstOrDefaultAsync(p => p.Id == profileId);
+            var profileId = await _context.Profiles
+                .AsNoTracking()
+                .Include(p => p.User)
+                .Where(p => p.User.Email == userEmail)
+                .Select(p => p.Id)
+                .FirstOrDefaultAsync();
 
             var tour = await _context.Tours.FindAsync(tourId);
 
-            if (profile != null && tour != null)
+            if (profileId != default && tour != null)
             {
-                profile.Tours.Add(tour);
+                await _context.ProfilesTours.AddAsync(new ProfileTour
+                {
+                    ProfileId = profileId,
+                    TourId = tourId
+                });
+
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task<List<ShortTourDto>> GetProfileTours(int profileId)
+        public async Task<List<ShortTourDto>> GetProfileTours(string userEmail)
         {
-            return await _context.Profiles
-                .Where(p => p.Id == profileId)
-                .SelectMany(p => p.Tours)
+            var profileId = await _context.Profiles
+                .AsNoTracking()
+                .Include(x => x.User)
+                .Where(x => x.User.Email == userEmail)
+                .Select (x => x.Id)
+                .FirstOrDefaultAsync();
+
+            var toursId = await _context.ProfilesTours
+                .Where(x => x.ProfileId == profileId)
+                .Select(x => x.TourId)
+                .ToListAsync();
+
+            return await _context.Tours
+                .Where(x => toursId.Any(id => id == x.Id))
                 .Select(t => new ShortTourDto
                 {
                     Id = t.Id,
@@ -138,7 +158,8 @@ namespace BusToursInEurope.Application.Services
                     Price = t.Price,
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
-                    FirstImageLink = t.ImageLinks.First()
+                    FirstImageLink = t.ImageLinks.First(),
+                    IsLiked = true
                 })
                 .ToListAsync();
         }

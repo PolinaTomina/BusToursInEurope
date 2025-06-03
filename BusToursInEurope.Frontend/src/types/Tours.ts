@@ -36,6 +36,9 @@ export interface ShortTourDto {
   startDate: string;
   endDate: string;
   firstImageLink: string;
+  isLiked?: boolean;
+  reservationCount: number;
+  rating: number;
 }
 
 export interface FullTourDto {
@@ -50,5 +53,6 @@ export interface FullTourDto {
   routeBusDto: RouteBusDto;
   reservationsDto: ReservationDto[] | null;
   reviewsDto: ReviewDto[] | null;
-  fullImageLink: string[]
+  fullImageLink: string[];
+  isLiked?: boolean
 }

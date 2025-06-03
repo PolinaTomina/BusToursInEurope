@@ -24,21 +24,24 @@ namespace BusToursInEurope.Controllers
         [HttpGet("top")]
         public async Task<ActionResult<List<ShortTourDto>>> GetTopTours()
         {
-            var topTours = await _showTours.GetTopToursAsync();
+            var userEmail = User.Claims?.FirstOrDefault()?.Value ?? string.Empty;
+            var topTours = await _showTours.GetTopToursAsync(userEmail);
             return Ok(topTours);
         }
 
         [HttpGet("filters")] 
         public async Task<ActionResult<List<ShortTourDto>>> GetTours([FromQuery] ToursFilter toursFilter) 
-        { 
-            var tours = await _showTours.GetToursAsync(toursFilter); 
+        {
+            var userEmail = User.Claims.Count() > 0 ? User.Claims.First().Value : string.Empty;
+            var tours = await _showTours.GetToursAsync(toursFilter, userEmail); 
             return Ok(tours);
         }
 
         [HttpGet("id")]
         public async Task<ActionResult<FullTourDto>> GetFullTour(int id)
         {
-            var tour = await _showTours.GetFullTourAsync(id);
+            var userEmail = User.Claims.Count() > 0 ? User.Claims.First().Value : string.Empty;
+            var tour = await _showTours.GetFullTourAsync(id, userEmail);
             if (tour == null)
             {
                 return NotFound();
@@ -74,7 +77,8 @@ namespace BusToursInEurope.Controllers
         [HttpGet("export_statistic_top_tours")]
         public async Task<IActionResult> ExportTopTours()
         {
-            var topTours = await _showTours.GetTopToursAsync();
+            var userEmail = User?.Claims.First()?.Value;
+            var topTours = await _showTours.GetTopToursAsync(userEmail);
             var fileContents = await _exportExcelService.ExportToursToExcel(topTours);
 
             return File(fileContents,

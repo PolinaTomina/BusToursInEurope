@@ -45,14 +45,11 @@ namespace BusToursInEurope.Controllers
         }
 
         [Authorize]
-        [HttpDelete("delete review")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteReview(int reviewId)
         {
             var email = User.FindFirst(ClaimTypes.Name)?.Value;
             var isAdmin = User.IsInRole(Role.Admin); // Используем твою константу
-
-            if (string.IsNullOrEmpty(email))
-                return Unauthorized();
 
             var success = await _reviewService.DeleteReviewAsync(reviewId, email, isAdmin);
 

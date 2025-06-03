@@ -23,5 +23,7 @@ namespace BusToursInEurope.Application.Models.TourModel
 
         public ICollection<ReservationDto> ReservationsDto { get; set; } = new List<ReservationDto>();
         public ICollection<ReviewDto> ReviewsDto { get; set; } = new List<ReviewDto>();
+
+        public bool? IsLiked { get; set; }
     }
 }

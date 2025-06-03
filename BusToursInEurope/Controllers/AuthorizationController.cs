@@ -41,7 +41,7 @@ namespace BusToursInEurope.Controllers
             return Ok();
         }
 
-        [HttpGet("is_authenticated")]
+        [HttpGet("is-authenticated")]
         public IActionResult CheckAuthentication()
         {
             bool isAuthenticated = _authService.IsUserAuthenticated(HttpContext);
