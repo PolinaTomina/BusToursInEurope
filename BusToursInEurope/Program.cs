@@ -66,6 +66,7 @@ namespace BusToursInEurope
             builder.Services.AddScoped<IExportExcelService, ExportExcelService>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IProfileService, ProfileService>();
+            builder.Services.AddScoped<IAdminService, AdminService>();
 
             builder.Services.AddDbContext<ApplicationContext>();
 
@@ -179,9 +180,10 @@ namespace BusToursInEurope
                 RequestPath = "/TourFiles"
             });
 
-
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<AuthMiddleware>();
 
             app.MapControllers();
 

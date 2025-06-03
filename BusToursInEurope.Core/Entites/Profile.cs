@@ -17,5 +17,7 @@
         public int UserId { get; set; }
 
         public User User { get; set; }
+
+        public List<Tour> Tours { get; set; } = new List<Tour>();
     }
 }

@@ -2,6 +2,7 @@
 using BusToursInEurope.Application.Models.ProfileModels;
 using BusToursInEurope.Application.Models.ReservationModel;
 using BusToursInEurope.Application.Models.ReviewModels;
+using BusToursInEurope.Application.Models.TourModel;
 using BusToursInEurope.Application.Models.UserModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
@@ -109,6 +110,37 @@ namespace BusToursInEurope.Application.Services
             profile.PassportNumber = request.PassportNumber;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task AddTourToProfile(int profileId, int tourId)
+        {
+            var profile = await _context.Profiles.Include(p => p.Tours)
+                .FirstOrDefaultAsync(p => p.Id == profileId);
+
+            var tour = await _context.Tours.FindAsync(tourId);
+
+            if (profile != null && tour != null)
+            {
+                profile.Tours.Add(tour);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<ShortTourDto>> GetProfileTours(int profileId)
+        {
+            return await _context.Profiles
+                .Where(p => p.Id == profileId)
+                .SelectMany(p => p.Tours)
+                .Select(t => new ShortTourDto
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Price = t.Price,
+                    StartDate = t.StartDate,
+                    EndDate = t.EndDate,
+                    FirstImageLink = t.ImageLinks.First()
+                })
+                .ToListAsync();
         }
     }
 }
