@@ -3,7 +3,7 @@ import { AboutUsPage, MainPage } from './pages/common';
 import { FullTourPage, ToursPage } from './pages/tours';
 import { DefaultLayout } from './components/layout/DefaultLayout/DefaultLayout';
 import { AdminLayout } from './components/layout/AdminLayout/AdminLayout';
-import { AdminBusPage, AdminHotelsPage, AdminOrdersPage, AdminToursPage } from './pages/admin';
+import { AdminBusPage, AdminOrdersPage, AdminToursPage } from './pages/admin';
 import { AuthorizationPage, UserProfilePage } from './pages/user';
 import classes from './app.module.css'
 import { AuthProvider } from './components/common/Authentication/AuthenticationProvider';
@@ -25,7 +25,9 @@ function App() {
             </Route>
             <Route path='/admin' element={<AdminLayout />}>
               <Route path='buses' element={<AdminBusPage />} />
-              <Route path='hotels' element={<AdminHotelsPage />} />
+              <Route path='cities' element={<div></div>} />
+              <Route path='routes' element={<div></div>} />
+              <Route path='hotels' element={<div></div>} />
               <Route path='orders' element={<AdminOrdersPage />} />
               <Route path='tours' element={<AdminToursPage />} />
               <Route path='profile' element={<UserProfilePage/>} />

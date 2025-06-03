@@ -35,5 +35,11 @@ namespace BusToursInEurope.Controllers
 
             return Ok("Пользователь разблокирован");
         }
+
+        [HttpGet("reservations-users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            return Ok(_adminService.GetAllUsers());
+        }
     }
 }

@@ -1,0 +1,130 @@
+/* Основные стили страницы */
+.pageContainer {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Заголовок страницы */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* Блок управления */
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+/* Сообщение об ошибке */
+.errorAlert {
+  padding: 12px 16px;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #fecaca;
+}
+
+/* Контейнер таблицы */
+.tableContainer {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для ячеек с датами */
+.dateCell {
+  white-space: nowrap;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+/* Стили для email пользователя */
+.emailCell {
+  color: #3b82f6;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* Стили для количества мест */
+.seatsCell {
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Стили для ячеек с действиями */
+.actionsCell {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Стили для кнопки экспорта */
+.exportButton {
+  background-color: #10b981;
+  color: white;
+}
+
+.exportButton:hover {
+  background-color: #059669;
+}
+
+/* Стили для кнопки оплаты */
+.paymentButton {
+  min-width: 160px;
+}
+
+.paymentButton.success {
+  background-color: #10b981;
+  color: white;
+}
+
+.paymentButton.warning {
+  background-color: #f59e0b;
+  color: white;
+}
+
+/* Стили для кнопки удаления */
+.deleteButton {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.deleteButton:hover {
+  background-color: #fecaca;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 16px;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .controls {
+    width: 100%;
+  }
+  
+  .paymentButton {
+    min-width: 140px;
+  }
+}

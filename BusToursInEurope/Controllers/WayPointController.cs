@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BusToursInEurope.Controllers
 {
     [ApiController]
-    [Route("/wayPoints")]
+    [Route("/waypoints")]
 
     public class WayPointController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace BusToursInEurope.Controllers
         }
 
         [Authorize(Roles = Role.Admin)]
-        [HttpGet("get_way_points")]
+        [HttpGet]
         public async Task<ActionResult<List<WayPointDto>>> GetWayPoints()
         {
             var wp = await _wayPoints.GetWayPointsAsync();

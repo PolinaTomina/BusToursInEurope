@@ -1,9 +1,6 @@
 ﻿using BusToursInEurope.Application.Contstants;
 using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.ReservationModel;
-using BusToursInEurope.Application.Models.TourModel;
-using BusToursInEurope.Application.Models.UserModel;
-using BusToursInEurope.Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +31,16 @@ namespace BusToursInEurope.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
+        [Authorize(Roles = Role.Admin)]
+        [HttpPost("update-payment")]
+        public async Task<IActionResult> UpdatePaymentStatus([FromBody]UpdatePaymentStatusDto request)
+        {
+            await _reservationsService.UpdatePaymentStatusAsync(request);
+
+            return StatusCode(StatusCodes.Status201Created);
+        }
+
+        [Authorize(Roles = Role.Admin)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReservation(int id)
         {

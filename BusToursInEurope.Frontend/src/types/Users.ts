@@ -10,3 +10,8 @@ export interface UserDto {
   reservationsDto: ReservationDto[];
   reviewsDto: ReviewDto[];
 }
+
+export interface ShortUserDto {
+  Id: number;
+  Email: string;
+}
