@@ -11,8 +11,8 @@ export interface CreateWPDto {
 
 export interface CreateWayPointDto {
   namePlace: string | null;
-  cityId: number;
-  hotelId: number;
+  cityId?: number | null;
+  hotelId?: number | null;
 }
 
 export interface WayPointDto {

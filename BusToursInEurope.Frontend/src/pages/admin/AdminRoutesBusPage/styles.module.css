@@ -1,0 +1,118 @@
+/* Основные стили страницы */
+.pageContainer {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Заголовок страницы */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* Блок управления */
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+/* Сообщение об ошибке */
+.errorAlert {
+  padding: 12px 16px;
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #fecaca;
+}
+
+/* Контейнер таблицы */
+.tableContainer {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для ячеек */
+.nameCell {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.distanceCell {
+  text-align: center;
+  color: #64748b;
+}
+
+.waypointsCell {
+  text-align: center;
+  font-weight: 500;
+  color: #3b82f6;
+}
+
+/* Стили для ячеек с действиями */
+.actionsCell {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* Стили для кнопок */
+.addButton {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.addButton:hover {
+  background-color: #2563eb;
+}
+
+.editButton {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.editButton:hover {
+  background-color: #bae6fd;
+}
+
+.deleteButton {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.deleteButton:hover {
+  background-color: #fecaca;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .pageContainer {
+    padding: 16px;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .controls {
+    width: 100%;
+  }
+}

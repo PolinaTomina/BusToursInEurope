@@ -1,5 +1,6 @@
 ﻿using BusToursInEurope.Application.Interfaces;
 using BusToursInEurope.Application.Models.RoutesBusModels;
+using BusToursInEurope.Application.Models.WayPointsModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace BusToursInEurope.Application.Services
 
             var route = new RouteBus
             {
+                Name = request.Name,
                 Distance = request.Distance,
                 WayPoints = request.WayPoints
                     .Select(w => new WayPoint
@@ -51,6 +53,31 @@ namespace BusToursInEurope.Application.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<RouteBusDto>> GetAll()
+        {
+            var routes = await _context.RoutesBuses
+                .Select(x => new RouteBusDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Distance = x.Distance,
+                }).ToListAsync();
+
+            foreach (var item in routes)
+            {
+                item.WayPointsDto = await _context.WayPoints
+                        .Select(w => new WayPointDto
+                        {
+                            Id = w.Id,
+                            CityId = w.CityId,
+                            HotelId = w.HotelId,
+                            NamePlace = w.NamePlace,
+                        }).ToListAsync();
+            }
+
+            return routes;
+        }
+
         public async Task UpdateRouteBusAsync(UpdateRouteBusDto request)
         {
             var route = await _context.RoutesBuses
@@ -67,6 +94,7 @@ namespace BusToursInEurope.Application.Services
 
             route.WayPoints = new List<WayPoint>();
 
+            route.Name = request.Name;
             route.Distance = request.Distance;
             route.WayPoints = request.WayPoints
                     .Select(w => new WayPoint
