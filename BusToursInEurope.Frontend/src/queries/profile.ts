@@ -20,3 +20,20 @@ export const updateProfileQuery = async (data: UpdateProfileDto) => {
     }
   })
 }
+
+export const addLikeToTour = async (tourId: number) => {
+  console.log(localStorage.getItem(JwtTokenKey))
+  return axios.post(`${BASE_URL_PROFILE}/like/${tourId}`, null, {
+    headers: {
+      'Authorization': localStorage.getItem(JwtTokenKey)
+    }
+  })
+}
+
+export const getLikedTours = async () => {
+  return axios.get(`${BASE_URL_PROFILE}/tours`, {
+    headers: {
+      'Authorization': localStorage.getItem(JwtTokenKey)
+    }
+  })
+}

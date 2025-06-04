@@ -1,5 +1,3 @@
-import { UserDto } from './Users';
-
 export interface CreateReservationDto {
   numOfSeats: number;
   tourId: number;
@@ -8,9 +6,13 @@ export interface CreateReservationDto {
 export interface ReservationDto {
   id: number;
   date: string;
-  paymentDate: string;
+  paymentDate?: string;
   paymentDeadline: string;
   numOfSeats: number;
-  userDtoId: number;
-  userDto: UserDto;
+  userId: number;
+}
+
+export interface UpdatePaymentStatusDto {
+  id: number;
+  isPaid: boolean;
 }

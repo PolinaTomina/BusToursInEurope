@@ -1,4 +1,5 @@
 ﻿using BusToursInEurope.Application.Interfaces;
+using BusToursInEurope.Application.Models.UserModel;
 using BusToursInEurope.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,15 @@ namespace BusToursInEurope.Application.Services
                 return true;
             }
         }
+
+        public Task<List<ShortUserDto>> GetAllUsers() =>
+            _context.Users
+                .Select(u => new ShortUserDto
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                })
+                .ToListAsync();
 
         public async Task<bool> UnblockUser(int userId)
         {

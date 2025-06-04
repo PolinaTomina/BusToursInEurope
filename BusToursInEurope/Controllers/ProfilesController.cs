@@ -36,17 +36,22 @@ namespace BusToursInEurope.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        [HttpPost("{profileId}/like/{tourId}")]
-        public async Task<IActionResult> LikeTour(int profileId, int tourId)
+        [HttpPost("like/{tourId}")]
+        public async Task<IActionResult> LikeTour(int tourId)
         {
-            await _profileService.AddTourToProfile(profileId, tourId);
+            var userEmail = User.Claims.First().Value;
+
+            await _profileService.AddTourToProfile(userEmail, tourId);
             return Ok("Тур добавлен в профиль");
         }
 
-        [HttpGet("{profileId}/tours")]
-        public async Task<ActionResult<List<ShortTourDto>>> GetLikedTours(int profileId)
+        [HttpGet("tours")]
+        public async Task<ActionResult<List<ShortTourDto>>> GetLikedTours()
         {
-            var tours = await _profileService.GetProfileTours(profileId);
+            var userEmail = User.Claims.First().Value;
+
+            var tours = await _profileService.GetProfileTours(userEmail);
+
             return Ok(tours);
         }
     }

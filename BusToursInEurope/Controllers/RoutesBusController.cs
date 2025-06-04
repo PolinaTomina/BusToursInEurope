@@ -29,7 +29,12 @@ namespace BusToursInEurope.Controllers
 
         [Authorize(Roles = Role.Admin)]
         [HttpDelete(nameof(Delete))]
-        public Task Delete([FromBody] int id)
+        public Task Delete(int id)
             => _routeService.DeleteRouteBusAsync(id);
+
+        [Authorize(Roles = Role.Admin)]
+        [HttpGet(nameof(GetAll))]
+        public async Task<IActionResult> GetAll() => 
+            Ok(await _routeService.GetAll());
     }
 }

@@ -11,8 +11,6 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
 }
 
 .title {
@@ -46,24 +44,21 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Стили для ячеек с датами */
-.dateCell {
-  white-space: nowrap;
-  color: #64748b;
-  font-size: 0.875rem;
-}
-
-/* Стили для email пользователя */
-.emailCell {
-  color: #3b82f6;
+/* Стили для ячеек */
+.nameCell {
   font-weight: 500;
-  word-break: break-word;
+  color: #1e293b;
 }
 
-/* Стили для количества мест */
-.seatsCell {
+.distanceCell {
+  text-align: center;
+  color: #64748b;
+}
+
+.waypointsCell {
   text-align: center;
   font-weight: 500;
+  color: #3b82f6;
 }
 
 /* Стили для ячеек с действиями */
@@ -73,32 +68,28 @@
   justify-content: flex-end;
 }
 
-/* Стили для кнопки экспорта */
-.exportButton {
-  background-color: #10b981;
+/* Стили для кнопок */
+.addButton {
+  background-color: #3b82f6;
   color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
 }
 
-.exportButton:hover {
-  background-color: #059669;
+.addButton:hover {
+  background-color: #2563eb;
 }
 
-/* Стили для кнопки оплаты */
-.paymentButton {
-  min-width: 160px;
+.editButton {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
 }
 
-.paymentButton.success {
-  background-color: #10b981;
-  color: white;
+.editButton:hover {
+  background-color: #bae6fd;
 }
 
-.paymentButton.warning {
-  background-color: #f59e0b;
-  color: white;
-}
-
-/* Стили для кнопки удаления */
 .deleteButton {
   background-color: #fee2e2;
   color: #b91c1c;
@@ -118,13 +109,10 @@
   .header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 16px;
   }
   
   .controls {
     width: 100%;
-  }
-  
-  .paymentButton {
-    min-width: 140px;
   }
 }

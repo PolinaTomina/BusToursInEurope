@@ -10,9 +10,7 @@ using BusToursInEurope.Application.Models.UserModel;
 using BusToursInEurope.Application.Models.WayPointsModel;
 using BusToursInEurope.Core.Entites;
 using BusToursInEurope.Database;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace BusToursInEurope.Application.Services
 {
@@ -27,7 +25,7 @@ namespace BusToursInEurope.Application.Services
             _emailService = emailService;
         }
 
-        public async Task<List<ShortTourDto>> GetTopToursAsync()
+        public async Task<List<ShortTourDto>> GetTopToursAsync(string? userEmail)
         {
             // получить список туров из БД: var entities = applicationCntext.Tours
             var tours = await _context.Tours.
@@ -41,17 +39,27 @@ namespace BusToursInEurope.Application.Services
                     FirstImageLink = t.ImageLinks.First(),
                     ReservationCount = t.Reservations.Count, // Считаем бронирования
                     Rating = t.Reviews.Any()
-                ? Math.Round(t.Reviews.Average(r => r.Rating), 2) // Средний рейтинг до 2 знаков
-                : 0
+                        ? Math.Round(t.Reviews.Average(r => r.Rating), 2) // Средний рейтинг до 2 знаков
+                        : 0
                 })
                 .OrderByDescending(t => t.ReservationCount)
                 .Take(10)
                 .ToListAsync();
 
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return tours;
+            }
+
+            foreach (var tour in tours)
+            {
+                tour.IsLiked = await TourIsLikedByProfileAsync(userEmail, tour.Id);
+            }
+
             return tours;
         }
 
-        public async Task<List<ShortTourDto>> GetToursAsync(ToursFilter toursFilter)
+        public async Task<List<ShortTourDto>> GetToursAsync(ToursFilter toursFilter, string? userEmail)
         {
             var query = _context.Tours.AsQueryable();
 
@@ -84,13 +92,27 @@ namespace BusToursInEurope.Application.Services
                     Price = t.Price,
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
-                    FirstImageLink = t.ImageLinks.First()
+                    FirstImageLink = t.ImageLinks.First(),
+                    ReservationCount = t.Reservations.Count, // Считаем бронирования
+                    Rating = t.Reviews.Any()
+                        ? Math.Round(t.Reviews.Average(r => r.Rating), 2) // Средний рейтинг до 2 знаков
+                        : 0
                 }).ToListAsync();
+
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return filteredTours;
+            }
+
+            foreach (var tour in filteredTours)
+            {
+                tour.IsLiked = await TourIsLikedByProfileAsync(userEmail, tour.Id);
+            }
 
             return filteredTours;
         }
 
-        public async Task<FullTourDto> GetFullTourAsync(int id)
+        public async Task<FullTourDto> GetFullTourAsync(int id, string? userEmail)
         {
             var tour = await _context.Tours
                 .Include(t => t.Bus)
@@ -119,6 +141,7 @@ namespace BusToursInEurope.Application.Services
                 NumOfSeats = tour.NumOfSeats,
                 Description = tour.Description,
                 FullImageLink = tour.ImageLinks,
+                IsLiked = await TourIsLikedByProfileAsync(userEmail, tour.Id),
 
                 BusDto = tour.Bus != null ? new ShowBusDto
                 {
@@ -335,6 +358,22 @@ namespace BusToursInEurope.Application.Services
 
                 await _context.SaveChangesAsync();
             }
+        }
+
+        private async Task<bool> TourIsLikedByProfileAsync(string? userEmail, int tourId)
+        {
+            if (string.IsNullOrEmpty(userEmail)) 
+                return false;
+
+            var profileId = await _context.Profiles
+                .AsNoTracking()
+                .Include(p => p.User)
+                .Where(p => p.User.Email == userEmail)
+                .Select(p => p.Id)
+                .FirstAsync();
+
+            return await _context.ProfilesTours
+                .AnyAsync(x => x.TourId == tourId && x.ProfileId == profileId);
         }
     }
 }

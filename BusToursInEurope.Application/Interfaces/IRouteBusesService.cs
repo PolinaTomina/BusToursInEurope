@@ -7,5 +7,6 @@ namespace BusToursInEurope.Application.Interfaces
         Task AddRouteBusAsync(CreateRouteBusDto request);
         Task DeleteRouteBusAsync(int id);
         Task UpdateRouteBusAsync(UpdateRouteBusDto request);
+        Task<List<RouteBusDto>> GetAll();
     }
 }

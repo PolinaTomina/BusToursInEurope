@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import classes from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
-import { getProfileQuery, updateProfileQuery } from "../../../queries/profile";
+import { getProfileQuery, updateProfileQuery, getLikedTours} from "../../../queries/profile";
 import { ProfileDto, UpdateProfileDto } from "../../../types/Profile";
 import { CircularProgress, Alert, Snackbar, Modal, Box, TextField, Button } from "@mui/material";
 import { JwtTokenKey } from "../../../utils/constants/localStorageConstants";
 import { isAdmin } from "../../../queries/auth";
+import { ShortTourDto } from "../../../types/Tours";
+import { BASE_URL } from "../../../utils/constants/urlConstants";
 
 export const UserProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<ProfileDto | null>(null);
+  const [likedTours, setLikedTours] = useState<ShortTourDto[]>([]);
   const [userIsAdmin, setIsAdmin] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,17 +26,21 @@ export const UserProfilePage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchProfileData = async () => {
       try {
-        const response = await getProfileQuery();
-        const profileData = response.data;
-        setProfile(profileData);
+        const [profileResponse, likedToursResponse] = await Promise.all([
+          getProfileQuery(),
+          getLikedTours()
+        ]);
+        
+        setProfile(profileResponse.data);
+        setLikedTours(likedToursResponse.data);
         setEditForm({
-          name: profileData.name || "",
-          surName: profileData.surName || "",
-          middleName: profileData.middleName || "",
-          numPhone: profileData.numPhone || "",
-          passportNumber: profileData.passportNumber || ""
+          name: profileResponse.data.name || "",
+          surName: profileResponse.data.surName || "",
+          middleName: profileResponse.data.middleName || "",
+          numPhone: profileResponse.data.numPhone || "",
+          passportNumber: profileResponse.data.passportNumber || ""
         });
 
         const admin = await isAdmin(localStorage.getItem(JwtTokenKey) || "");
@@ -48,7 +55,7 @@ export const UserProfilePage: React.FC = () => {
       }
     };
 
-    fetchProfile();
+    fetchProfileData();
   }, []);
 
   const handleReviewClick = (tourId: number) => {
@@ -217,6 +224,59 @@ export const UserProfilePage: React.FC = () => {
         <div className={classes.activitySection}>
           {!userIsAdmin && (
             <>
+              {/* Блок лайкнутых туров */}
+              {likedTours.length > 0 ? (
+                <div className={classes.profileSection}>
+                  <h2 className={classes.sectionTitle}>
+                    <span className={classes.sectionIcon}>❤️</span>
+                    Понравившиеся туры ({likedTours.length})
+                  </h2>
+                  <div className={classes.toursList}>
+                    {likedTours.map(tour => (
+                      <div 
+                        key={tour.id} 
+                        className={classes.tourItem}
+                        onClick={() => navigate(`/tours/${tour.id}`)}
+                      >
+                        {tour.firstImageLink && (
+                          <div className={classes.tourImage}>
+                            <img 
+                              src={`${BASE_URL}/${tour.firstImageLink}`} 
+                              alt={tour.name || "Тур"} 
+                              className={classes.tourImage}
+                            />
+                          </div>
+                        )}
+                        <div className={classes.tourInfo}>
+                          <h3 className={classes.tourName}>{tour.name || "Без названия"}</h3>
+                          <div className={classes.tourDates}>
+                            <span>{formatDate(tour.startDate)}</span>
+                            <span> - </span>
+                            <span>{formatDate(tour.endDate)}</span>
+                          </div>
+                          <div className={classes.tourPrice}>
+                            {tour.price.toLocaleString()} €
+                          </div>
+                          <div className={classes.tourRating}>
+                            Рейтинг: {tour.rating.toFixed(1)}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className={classes.profileSection}>
+                  <h2 className={classes.sectionTitle}>
+                    <span className={classes.sectionIcon}>❤️</span>
+                    Понравившиеся туры
+                  </h2>
+                  <div className={classes.emptySection}>
+                    <p>У вас пока нет понравившихся туров.</p>
+                  </div>
+                </div>
+              )}
+
               {profile.user.reservationsDto && profile.user.reservationsDto.length > 0 ? (
                 <div className={classes.profileSection}>
                   <h2 className={classes.sectionTitle}>

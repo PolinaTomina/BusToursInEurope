@@ -11,8 +11,8 @@ namespace BusToursInEurope.Application.Interfaces
 
         Task<GetProfileDto> GetProfileByUserEmailAsync(string userEmail);
 
-        Task AddTourToProfile(int profileId, int tourId);
+        Task AddTourToProfile(string userEmail, int tourId);
 
-        Task<List<ShortTourDto>> GetProfileTours(int profileId);
+        Task<List<ShortTourDto>> GetProfileTours(string userEmail);
     }
 }

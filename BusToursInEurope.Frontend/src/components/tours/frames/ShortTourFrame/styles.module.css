@@ -18,6 +18,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    position: relative;
 }
 
 .tourCard:hover {
@@ -74,6 +75,25 @@
     line-height: 1.5;
 }
 
+.ratingContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.starIcon {
+    width: 16px;
+    height: 16px;
+    margin-right: 2px;
+}
+
+.ratingValue {
+    margin-left: 5px;
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
 .dateRange {
     margin-top: auto;
     font-size: 0.9rem;
@@ -82,11 +102,92 @@
     align-items: center;
     padding-top: 10px;
     border-top: 1px solid #f0f0f0;
+    position: relative;
 }
 
 .dateIcon {
     margin-right: 8px;
     font-size: 1rem;
+}
+
+.likeButton {
+    margin-left: auto;
+    background: transparent;
+    border: none;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.likeButton:disabled {
+    cursor: default;
+    opacity: 0.8;
+}
+
+.likeButton svg {
+    width: 18px;
+    height: 18px;
+    stroke: #9ca3af;
+    fill: transparent;
+    transition: all 0.3s ease;
+}
+
+.likeButton:hover:not(:disabled) {
+    transform: scale(1.1);
+}
+
+.likeButton:hover:not(:disabled) svg {
+    stroke: #ef4444;
+}
+
+.likeButton.liked svg,
+.likeButton:disabled svg {
+    stroke: #ef4444;
+    fill: #ef4444;
+}
+
+.likeButton.liked:not(:disabled) svg {
+    animation: likeAnimation 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.reservationBadge {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    background-color: #f3f4f6;
+    border-radius: 12px;
+    align-self: flex-start;
+}
+
+.reservationIcon {
+    margin-right: 4px;
+    font-size: 0.9rem;
+}
+
+@keyframes likeAnimation {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.3);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    70% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Адаптивность */

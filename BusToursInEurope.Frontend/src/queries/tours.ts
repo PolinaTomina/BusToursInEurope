@@ -73,17 +73,28 @@ export const updateTour = async (id: number, data: UpdateTourDto) => {
 };
 
 export const deleteTour = async (id: number) => {
-  return axios.delete(`${TOURS_URL}/id?id=${id}`);
+  return axios.delete(`${TOURS_URL}/id?id=${id}`, {
+    headers: {
+      'Authorization': localStorage.getItem(JwtTokenKey) // Добавляем токен в заголовок
+    },
+  });
 };
 
 export const getTour = async (id: number) => {
   return axios.get(`${TOURS_URL}/id`, {
-    params: { id }
-  });
+    params: { id },
+    headers: {
+      'Authorization': localStorage.getItem(JwtTokenKey) // Добавляем токен в заголовок
+    }
+  },);
 };
 
 export const getTopTours = async (): Promise<AxiosResponse<ShortTourDto[]>> => {
-  return axios.get(`${TOURS_URL}/top`);
+  return axios.get(`${TOURS_URL}/top`, {
+    headers: {
+      'Authorization': localStorage.getItem(JwtTokenKey) // Добавляем токен в заголовок
+    }
+  });
 };
 
 export const getToursByFilters = async (filters: {
@@ -93,5 +104,10 @@ export const getToursByFilters = async (filters: {
   StartDate?: string;
   EndDate?: string;
 }) => {
-  return axios.get(`${TOURS_URL}/filters`, { params: filters });
+  return axios.get(`${TOURS_URL}/filters`, { 
+      params: filters,     
+      headers: {
+      'Authorization': localStorage.getItem(JwtTokenKey) 
+    }// Добавляем токен в заголовок
+  });
 };
