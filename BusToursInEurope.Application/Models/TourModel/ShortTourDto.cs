@@ -9,6 +9,8 @@ namespace BusToursInEurope.Application.Models.TourModel
         public decimal Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int NumOfSeats { get; set; }
+        public string Description { get; set; }
         public string FirstImageLink { get; set; }
         public int ReservationCount { get; set; }
         public double Rating { get; set; }

@@ -36,6 +36,8 @@ namespace BusToursInEurope.Application.Services
                     Price = t.Price,
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
+                    NumOfSeats = t.NumOfSeats,
+                    Description = t.Description,
                     FirstImageLink = t.ImageLinks.First(),
                     ReservationCount = t.Reservations.Count, // Считаем бронирования
                     Rating = t.Reviews.Any()
@@ -92,6 +94,8 @@ namespace BusToursInEurope.Application.Services
                     Price = t.Price,
                     StartDate = t.StartDate,
                     EndDate = t.EndDate,
+                    NumOfSeats = t.NumOfSeats,
+                    Description = t.Description,
                     FirstImageLink = t.ImageLinks.First(),
                     ReservationCount = t.Reservations.Count, // Считаем бронирования
                     Rating = t.Reviews.Any()
