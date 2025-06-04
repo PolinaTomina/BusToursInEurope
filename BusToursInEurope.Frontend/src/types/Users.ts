@@ -14,4 +14,6 @@ export interface UserDto {
 export interface ShortUserDto {
   Id: number;
   Email: string;
+  Login: string;
+  IsBlocked: boolean;
 }

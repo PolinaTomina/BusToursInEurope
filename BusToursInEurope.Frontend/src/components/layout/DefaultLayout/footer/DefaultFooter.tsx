@@ -22,6 +22,7 @@ export const DefaultFooter: React.FC = () => {
                         <li><a href="/">Главная</a></li>
                         <li><a href="/tours">Туры</a></li>
                         <li><a href="/about">О нас</a></li>
+                        <li><a href="/rules">Правила</a></li>
                     </ul>
                 </div>
             </div>

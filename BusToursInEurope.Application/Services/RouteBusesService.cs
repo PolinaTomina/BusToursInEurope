@@ -64,6 +64,7 @@ namespace BusToursInEurope.Application.Services
             foreach (var item in routes)
             {
                 item.WayPointsDto = await _context.WayPoints
+                        .Where(x => x.RouteBusId == item.Id)
                         .Select(w => new WayPointDto
                         {
                             Id = w.Id,

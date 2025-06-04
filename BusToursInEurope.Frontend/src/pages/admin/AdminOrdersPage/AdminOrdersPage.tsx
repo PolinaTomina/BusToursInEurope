@@ -5,7 +5,8 @@ import {
   getAllReservations, 
   deleteReservation, 
   updatePayment,
-  getUsersForReservations
+  getUsersForReservations,
+  downloadExcelReservations
 } from "../../../queries/reservations";
 import classes from './styles.module.css';
 
@@ -161,8 +162,8 @@ export const AdminOrdersPage: React.FC = () => {
         }
     };
 
-    const handleExportToExcel = () => {
-
+    const handleExportToExcel = async () => {
+        await downloadExcelReservations()
     };
 
     return (

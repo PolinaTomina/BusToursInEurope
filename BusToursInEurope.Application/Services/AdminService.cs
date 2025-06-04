@@ -35,10 +35,13 @@ namespace BusToursInEurope.Application.Services
 
         public Task<List<ShortUserDto>> GetAllUsers() =>
             _context.Users
+                .Where(u => u.Role != "Admin")
                 .Select(u => new ShortUserDto
                 {
                     Id = u.Id,
                     Email = u.Email,
+                    Login = u.Login,
+                    IsLocked = u.IsBlocked,
                 })
                 .ToListAsync();
 

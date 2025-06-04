@@ -42,6 +42,9 @@ export const DefaultHeader: React.FC = () => {
                     <Link to="/about" className={classes.navLink}>
                         <span className={classes.linkText}>О нас</span>
                     </Link>
+                    <Link to="/rules" className={classes.navLink}>
+                        <span className={classes.linkText}>Правила</span>
+                    </Link>
                     <Link to={profileLink} className={classes.navLink}>
                         <span className={classes.linkText}>{profileString}</span>
                     </Link>

@@ -106,7 +106,14 @@ public class AuthService : IAuthService
             </body>
             </html>";
 
-        await _emailService.SendEmailAsync(email, subject, message);
+        try
+        {
+            await _emailService.SendEmailAsync(email, subject, message);
+        }
+        catch (Exception ex)
+        {
+            return;
+        }
     }
 
     public static string CreateJwtToken(string email, string role)

@@ -1,13 +1,157 @@
 import React, { useEffect, useState } from "react";
-import classes from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
-import { getProfileQuery, updateProfileQuery, getLikedTours} from "../../../queries/profile";
+import { getProfileQuery, updateProfileQuery, getLikedTours } from "../../../queries/profile";
 import { ProfileDto, UpdateProfileDto } from "../../../types/Profile";
-import { CircularProgress, Alert, Snackbar, Modal, Box, TextField, Button } from "@mui/material";
+import { CircularProgress, Alert, Snackbar, Modal, Box, TextField, Button, Typography } from "@mui/material";
 import { JwtTokenKey } from "../../../utils/constants/localStorageConstants";
-import { isAdmin } from "../../../queries/auth";
+import { isAdmin, ChangePassword } from "../../../queries/auth";
 import { ShortTourDto } from "../../../types/Tours";
 import { BASE_URL } from "../../../utils/constants/urlConstants";
+import classes from "./styles.module.css";
+
+interface ChangePasswordData {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+const ChangePasswordModal: React.FC<{
+  open: boolean;
+  onClose: () => void;
+  email: string;
+}> = ({ open, onClose, email }) => {
+  const [formData, setFormData] = useState<ChangePasswordData>({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+console.log(email)
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (formData.newPassword !== formData.confirmPassword) {
+      setError('Новые пароли не совпадают');
+      return;
+    }
+    if (formData.newPassword.length < 6) {
+      setError('Пароль должен содержать минимум 6 символов');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+      
+      await ChangePassword(
+        email,
+        formData.currentPassword,
+        formData.newPassword
+      );
+      
+      setSuccess(true);
+      setTimeout(() => {
+        onClose();
+        setSuccess(false);
+        setFormData({
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: ''
+        });
+      }, 2000);
+    } catch (err) {
+      setError('Не удалось изменить пароль. Проверьте текущий пароль.');
+      console.error('Password change error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <Box sx={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+        borderRadius: 2
+      }}>
+        <Typography variant="h6" gutterBottom>
+          Изменение пароля
+        </Typography>
+        
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+        
+        {success ? (
+          <Alert severity="success" sx={{ mb: 2 }}>
+            Пароль успешно изменен!
+          </Alert>
+        ) : (
+          <>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Текущий пароль"
+              name="currentPassword"
+              type="password"
+              value={formData.currentPassword}
+              onChange={handleChange}
+            />
+            
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Новый пароль"
+              name="newPassword"
+              type="password"
+              value={formData.newPassword}
+              onChange={handleChange}
+            />
+            
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Подтвердите новый пароль"
+              name="confirmPassword"
+              type="password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+            />
+            
+            <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button onClick={onClose} sx={{ mr: 2 }}>
+                Отмена
+              </Button>
+              <Button 
+                variant="contained" 
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? 'Изменение...' : 'Изменить пароль'}
+              </Button>
+            </Box>
+          </>
+        )}
+      </Box>
+    </Modal>
+  );
+};
 
 export const UserProfilePage: React.FC = () => {
   const [profile, setProfile] = useState<ProfileDto | null>(null);
@@ -16,6 +160,7 @@ export const UserProfilePage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
   const [editForm, setEditForm] = useState<UpdateProfileDto>({
     name: "",
     surName: "",
@@ -81,7 +226,7 @@ export const UserProfilePage: React.FC = () => {
 
   const handleExitProfile = () => {
     localStorage.removeItem(JwtTokenKey);
-    navigate('/');
+    window.location.href = '/';
   };
 
   const handleCloseEditModal = () => {
@@ -186,6 +331,17 @@ export const UserProfilePage: React.FC = () => {
                 <span className={classes.infoLabel}>Логин:</span>
                 <span className={classes.infoValue}>{profile.user.login || "Не указан"}</span>
               </div>
+              <div className={classes.infoItem}>
+                <span className={classes.infoLabel}>Пароль:</span>
+                <Button 
+                  variant="outlined" 
+                  size="small"
+                  onClick={() => setChangePasswordModalOpen(true)}
+                  className={classes.passwordButton}
+                >
+                  Изменить пароль
+                </Button>
+              </div>
             </div>
           </div>
 
@@ -224,7 +380,6 @@ export const UserProfilePage: React.FC = () => {
         <div className={classes.activitySection}>
           {!userIsAdmin && (
             <>
-              {/* Блок лайкнутых туров */}
               {likedTours.length > 0 ? (
                 <div className={classes.profileSection}>
                   <h2 className={classes.sectionTitle}>
@@ -297,7 +452,7 @@ export const UserProfilePage: React.FC = () => {
                         <div className={classes.reservationDetails}>
                           <div>
                             <span>Оплата: </span>
-                            <span>{formatDate(reservation.paymentDate) || "Не оплачено"}</span>
+                            <span>{formatDate(reservation.paymentDate || "") || "Не оплачено"}</span>
                           </div>
                           <div>
                             <span>Срок оплаты: </span>
@@ -382,7 +537,7 @@ export const UserProfilePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Модальное окно редактирования */}
+      {/* Модальное окно редактирования профиля */}
       <Modal
         open={editModalOpen}
         onClose={handleCloseEditModal}
@@ -457,6 +612,13 @@ export const UserProfilePage: React.FC = () => {
           </div>
         </Box>
       </Modal>
+
+      {/* Модальное окно изменения пароля */}
+      <ChangePasswordModal
+        open={changePasswordModalOpen}
+        onClose={() => setChangePasswordModalOpen(false)}
+        email={profile.user.email || ""}
+      />
     </div>
   );
 };

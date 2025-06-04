@@ -72,7 +72,7 @@ export const AuthorizationPage: React.FC = () => {
         const response = await register(dto);
 
         if (response.data) {
-          const token = response.data
+          const token = response.data.token
 
           localStorage.setItem(JwtTokenKey, `Bearer ${token}`)
           
