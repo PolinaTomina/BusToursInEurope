@@ -1,27 +1,14 @@
-import { CityDto } from './Cities';
-import { HotelDto } from './Hotels';
-import { RouteBusDto } from './Routes';
-
 export interface CreateWPDto {
-  namePlace: string | null;
-  cityDtoId: number;
+  description: string;
   routeBusDtoId: number;
-  hotelDtoId: number;
 }
 
 export interface CreateWayPointDto {
-  namePlace: string | null;
-  cityId?: number | null;
-  hotelId?: number | null;
+  description: string | null;
 }
 
 export interface WayPointDto {
   id: number;
-  namePlace: string | null;
-  cityDtoId: number;
-  cityDto: CityDto;
+  description: string;
   routeBusDtoId: number;
-  routeBusDto: RouteBusDto;
-  hotelDtoId: number;
-  hotelDto: HotelDto;
 }

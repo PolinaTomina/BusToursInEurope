@@ -111,3 +111,43 @@ export const getToursByFilters = async (filters: {
     }// Добавляем токен в заголовок
   });
 };
+
+export const exportTopToursStatistics = async (): Promise<Blob> => {
+  const token = localStorage.getItem(JwtTokenKey);
+  if (!token) {
+    throw new Error('No JWT token found');
+  }
+
+  const response = await axios.get(`${TOURS_URL}/export_statistic_top_tours`, {
+    responseType: 'blob', // Указываем, что ожидаем бинарные данные (файл)
+    headers: {
+      'Authorization': token
+    }
+  });
+
+  return response.data;
+};
+
+// Функция для скачивания файла
+export const downloadTopToursExcel = async () => {
+  try {
+    const blob = await exportTopToursStatistics();
+    
+    // Создаем ссылку для скачивания
+    const url = window.URL.createObjectURL(new Blob([blob]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Топовые туры.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    
+    // Очищаем ссылку после скачивания
+    if (link.parentNode) {
+      link.parentNode.removeChild(link);
+    }
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error downloading top tours statistics:', error);
+    throw error;
+  }
+};

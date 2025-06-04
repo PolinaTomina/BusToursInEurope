@@ -149,7 +149,7 @@ export const FullTourPage: React.FC<FullTourProps> = ({}) => {
             <h2>Точки маршрута</h2>
             <ul>
               {tour.routeBusDto.wayPointsDto?.map((point, index) => (
-                <li key={index}>{point.namePlace}</li>
+                <li key={index}>{point.description}</li>
               ))}
             </ul>
           </div>

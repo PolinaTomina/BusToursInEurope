@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { GenericTable } from "../../../components/common/GenericTable/GenericTable";
 import { FullTourDto } from "../../../types/Tours";
 import { Button } from "../../../ui";
-import { deleteTour, getToursByFilters } from "../../../queries/tours";
+import { deleteTour, downloadTopToursExcel, getToursByFilters } from "../../../queries/tours";
 import classes from './styles.module.css';
 import { CreateTourModal } from "../../../components";
 
@@ -147,6 +147,14 @@ export const AdminToursPage: React.FC = () => {
         setModalOpen(false);
     };
 
+    const handleDownloadExcel = async () => {
+        try {
+            await downloadTopToursExcel()
+        } catch {
+
+        }
+    }
+
     return (
         <div className={classes.pageContainer}>
             <div className={classes.header}>
@@ -161,6 +169,7 @@ export const AdminToursPage: React.FC = () => {
                 <Button
                 variant="primary"
                 className={classes.exportButton}
+                onClick={() => handleDownloadExcel()}
                 >
                     Экспорт в Excel
                 </Button>

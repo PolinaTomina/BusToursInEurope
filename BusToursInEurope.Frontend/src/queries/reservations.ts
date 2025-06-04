@@ -60,3 +60,43 @@ export const getUsersForReservations = async () => {
       }
     })
 }
+
+export const exportReservations = async (): Promise<Blob> => {
+  const token = localStorage.getItem(JwtTokenKey);
+  if (!token) {
+    throw new Error('No JWT token found');
+  }
+
+  const response = await axios.get(`${BASE_RESERVATION_URL}/reservations_export`, {
+    responseType: 'blob', // Указываем, что ожидаем бинарные данные (файл)
+    headers: {
+      'Authorization': token
+    }
+  });
+
+  return response.data;
+};
+
+// Функция для скачивания файла
+export const downloadExcelReservations = async () => {
+  try {
+    const blob = await exportReservations();
+    
+    // Создаем ссылку для скачивания
+    const url = window.URL.createObjectURL(new Blob([blob]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'Бронирования.xlsx');
+    document.body.appendChild(link);
+    link.click();
+    
+    // Очищаем ссылку после скачивания
+    if (link.parentNode) {
+      link.parentNode.removeChild(link);
+    }
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error downloading top tours statistics:', error);
+    throw error;
+  }
+};
