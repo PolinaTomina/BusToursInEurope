@@ -122,10 +122,6 @@ namespace BusToursInEurope.Application.Services
                 .Include(t => t.Bus)
                 .Include(t => t.RouteBus)
                     .ThenInclude(r => r.WayPoints)
-                        .ThenInclude(wp => wp.City)
-                .Include(t => t.RouteBus)
-                    .ThenInclude(r => r.WayPoints)
-                        .ThenInclude(wp => wp.Hotel)
                 .Include(t => t.Reservations)
                     .ThenInclude(res => res.User)
                 .Include(t => t.Reviews)
@@ -161,20 +157,7 @@ namespace BusToursInEurope.Application.Services
                     WayPointsDto = tour.RouteBus.WayPoints.Select(wp => new WayPointDto
                     {
                         Id = wp.Id,
-                        NamePlace = wp.NamePlace,
-                        CityDto = wp.City != null ? new ShowCityDto
-                        {
-                            Id = wp.City.Id,
-                            Name = wp.City.Name,
-                            Country = wp.City.Country,
-                            Visa = wp.City.Visa
-                        } : null,
-                        HotelDto = wp.Hotel != null ? new ShowHotelDto
-                        {
-                            Id = wp.Hotel.Id,
-                            Name = wp.Hotel.Name,
-                            Rating = wp.Hotel.Rating
-                        } : null
+                        Description = wp.Description,
                     }).ToList()
                 } : null,
 

@@ -20,10 +20,8 @@ namespace BusToursInEurope.Application.Services
                 Select(wp => new ShowWayPointsDto
                 {
                     Id = wp.Id,
-                    NamePlace = wp.NamePlace,
-                    CityId = wp.CityId,
+                    Description = wp.Description,
                     RouteBusId = wp.RouteBusId,
-                    HotelId = wp.HotelId,
                 }).ToListAsync();
 
             return wayPoints;

@@ -30,9 +30,7 @@ namespace BusToursInEurope.Application.Services
                 WayPoints = request.WayPoints
                     .Select(w => new WayPoint
                     {
-                        NamePlace = w.NamePlace,
-                        CityId = w.CityId,
-                        HotelId = w.HotelId
+                        Description = w.Description
                     }).ToList()
             };
 
@@ -69,9 +67,7 @@ namespace BusToursInEurope.Application.Services
                         .Select(w => new WayPointDto
                         {
                             Id = w.Id,
-                            CityId = w.CityId,
-                            HotelId = w.HotelId,
-                            NamePlace = w.NamePlace,
+                            Description = w.Description
                         }).ToListAsync();
             }
 
@@ -99,9 +95,7 @@ namespace BusToursInEurope.Application.Services
             route.WayPoints = request.WayPoints
                     .Select(w => new WayPoint
                     {
-                        NamePlace = w.NamePlace,
-                        CityId = w.CityId,
-                        HotelId = w.HotelId
+                        Description = w.Description
                     }).ToList();
 
             await _context.SaveChangesAsync();

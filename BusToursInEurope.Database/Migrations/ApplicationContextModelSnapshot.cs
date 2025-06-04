@@ -32,7 +32,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Buses");
+                    b.ToTable("Buses", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.City", b =>
@@ -54,7 +54,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities");
+                    b.ToTable("Cities", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.Hotel", b =>
@@ -77,7 +77,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Hotels");
+                    b.ToTable("Hotels", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.Profile", b =>
@@ -108,7 +108,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Profiles", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.ProfileTour", b =>
@@ -125,7 +125,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProfilesTours");
+                    b.ToTable("ProfilesTours", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.Reservation", b =>
@@ -158,7 +158,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.Review", b =>
@@ -193,7 +193,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.RouteBus", b =>
@@ -211,7 +211,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoutesBuses");
+                    b.ToTable("RoutesBuses", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.Tour", b =>
@@ -261,7 +261,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasIndex("RouteBusId");
 
-                    b.ToTable("Tours");
+                    b.ToTable("Tours", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.User", b =>
@@ -291,7 +291,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.WayPoint", b =>
@@ -321,7 +321,7 @@ namespace BusToursInEurope.Database.Migrations
 
                     b.HasIndex("RouteBusId");
 
-                    b.ToTable("WayPoints");
+                    b.ToTable("WayPoints", (string)null);
                 });
 
             modelBuilder.Entity("BusToursInEurope.Core.Entites.Hotel", b =>

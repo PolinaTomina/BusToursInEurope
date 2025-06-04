@@ -38,7 +38,6 @@ namespace BusToursInEurope.Application.Services
                 var wayPoints = await _context.WayPoints
                     .Where(w => cityDto.WayPointIds.Contains(w.Id))
                     .ToListAsync();
-                city.WayPoints = wayPoints;
             }
 
             await _context.Cities.AddAsync(city);
@@ -63,7 +62,6 @@ namespace BusToursInEurope.Application.Services
         {
             var city = await _context.Cities
             .Include(c => c.Hotel)
-            .Include(c => c.WayPoints)
             .FirstOrDefaultAsync(c => c.Id == id);
 
             if (city == null)
@@ -89,8 +87,6 @@ namespace BusToursInEurope.Application.Services
                 var wayPoints = await _context.WayPoints
                     .Where(wp => cityDto.WayPointIds.Contains(wp.Id))
                     .ToListAsync();
-
-                city.WayPoints = wayPoints; 
             }
             await _context.SaveChangesAsync();
         }
