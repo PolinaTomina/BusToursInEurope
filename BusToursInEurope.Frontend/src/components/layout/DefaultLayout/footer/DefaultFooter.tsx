@@ -13,7 +13,7 @@ export const DefaultFooter: React.FC = () => {
                 <div className={classes.footerSection}>
                     <h3>Контакты</h3>
                     <p>Email: info@bustours.com</p>
-                    <p>Телефон: +375 (XX) XXX-XX-XX</p>
+                    <p>Телефон: +375 (29) 719-54-01</p>
                 </div>
                 
                 <div className={classes.footerSection}>

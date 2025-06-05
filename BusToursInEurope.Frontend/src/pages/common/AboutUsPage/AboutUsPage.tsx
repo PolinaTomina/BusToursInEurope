@@ -5,11 +5,6 @@ export const AboutUsPage: React.FC = () => {
     return (
         <div className={classes.aboutPage}>
             <div className={classes.header}>
-                <img 
-                    src="/BigLogo.png" 
-                    alt="BusToursInEurope Logo" 
-                    className={classes.logo}
-                />
                 <h1 className={classes.title}>О BusToursInEurope</h1>
             </div>
 

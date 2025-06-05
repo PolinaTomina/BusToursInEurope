@@ -33,7 +33,7 @@ export const DefaultHeader: React.FC = () => {
             <div className={classes.container}>
                 <Link to="/" className={classes.logo}>
                     <img src="public/logo.jpg" alt="Логотип" className={classes.logoImage} />
-                    <span className={classes.logoText}>BusTours</span>
+                    <span className={classes.logoText}>Автобусные туры</span>
                 </Link>
                 <nav className={classes.navigation}>
                     <Link to="/tours" className={classes.navLink}>
