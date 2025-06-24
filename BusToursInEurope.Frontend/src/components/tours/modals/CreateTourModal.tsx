@@ -64,6 +64,7 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
           const tourData = response.data;
           
           setTitle('Редактировать тур');
+          console.log("tour: ", tourData)
           setUpdateData({
             name: tourData.name || '',
             price: tourData.price,
@@ -73,8 +74,8 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
             description: tourData.description || '',
             images: [],
             existingImages: tourData.fullImageLink || [],
-            busId: tourData.busDto.Id,
-            routeBusId: tourData.routeBusDto.Id
+            busId: tourData.busDto.id,
+            routeBusId: tourData.routeBusDto.id
           });
           
           if (tourData.fullImageLink?.length) {
@@ -189,6 +190,20 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
 
   const handleCommonFieldChange = (field: keyof CreateTourDto | keyof UpdateTourDto, value: any) => {
     if (id) {
+      if (field === 'routeBusId'){
+        console.log("route: ", value)
+        setUpdateData({
+          ...updateData,
+          routeBusId: value
+        })
+      }
+      if (field === 'busId'){
+        console.log("bus: ", value)
+        setUpdateData({
+          ...updateData,
+          busId: value
+        })
+      }
       setUpdateData({ ...updateData, [field]: value });
     } else {
       setFormData({ ...formData, [field]: value });
@@ -199,7 +214,13 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
     e.preventDefault();
     try {
       if (id) {
-        await updateTour(id, updateData);
+        const dataToSend = {
+          ...updateData,
+          busId: updateData.busId === 0 ? formData.busId : updateData.busId,
+          routeBusId: updateData.routeBusId === 0 ? formData.routeBusId : updateData.routeBusId
+        };
+        console.log("data send: ", dataToSend)
+        await updateTour(id, dataToSend);
       } else {
         await createTour(formData);
       }
@@ -318,15 +339,15 @@ export const CreateTourModal: React.FC<CreateTourModalProps> = ({
         <Input
           label="ID автобуса"
           type="number"
-          value={formData.busId}
-          onChange={(e) => setFormData({ ...formData, busId: parseInt(e.target.value) })}
+          value={id ? updateData.busId || 0 : formData.busId}  // Добавил fallback на 0 для null
+          onChange={(e) => handleCommonFieldChange('busId', parseInt(e.target.value) || 0)}  // Добавил fallback на 0
           required
         />
         <Input
           label="ID маршрута"
           type="number"
-          value={formData.routeBusId}
-          onChange={(e) => setFormData({ ...formData, routeBusId: parseInt(e.target.value) })}
+          value={id ? updateData.routeBusId || 0 : formData.routeBusId}  // Добавил fallback на 0 для null
+          onChange={(e) => handleCommonFieldChange('routeBusId', parseInt(e.target.value) || 0)}  // Добавил fallback на 0
           required
         />
 

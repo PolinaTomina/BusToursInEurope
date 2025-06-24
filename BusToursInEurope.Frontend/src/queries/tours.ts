@@ -43,6 +43,8 @@ export const updateTour = async (id: number, data: UpdateTourDto) => {
   if (data.endDate !== null) formData.append('EndDate', data.endDate || '');
   if (data.numOfSeats !== null) formData.append('NumOfSeats', data.numOfSeats?.toString() || '');
   if (data.description !== null) formData.append('Description', data.description || '');
+  if (data.busId) formData.append('BusId', data.busId || 0);
+  if (data.routeBusId) formData.append('RouteBusId', data.routeBusId || 0);
   
   // Добавляем изображения, если они есть
   if (data.images) {
