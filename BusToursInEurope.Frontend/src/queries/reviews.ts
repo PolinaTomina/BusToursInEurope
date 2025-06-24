@@ -18,3 +18,16 @@ export const getReviewsByTourId = async (tourId: number) => {
     params: { tourId }
   });
 };
+
+export const getAll = async () => {
+  return axios.get(`${BASE_REVIEWS_URL}/GetAll`)
+}
+
+export const deleteReview = async (reviewId: number) => {
+  return axios.delete(`${BASE_REVIEWS_URL}`, {
+    params: { reviewId },
+    headers: {
+      'Authorization': localStorage.getItem(JwtTokenKey)
+    }
+  })
+}

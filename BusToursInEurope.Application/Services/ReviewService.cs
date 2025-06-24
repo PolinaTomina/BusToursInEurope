@@ -29,7 +29,7 @@ namespace BusToursInEurope.Application.Services
             var review = new Review
             {
                 Rating = createReview.Rating,
-                Comment = createReview.Comment,
+                Comment = createReview.Comment ?? string.Empty,
                 ReviewDate = DateTime.UtcNow,
                 Login = user.Login,
                 UserId = user.Id,
@@ -70,11 +70,14 @@ namespace BusToursInEurope.Application.Services
             }).ToList();
         }
 
-        public async Task<bool> DeleteReviewAsync(int reviewId, string email, bool isAdmin)
+        public async Task<bool> DeleteReviewAsync(int reviewId, string email)
         {
             var review = await _context.Reviews
                 .Include(r => r.User)
                 .FirstOrDefaultAsync(r => r.Id == reviewId);
+
+            var currentUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var isAdmin = currentUser?.Role == Role.Admin;
 
             if (review == null)
                 return false;
@@ -87,6 +90,24 @@ namespace BusToursInEurope.Application.Services
             await _context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<List<ReviewDto>> GetAllAsync()
+        {
+            var reviews = await _context.Reviews
+                .Include(r => r.User)
+                .ToListAsync();
+
+            return reviews.Select(r => new ReviewDto
+            {
+                Id = r.Id,
+                Login = r.Login,
+                Rating = r.Rating,
+                Comment = r.Comment,
+                ReviewDate = r.ReviewDate,
+                UserId = r.UserId,
+                TourId = r.TourId,
+            }).ToList();
         }
     }
 

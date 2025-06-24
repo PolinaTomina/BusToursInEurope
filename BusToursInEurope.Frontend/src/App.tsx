@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { isAdmin, isAuthenticated } from './queries/auth';
 import { JwtTokenKey } from './utils/constants/localStorageConstants';
 import { RulesPage } from './pages/common/RulesPage/RulesPage';
+import { AdminReviewsPage } from './pages/admin/AdminReviewsPage/AdminReviewsPage';
 
 function App() {
   return (
@@ -113,6 +114,7 @@ function RouterContent() {
         <Route path='tours' element={<AdminToursPage />} />
         <Route path='profile' element={<UserProfilePage/>} />
         <Route path='users' element={<AdminUserPage/>} />
+        <Route path='reviews' element={<AdminReviewsPage/>} />
       </Route>
     </Routes>
   );

@@ -19,6 +19,10 @@ namespace BusToursInEurope.Controllers
             _reviewService = reviewService;
         }
 
+        [HttpGet(nameof(GetAll))]
+        public Task<List<ReviewDto>> GetAll() 
+            => _reviewService.GetAllAsync();
+
         /// <summary>
         /// Получение всех отзывов для тура
         /// </summary>
@@ -49,9 +53,8 @@ namespace BusToursInEurope.Controllers
         public async Task<IActionResult> DeleteReview(int reviewId)
         {
             var email = User.FindFirst(ClaimTypes.Name)?.Value;
-            var isAdmin = User.IsInRole(Role.Admin); // Используем твою константу
 
-            var success = await _reviewService.DeleteReviewAsync(reviewId, email, isAdmin);
+            var success = await _reviewService.DeleteReviewAsync(reviewId, email);
 
             if (!success)
                 return Forbid("Вы не можете удалить этот отзыв.");

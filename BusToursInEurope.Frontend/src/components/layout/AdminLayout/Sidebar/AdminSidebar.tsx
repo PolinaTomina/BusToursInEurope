@@ -52,6 +52,16 @@ export const AdminSidebar: React.FC = () => {
                     </li>
                     <li className={styles.navItem}>
                         <NavLink 
+                            to="/admin/reviews" 
+                            className={({ isActive }) => 
+                                isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+                            }
+                        >
+                            Отзывы
+                        </NavLink>
+                    </li>
+                    <li className={styles.navItem}>
+                        <NavLink 
                             to="/admin/users" 
                             className={({ isActive }) => 
                                 isActive ? `${styles.navLink} ${styles.active}` : styles.navLink

@@ -193,8 +193,10 @@ export const UserProfilePage: React.FC = () => {
           setIsAdmin(true);
         }
       } catch (err) {
-        setError("Не удалось загрузить профиль. Пожалуйста, попробуйте позже.");
-        console.error("Error fetching profile:", err);
+        if (userIsAdmin) {
+          setError("Не удалось загрузить профиль. Пожалуйста, попробуйте позже.");
+          console.error("Error fetching profile:", err); 
+        }
       } finally {
         setLoading(false);
       }
